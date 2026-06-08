@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Trirong:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
     /* ============================================
@@ -6537,18 +6539,9 @@
 
     // ---- Module F Init ----
     function initModuleF() {
-      animateModFKPIs();
-      renderModFGauge();
-      renderModFSparklines();
-      renderModFFunnel();
-      renderModFHeatMatrix();
-      renderModFMap();
-      renderModFPincodes();
-      renderModFReplays();
-      renderModFPPFunnelSummary();
-      renderModFPPCards();
-      renderModFLeaksTable();
-      renderModFTrendChart('all');
+      var fns = [animateModFKPIs, renderModFGauge, renderModFSparklines, renderModFFunnel, renderModFHeatMatrix, renderModFMap, renderModFPincodes, renderModFReplays, renderModFPPFunnelSummary, renderModFPPCards, renderModFLeaksTable];
+      fns.forEach(function(fn) { try { fn(); } catch(e) { console.warn('Module F:', fn.name, e.message); } });
+      try { renderModFTrendChart('all'); } catch(e) { console.warn('Module F: renderModFTrendChart', e.message); }
     }
 
     // ---- KPI Counter Animation ----
@@ -6785,6 +6778,7 @@
     function renderModFMap() {
       var container = document.getElementById('modFMapContainer');
       if (!container || modFMapInst) return;
+      if (typeof L === 'undefined') return;
 
       modFMapInst = L.map(container, { scrollWheelZoom: false }).setView([22.5, 79], 5);
 

@@ -1111,6 +1111,630 @@
       .mod-d-loop-kpi { flex-direction: column; gap: var(--space-md); }
     }
 
+
+
+    /* ============================================
+       MODULE E — Product Engagement & Trust Signals
+       ============================================ */
+
+    /* Executive Trust Scorecard */
+    .mod-e-trust-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--grid-gutter); margin-bottom: var(--space-2xl); }
+    .mod-e-trust-card {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      padding: var(--space-xl); transition: all var(--transition-base);
+      position: relative; overflow: hidden;
+    }
+    .mod-e-trust-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      border-radius: 0 2px 2px 0; transition: opacity 0.3s ease;
+    }
+    .mod-e-trust-card.accent-terracotta::before { background: var(--brand-primary); }
+    .mod-e-trust-card.accent-success::before { background: var(--data-success); }
+    .mod-e-trust-card.accent-danger::before { background: var(--data-danger); }
+    .mod-e-trust-card.accent-teal::before { background: #09728c; }
+    .mod-e-trust-card.accent-charcoal::before { background: #232323; }
+    .mod-e-trust-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+    .mod-e-trust-icon { font-size: 20px; margin-bottom: 8px; opacity: 0.6; }
+    .mod-e-trust-value {
+      font-family: var(--font-body); font-size: 28px; font-weight: 800;
+      color: var(--text-primary); line-height: 1.1;
+    }
+    .mod-e-trust-value.brand { color: var(--brand-primary); }
+    .mod-e-trust-value.success { color: var(--data-success); }
+    .mod-e-trust-value.danger { color: var(--data-danger); }
+    .mod-e-trust-label {
+      font-size: 11px; font-weight: 700; color: var(--text-secondary);
+      margin-top: var(--space-xs); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .mod-e-trust-delta {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; margin-top: var(--space-sm);
+      padding: 2px 8px; border-radius: var(--radius-sm);
+    }
+    .mod-e-trust-delta.up { color: var(--data-success); background: var(--data-success-light); }
+    .mod-e-trust-delta.down { color: var(--data-danger); background: var(--data-danger-light); }
+    .mod-e-trust-delta.flat { color: var(--text-tertiary); background: var(--bg-inset); }
+
+    /* Zone Grid */
+    .mod-e-zone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gutter); }
+    .mod-e-full { grid-column: 1 / -1; }
+
+    /* SHAP Bar Chart */
+    .mod-e-shap-container { position: relative; height: 340px; }
+    .mod-e-shap-legend {
+      display: flex; gap: var(--space-lg); margin-top: var(--space-md);
+      font-size: 11px; color: var(--text-secondary); flex-wrap: wrap;
+    }
+    .mod-e-shap-legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+    .mod-e-shap-note {
+      font-size: 11px; color: var(--text-tertiary); font-style: italic;
+      margin-top: var(--space-sm); padding: 6px 10px;
+      background: var(--bg-inset); border-radius: var(--radius-sm);
+    }
+
+    /* Causal Lift Table */
+    .mod-e-causal-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+    .mod-e-causal-table thead th {
+      font-weight: 700; color: var(--text-secondary); text-align: left;
+      padding: var(--space-md) var(--space-lg); border-bottom: 2px solid var(--border-default);
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+      white-space: nowrap; cursor: pointer; user-select: none;
+    }
+    .mod-e-causal-table thead th:hover { color: var(--brand-primary); }
+    .mod-e-causal-table tbody tr { transition: background var(--transition-fast); }
+    .mod-e-causal-table tbody tr:hover { background: var(--bg-inset); }
+    .mod-e-causal-table tbody td {
+      padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary); vertical-align: middle;
+    }
+    .mod-e-causal-table tbody tr:last-child td { border-bottom: none; }
+    .mod-e-att-cell {
+      font-weight: 700; font-size: 14px; position: relative;
+    }
+    .mod-e-att-cell.significant { color: var(--data-success); }
+    .mod-e-att-cell.insignificant { color: var(--text-tertiary); }
+    .mod-e-att-arrow { font-size: 11px; margin-right: 3px; }
+    .mod-e-conf-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700; padding: 3px 10px;
+      border-radius: var(--radius-pill); text-transform: uppercase;
+      letter-spacing: 0.05em; cursor: pointer; transition: all var(--transition-fast);
+    }
+    .mod-e-conf-badge:hover { filter: brightness(0.92); transform: scale(1.05); }
+    .mod-e-conf-badge.high { background: var(--data-success-light); color: var(--data-success); }
+    .mod-e-conf-badge.medium { background: var(--data-warning-light); color: #9a6c00; }
+    .mod-e-conf-badge.low { background: var(--data-danger-light); color: var(--data-danger); }
+    .mod-e-sparkline-cell canvas { display: block; }
+
+    /* Funnel Efficiency */
+    .mod-e-funnel-container { position: relative; height: 340px; }
+    .mod-e-funnel-interpret {
+      font-size: 12px; color: var(--text-secondary); background: var(--bg-inset);
+      border-left: 3px solid var(--brand-primary); padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: var(--space-lg); line-height: 1.6;
+    }
+    .mod-e-funnel-interpret strong { color: var(--text-primary); }
+
+    /* Return-Risk Impact */
+    .mod-e-risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gutter); }
+    .mod-e-odds-callout {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: var(--space-2xl); background: linear-gradient(135deg, rgba(var(--data-success-rgb),0.06) 0%, rgba(var(--data-success-rgb),0.12) 100%);
+      border-radius: var(--radius-md); border: 2px solid var(--data-success);
+      text-align: center;
+    }
+    .mod-e-odds-value {
+      font-family: var(--font-body); font-size: 52px; font-weight: 900;
+      color: var(--data-success); line-height: 1;
+    }
+    .mod-e-odds-label {
+      font-size: 12px; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-top: var(--space-sm);
+    }
+    .mod-e-odds-ci {
+      font-size: 12px; color: var(--text-tertiary); margin-top: var(--space-xs);
+      font-weight: 500;
+    }
+    .mod-e-odds-desc {
+      font-size: 13px; color: var(--text-secondary); margin-top: var(--space-md);
+      line-height: 1.5; max-width: 280px;
+    }
+    .mod-e-risk-chart-container { position: relative; height: 260px; }
+    .mod-e-risk-toggle {
+      display: flex; gap: 6px; margin-bottom: var(--space-md);
+    }
+    .mod-e-risk-toggle-btn {
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
+      padding: 5px 14px; border: 1px solid var(--border-default); border-radius: var(--radius-pill);
+      background: var(--bg-card); color: var(--text-secondary); cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .mod-e-risk-toggle-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-e-risk-toggle-btn.active { background: var(--brand-primary); color: var(--text-inverse); border-color: var(--brand-primary); }
+
+    /* Trust-Friction Reel */
+    .mod-e-reel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gutter); }
+    .mod-e-reel-card {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      overflow: hidden; transition: all var(--transition-base);
+      cursor: pointer;
+    }
+    .mod-e-reel-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .mod-e-reel-thumb {
+      width: 100%; height: 160px; background: var(--bg-inset);
+      position: relative; overflow: hidden;
+    }
+    .mod-e-reel-thumb-inner {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      color: rgba(255,255,255,0.5);
+    }
+    .mod-e-reel-play-btn {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease; backdrop-filter: blur(4px);
+    }
+    .mod-e-reel-card:hover .mod-e-reel-play-btn {
+      background: rgba(var(--brand-primary-rgb),0.85); border-color: var(--brand-primary);
+      transform: scale(1.1);
+    }
+    .mod-e-reel-play-icon { width: 18px; height: 18px; fill: white; margin-left: 3px; }
+    .mod-e-reel-duration {
+      position: absolute; bottom: 8px; right: 8px;
+      font-size: 10px; font-weight: 700; color: white;
+      background: rgba(0,0,0,0.7); padding: 2px 7px; border-radius: 3px;
+    }
+    .mod-e-reel-body { padding: var(--space-lg); }
+    .mod-e-reel-type {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .mod-e-reel-type.confidence { color: var(--data-success); }
+    .mod-e-reel-type.friction { color: var(--data-danger); }
+    .mod-e-reel-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      color: var(--text-primary); line-height: 1.4; margin-bottom: 6px;
+    }
+    .mod-e-reel-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+    .mod-e-reel-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: var(--space-md); }
+    .mod-e-reel-tag {
+      font-size: 10px; font-weight: 600; padding: 3px 8px;
+      border-radius: var(--radius-pill); background: var(--bg-inset);
+      color: var(--text-secondary);
+    }
+    .mod-e-reel-cta {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700; color: var(--brand-primary);
+      margin-top: var(--space-md); cursor: pointer; transition: color var(--transition-fast);
+      text-transform: uppercase; letter-spacing: 0.05em; background: none; border: none;
+      font-family: var(--font-body); padding: 0;
+    }
+    .mod-e-reel-cta:hover { color: var(--brand-burgundy); }
+    .mod-e-reel-cta svg { width: 12px; height: 12px; }
+
+    /* Confidence Modal */
+    .mod-e-modal-overlay {
+      position: fixed; inset: 0; background: rgba(23,23,23,0.45); z-index: 300;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center;
+    }
+    .mod-e-modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .mod-e-modal {
+      background: var(--bg-card); border-radius: 8px; width: 520px; max-width: 92vw;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08);
+      transform: scale(0.92) translateY(12px); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow: hidden;
+    }
+    .mod-e-modal-overlay.open .mod-e-modal { transform: scale(1) translateY(0); }
+    .mod-e-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-inset);
+    }
+    .mod-e-modal-header h4 { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-primary); }
+    .mod-e-modal-close {
+      width: 36px; height: 36px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-default); background: var(--bg-card);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); transition: all var(--transition-fast);
+    }
+    .mod-e-modal-close:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-e-modal-body { padding: 24px; }
+    .mod-e-modal-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-md); }
+    .mod-e-modal-body p:last-child { margin-bottom: 0; }
+    .mod-e-modal-body strong { color: var(--text-primary); }
+    .mod-e-modal-rec {
+      padding: 12px 16px; background: rgba(var(--brand-primary-rgb),0.06);
+      border-left: 3px solid var(--brand-primary); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px; color: var(--text-primary); line-height: 1.5;
+    }
+
+    /* Staggered entrance animations */
+    .mod-e-animate { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .mod-e-animate.visible { opacity: 1; transform: translateY(0); }
+    .mod-e-animate:nth-child(1) { transition-delay: 0.05s; }
+    .mod-e-animate:nth-child(2) { transition-delay: 0.12s; }
+    .mod-e-animate:nth-child(3) { transition-delay: 0.19s; }
+    .mod-e-animate:nth-child(4) { transition-delay: 0.26s; }
+    .mod-e-animate:nth-child(5) { transition-delay: 0.33s; }
+
+    /* Responsive — Module E */
+    @media(max-width:1024px) {
+      .mod-e-trust-row { grid-template-columns: repeat(3, 1fr); }
+      .mod-e-zone-grid { grid-template-columns: 1fr; }
+      .mod-e-risk-grid { grid-template-columns: 1fr; }
+      .mod-e-reel-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width:768px) {
+      .mod-e-trust-row { grid-template-columns: repeat(2, 1fr); }
+      .mod-e-trust-value { font-size: 22px; }
+      .mod-e-reel-grid { grid-template-columns: 1fr; }
+      .mod-e-odds-value { font-size: 40px; }
+      .mod-e-shap-container { height: 280px; }
+      .mod-e-funnel-container { height: 280px; }
+    }
+
+
+
+    /* ============================================
+       MODULE F — Funnel Leaks & Friction Points
+       ============================================ */
+
+    /* KPI Row — 4 tiles */
+    .mod-f-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gutter); margin-bottom: var(--space-2xl); }
+    .mod-f-kpi-card {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      padding: var(--space-xl); transition: all var(--transition-base);
+      position: relative; overflow: hidden; cursor: default;
+    }
+    .mod-f-kpi-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--brand-primary);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .mod-f-kpi-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px) scale(1.02); }
+    .mod-f-kpi-card:hover::after { transform: scaleX(1); }
+    .mod-f-kpi-card:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: 2px; box-shadow: var(--shadow-glow-accent); }
+    .mod-f-kpi-icon { font-size: 18px; margin-bottom: 6px; opacity: 0.5; }
+    .mod-f-kpi-value {
+      font-family: var(--font-body); font-size: 30px; font-weight: 800;
+      color: var(--text-primary); line-height: 1.1;
+    }
+    .mod-f-kpi-value.danger { color: var(--data-danger); }
+    .mod-f-kpi-value.burgundy { color: var(--brand-burgundy); }
+    .mod-f-kpi-label {
+      font-size: 11px; font-weight: 700; color: var(--text-secondary);
+      margin-top: var(--space-xs); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .mod-f-kpi-sparkline { margin-top: var(--space-sm); }
+
+    /* Mini Gauge for Conversion Rate KPI */
+    .mod-f-gauge-wrap { display: flex; align-items: center; gap: var(--space-md); margin-top: var(--space-sm); }
+    .mod-f-gauge { width: 72px; height: 40px; position: relative; overflow: hidden; }
+    .mod-f-gauge canvas { display: block; }
+    .mod-f-gauge-labels { display: flex; flex-direction: column; gap: 2px; }
+    .mod-f-gauge-label { font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .mod-f-gauge-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Dual Funnel Chart */
+    .mod-f-funnel-container { position: relative; height: 460px; }
+    .mod-f-funnel-legend { display: flex; gap: var(--space-xl); margin-bottom: var(--space-md); }
+    .mod-f-funnel-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+    .mod-f-funnel-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+    /* Heat Matrix */
+    .mod-f-heat-matrix { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .mod-f-heat-matrix th {
+      font-family: var(--font-body); font-size: 10px; font-weight: 700;
+      color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 10px 8px; text-align: center; border-bottom: 2px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+    .mod-f-heat-matrix th:first-child { text-align: left; }
+    .mod-f-heat-matrix td {
+      padding: 6px; text-align: center; font-weight: 600; font-size: 12px;
+      border-bottom: 1px solid var(--border-subtle); vertical-align: middle;
+    }
+    .mod-f-heat-matrix td:first-child {
+      text-align: left; font-size: 12px; font-weight: 700; color: var(--text-primary);
+      white-space: nowrap; padding-right: var(--space-md);
+    }
+    .mod-f-heat-cell {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 8px 10px; min-width: 64px; min-height: 48px; border-radius: 4px;
+      cursor: default; transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .mod-f-heat-cell:hover { transform: scale(1.08); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .mod-f-heat-cell .pct { font-size: 16px; font-weight: 800; line-height: 1; }
+    .mod-f-heat-cell .vol { font-size: 9px; font-weight: 500; opacity: 0.7; margin-top: 2px; }
+
+    /* Map + Pincode Table Wrapper */
+    .mod-f-map-wrapper { display: grid; grid-template-columns: 1fr 380px; gap: var(--grid-gutter); }
+    .mod-f-map-container { height: 480px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); position: relative; z-index: 1; }
+    .mod-f-map-container .leaflet-container { height: 100%; width: 100%; }
+
+    /* Top 10 Pincodes Table */
+    .mod-f-pincodes-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+    .mod-f-pincodes-table thead th {
+      font-weight: 700; color: var(--text-secondary); text-align: left;
+      padding: var(--space-md) var(--space-md); border-bottom: 2px solid var(--border-default);
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+    }
+    .mod-f-pincodes-table tbody tr { transition: background var(--transition-fast); cursor: default; }
+    .mod-f-pincodes-table tbody tr:hover { background: var(--bg-inset); }
+    .mod-f-pincodes-table tbody td {
+      padding: 8px var(--space-md); border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary); vertical-align: middle; font-size: 12px;
+    }
+    .mod-f-pincodes-table tbody tr:last-child td { border-bottom: none; }
+    .mod-f-pincode-status {
+      display: inline-block; padding: 2px 7px; border-radius: var(--radius-pill);
+      font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .mod-f-pincode-status.critical { background: var(--data-danger-light); color: var(--data-danger); }
+    .mod-f-pincode-status.warning { background: var(--data-warning-light); color: var(--data-warning); }
+    .mod-f-pincode-status.moderate { background: var(--data-success-light); color: var(--data-success); }
+
+    /* Session Replay Mock UI */
+    .mod-f-replay-layout { display: grid; grid-template-columns: 220px 1fr 280px; gap: var(--grid-gutter); min-height: 380px; }
+    .mod-f-replay-playlist { background: var(--bg-inset); border-radius: var(--radius-md); padding: var(--space-lg); overflow-y: auto; max-height: 420px; }
+    .mod-f-replay-playlist-title {
+      font-size: 11px; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-md);
+    }
+    .mod-f-replay-item {
+      padding: var(--space-md); border-radius: var(--radius-sm); cursor: pointer;
+      transition: all var(--transition-fast); margin-bottom: var(--space-sm);
+      border: 1px solid transparent;
+    }
+    .mod-f-replay-item:hover { background: rgba(255,255,255,0.6); border-color: var(--border-default); }
+    .mod-f-replay-item.active { background: var(--bg-card); border-color: var(--brand-primary); box-shadow: var(--shadow-card); }
+    .mod-f-replay-item-thumb {
+      width: 100%; height: 56px; background: var(--border-default); border-radius: var(--radius-sm);
+      margin-bottom: 6px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--text-tertiary); position: relative; overflow: hidden;
+    }
+    .mod-f-replay-item-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(193,100,82,0.06) 0%, rgba(32,23,71,0.04) 100%);
+    }
+    .mod-f-replay-item-meta { font-size: 10px; color: var(--text-tertiary); display: flex; gap: 6px; align-items: center; }
+    .mod-f-replay-item-device { font-weight: 600; }
+
+    .mod-f-replay-player {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .mod-f-replay-viewport {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      position: relative; min-height: 280px;
+    }
+    .mod-f-replay-placeholder { text-align: center; color: rgba(255,255,255,0.5); }
+    .mod-f-replay-play-btn {
+      width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-md); cursor: pointer; transition: all var(--transition-fast);
+    }
+    .mod-f-replay-play-btn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); transform: scale(1.05); }
+    .mod-f-replay-play-btn svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.8); }
+    .mod-f-replay-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .mod-f-replay-controls {
+      display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--border-subtle); background: var(--bg-card);
+    }
+    .mod-f-replay-progress { flex: 1; height: 4px; background: var(--border-default); border-radius: 2px; overflow: hidden; }
+    .mod-f-replay-progress-fill { width: 35%; height: 100%; background: var(--brand-primary); border-radius: 2px; transition: width 0.3s ease; }
+    .mod-f-replay-time { font-size: 11px; color: var(--text-tertiary); font-weight: 600; white-space: nowrap; }
+    .mod-f-replay-speed {
+      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill);
+      background: var(--bg-inset); color: var(--text-secondary); border: 1px solid var(--border-default);
+      cursor: pointer;
+    }
+
+    .mod-f-replay-insights { padding: var(--space-lg); overflow-y: auto; max-height: 420px; }
+    .mod-f-replay-insight-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      color: var(--text-primary); margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm); border-bottom: 1px solid var(--border-subtle);
+    }
+    .mod-f-replay-insight-text { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-lg); }
+    .mod-f-replay-insight-stat {
+      display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-sm) var(--space-md);
+      background: var(--bg-inset); border-radius: var(--radius-sm); margin-bottom: var(--space-sm);
+      font-size: 12px; font-weight: 600; color: var(--text-primary);
+    }
+
+    /* Friction Tags */
+    .mod-f-tag {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: var(--radius-pill);
+      text-transform: uppercase; letter-spacing: 0.04em; margin: 2px 2px 2px 0;
+    }
+    .mod-f-tag.ux-friction { background: var(--data-danger-light); color: var(--data-danger); }
+    .mod-f-tag.trust-gap { background: var(--data-warning-light); color: #9a6c00; }
+    .mod-f-tag.payment { background: rgba(var(--brand-secondary-rgb),0.10); color: var(--brand-secondary); }
+    .mod-f-tag.storytelling { background: rgba(var(--brand-primary-rgb),0.12); color: var(--brand-primary); }
+    .mod-f-tag.rto { background: var(--data-danger-light); color: var(--data-danger); }
+
+    /* Priority Leaks Table */
+    .mod-f-leaks-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+    .mod-f-leaks-table thead th {
+      font-weight: 700; color: var(--text-secondary); text-align: left;
+      padding: var(--space-md) var(--space-lg); border-bottom: 2px solid var(--border-default);
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+      white-space: nowrap; cursor: pointer; user-select: none; transition: color var(--transition-fast);
+      background: var(--bg-inset);
+    }
+    .mod-f-leaks-table thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+    .mod-f-leaks-table thead th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+    .mod-f-leaks-table thead th:hover { color: var(--brand-primary); }
+    .mod-f-leaks-table tbody tr { transition: background var(--transition-fast); cursor: pointer; }
+    .mod-f-leaks-table tbody tr:hover { background: var(--bg-inset); }
+    .mod-f-leaks-table tbody tr:nth-child(even) { background: rgba(252,250,243,0.5); }
+    .mod-f-leaks-table tbody tr:nth-child(even):hover { background: var(--bg-inset); }
+    .mod-f-leaks-table tbody td {
+      padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary); vertical-align: middle; font-size: 12px;
+    }
+    .mod-f-leaks-table tbody tr:last-child td { border-bottom: none; }
+    .mod-f-leak-expanded { display: none; }
+    .mod-f-leak-expanded.open { display: table-row; }
+    .mod-f-leak-expanded td {
+      padding: var(--space-lg) var(--space-xl); background: var(--bg-inset);
+      border-bottom: 2px solid var(--border-default); font-size: 12px; color: var(--text-secondary); line-height: 1.6;
+    }
+    .mod-f-leak-expanded .evidence-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-lg); }
+    .mod-f-leak-expanded .evidence-item { }
+    .mod-f-leak-expanded .evidence-label { font-size: 10px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .mod-f-leak-expanded .evidence-value { font-size: 12px; color: var(--text-primary); font-weight: 500; }
+    .mod-f-root-cause {
+      display: inline-block; padding: 3px 8px; border-radius: var(--radius-pill);
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .mod-f-root-cause.ux-friction { background: var(--data-danger-light); color: var(--data-danger); }
+    .mod-f-root-cause.trust-gap { background: var(--data-warning-light); color: #9a6c00; }
+    .mod-f-root-cause.storytelling { background: rgba(var(--brand-primary-rgb),0.12); color: var(--brand-primary); }
+    .mod-f-root-cause.payment { background: rgba(var(--brand-secondary-rgb),0.10); color: var(--brand-secondary); }
+    .mod-f-revenue-loss { font-weight: 800; font-size: 14px; }
+    .mod-f-revenue-loss.high { color: var(--data-danger); }
+    .mod-f-revenue-loss.medium { color: var(--data-warning); }
+
+    /* Post-Fix Conversion Trend */
+    .mod-f-trend-container { position: relative; height: 360px; }
+    .mod-f-trend-toggle { display: flex; gap: 6px; margin-bottom: var(--space-md); }
+    .mod-f-trend-btn {
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
+      padding: 5px 14px; border: 1px solid var(--border-default); border-radius: var(--radius-pill);
+      background: var(--bg-card); color: var(--text-secondary); cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .mod-f-trend-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-f-trend-btn.active { background: var(--brand-primary); color: var(--text-inverse); border-color: var(--brand-primary); }
+
+    /* Pre-Purchase Friction Spotlight */
+    .mod-f-prepurchase-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-lg); flex-wrap: wrap; gap: var(--space-md); }
+    .mod-f-prepurchase-subtitle { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+    .mod-f-stage-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .mod-f-stage-pill {
+      font-family: var(--font-body); font-size: 10px; font-weight: 700;
+      padding: 4px 12px; border-radius: var(--radius-pill);
+      background: var(--bg-inset); color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      cursor: pointer; transition: all var(--transition-fast);
+      border: 1px solid transparent;
+    }
+    .mod-f-stage-pill:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-f-stage-pill.active { background: var(--brand-primary); color: var(--text-inverse); border-color: var(--brand-primary); }
+
+    .mod-f-prepurchase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gutter); margin-bottom: var(--space-xl); }
+    .mod-f-prepurchase-card {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      padding: var(--space-xl); transition: all var(--transition-base);
+      position: relative; overflow: hidden;
+    }
+    .mod-f-prepurchase-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--data-warning); transition: background 0.3s ease;
+    }
+    .mod-f-prepurchase-card.critical::before { background: var(--data-danger); }
+    .mod-f-prepurchase-card.high::before { background: var(--data-warning); }
+    .mod-f-prepurchase-card.moderate::before { background: var(--data-success); }
+    .mod-f-prepurchase-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+
+    .mod-f-pp-stage {
+      font-size: 10px; font-weight: 700; color: var(--text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-sm);
+    }
+    .mod-f-pp-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      color: var(--text-primary); line-height: 1.3; margin-bottom: var(--space-md);
+      min-height: 36px;
+    }
+    .mod-f-pp-loss {
+      font-family: var(--font-body); font-size: 22px; font-weight: 800;
+      line-height: 1; margin-bottom: var(--space-xs);
+    }
+    .mod-f-pp-loss.high { color: var(--data-danger); }
+    .mod-f-pp-loss.medium { color: var(--data-warning); }
+    .mod-f-pp-loss.moderate { color: var(--text-secondary); }
+    .mod-f-pp-loss-label { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-md); }
+
+    .mod-f-pp-dropoff-bar { margin-bottom: var(--space-md); }
+    .mod-f-pp-dropoff-label { font-size: 10px; font-weight: 600; color: var(--text-secondary); margin-bottom: 3px; display: flex; justify-content: space-between; }
+    .mod-f-pp-dropoff-track { height: 6px; background: var(--bg-inset); border-radius: 3px; overflow: hidden; }
+    .mod-f-pp-dropoff-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+
+    .mod-f-pp-segment { font-size: 11px; color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.4; }
+    .mod-f-pp-segment strong { color: var(--text-primary); font-weight: 700; }
+
+    .mod-f-pp-fix {
+      font-size: 11px; color: var(--data-success); font-weight: 600;
+      line-height: 1.4; padding: var(--space-sm) var(--space-md);
+      background: var(--data-success-light); border-radius: var(--radius-sm);
+    }
+    .mod-f-pp-tags { margin-top: var(--space-md); display: flex; flex-wrap: wrap; gap: 3px; }
+
+    /* Pre-Purchase Funnel Drop-off Summary */
+    .mod-f-pp-funnel-summary {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      background: var(--bg-inset); border-radius: var(--radius-md);
+      padding: var(--space-lg) 0; margin-bottom: var(--space-xl);
+      position: relative; overflow: hidden;
+    }
+    .mod-f-pp-funnel-step {
+      text-align: center; padding: 0 var(--space-lg); position: relative;
+    }
+    .mod-f-pp-funnel-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -6px; top: 50%;
+      transform: translateY(-50%); font-size: 16px; color: var(--text-tertiary);
+      z-index: 1;
+    }
+    .mod-f-pp-funnel-step:not(:last-child) { border-right: 1px solid var(--border-subtle); }
+    .mod-f-pp-funnel-step-name { font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-xs); }
+    .mod-f-pp-funnel-step-pct { font-size: 24px; font-weight: 800; color: var(--data-danger); line-height: 1; }
+    .mod-f-pp-funnel-step-vol { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+    .mod-f-pp-funnel-step-loss { font-size: 11px; font-weight: 700; color: var(--data-danger); margin-top: var(--space-xs); }
+
+    /* Section Spacing */
+    .mod-f-section { margin-bottom: var(--space-2xl); }
+
+    /* Responsive — Module F */
+    @media(max-width:1024px) {
+      .mod-f-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .mod-f-map-wrapper { grid-template-columns: 1fr; }
+      .mod-f-replay-layout { grid-template-columns: 1fr; }
+      .mod-f-replay-playlist { max-height: 200px; }
+      .mod-f-replay-insights { max-height: none; }
+      .mod-f-funnel-container { height: 380px; }
+      .mod-f-prepurchase-grid { grid-template-columns: repeat(2, 1fr); }
+      .mod-f-pp-funnel-summary { grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+      .mod-f-pp-funnel-step::after { display: none; }
+      .mod-f-pp-funnel-step { border-right: none !important; }
+    }
+    @media(max-width:768px) {
+      .mod-f-kpi-row { grid-template-columns: 1fr 1fr; }
+      .mod-f-kpi-value { font-size: 24px; }
+      .mod-f-trend-container { height: 280px; }
+      .mod-f-map-container { height: 340px; }
+      .mod-f-replay-layout { grid-template-columns: 1fr; }
+      .mod-f-gauge-wrap { flex-direction: column; align-items: flex-start; }
+      .mod-f-leaks-table { font-size: 11px; }
+      .mod-f-leaks-table thead th { padding: var(--space-sm) var(--space-md); font-size: 9px; }
+      .mod-f-leaks-table tbody td { padding: var(--space-sm) var(--space-md); }
+      .mod-f-leak-expanded .evidence-grid { grid-template-columns: 1fr; }
+      .mod-f-prepurchase-grid { grid-template-columns: 1fr; }
+      .mod-f-pp-funnel-summary { grid-template-columns: 1fr 1fr; }
+      .mod-f-pp-funnel-step-pct { font-size: 20px; }
+    }
+
     /* ============================================
        MODULE G — Post‑Purchase & Omnichannel Intelligence
        ============================================ */
@@ -2173,8 +2797,400 @@
 
       </div>
     </section>
-    <section class="tab-panel" id="panel-product"><div class="module-placeholder"><svg class="module-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><h3>Module E — Product Engagement & Trust Factors</h3><p>SHAP feature importance, return-rate impact, funnel efficiency, and qualitative trust reel.</p></div></section>
-    <section class="tab-panel" id="panel-friction"><div class="module-placeholder"><svg class="module-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><h3>Module F — Friction & Conversion Leaks</h3><p>Dual COD/Prepaid funnel, pincode black hole map, revenue recovery ICE matrix, and session replays.</p></div></section>
+    <section class="tab-panel" id="panel-product">
+
+      <!-- Section Header -->
+      <div class="section-header mod-e-animate">
+        <h2 class="section-title">Product Engagement & Trust Signals</h2>
+        <p class="section-desc">What drives purchases vs. what merely correlates? SHAP analysis, causal inference (PSM), and qualitative session reels reveal the true impact of each PDP interaction.</p>
+      </div>
+
+      <!-- Executive Trust Scorecard -->
+      <div class="mod-e-trust-row">
+        <div class="mod-e-trust-card accent-terracotta mod-e-animate">
+          <div class="mod-e-trust-icon">&#x1F6E1;</div>
+          <div class="mod-e-trust-value brand" id="modETscore">—</div>
+          <div class="mod-e-trust-label">Trust Score</div>
+          <div class="mod-e-trust-delta up" id="modETscoreDelta">&#9650; +4.2 pts</div>
+        </div>
+        <div class="mod-e-trust-card accent-success mod-e-animate">
+          <div class="mod-e-trust-icon">&#x1F4CF;</div>
+          <div class="mod-e-trust-value success" id="modESizeGuide">—</div>
+          <div class="mod-e-trust-label">Size Guide Conv. Lift</div>
+          <div class="mod-e-trust-delta up">&#9650; vs. non-users</div>
+        </div>
+        <div class="mod-e-trust-card accent-charcoal mod-e-animate">
+          <div class="mod-e-trust-icon">&#x1F4C8;</div>
+          <div class="mod-e-trust-value" id="modEConvLift">—</div>
+          <div class="mod-e-trust-label">Causal Conv. Lift (ATT)</div>
+          <div class="mod-e-trust-delta up">&#9650; propensity-matched</div>
+        </div>
+        <div class="mod-e-trust-card accent-success mod-e-animate">
+          <div class="mod-e-trust-icon">&#x2198;</div>
+          <div class="mod-e-trust-value success" id="modEReturnDrop">—</div>
+          <div class="mod-e-trust-label">Return Risk Reduction</div>
+          <div class="mod-e-trust-delta up">&#9660; fit-related returns</div>
+        </div>
+        <div class="mod-e-trust-card accent-teal mod-e-animate">
+          <div class="mod-e-trust-icon">&#x1F3AC;</div>
+          <div class="mod-e-trust-value" id="modESessionQ">—</div>
+          <div class="mod-e-trust-label">Session Quality Index</div>
+          <div class="mod-e-trust-delta flat">&#8212; stable</div>
+        </div>
+      </div>
+
+      <!-- Zone Grid: SHAP + Causal Lift -->
+      <div class="mod-e-zone-grid" style="margin-bottom: var(--space-2xl);">
+
+        <!-- Zone 1: SHAP Feature Importance -->
+        <div class="card-static mod-e-animate">
+          <div class="card-header">
+            <div>
+              <div class="card-title">True Purchase Drivers</div>
+              <div class="card-subtitle">SHAP feature importance — mean |SHAP value|</div>
+            </div>
+            <span class="card-badge badge-accent">Predictive</span>
+          </div>
+          <div class="mod-e-shap-container">
+            <canvas id="modEShapChart"></canvas>
+          </div>
+          <div class="mod-e-shap-legend">
+            <span><span class="mod-e-shap-legend-dot" style="background:#c16452"></span> Positive driver</span>
+            <span><span class="mod-e-shap-legend-dot" style="background:#5c5c5c"></span> Low impact</span>
+            <span><span class="mod-e-shap-legend-dot" style="background:rgba(193,100,82,0.25)"></span> Confidence interval</span>
+          </div>
+          <div class="mod-e-shap-note">Holding device type, session depth, and traffic source constant. SHAP values represent marginal contribution to purchase probability.</div>
+        </div>
+
+        <!-- Zone 2: Causal Lift Summary -->
+        <div class="card-static mod-e-animate">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Correlation vs. Causation</div>
+              <div class="card-subtitle">Propensity Score Matching — causal lift over observed</div>
+            </div>
+            <span class="card-badge badge-success">Causal</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="mod-e-causal-table" id="modECausalTable">
+              <thead>
+                <tr>
+                  <th>Interaction</th>
+                  <th>Observed Lift</th>
+                  <th>ATT (PSM)</th>
+                  <th>A/B Test</th>
+                  <th>Confidence</th>
+                  <th>Trend</th>
+                </tr>
+              </thead>
+              <tbody id="modECausalBody"></tbody>
+            </table>
+          </div>
+          <div class="mod-e-shap-note">ATT = Average Treatment Effect on the Treated. Click confidence badges for methodology detail.</div>
+        </div>
+
+        <!-- Zone 3: Funnel Efficiency -->
+        <div class="card-static mod-e-animate">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Funnel Efficiency by Module</div>
+              <div class="card-subtitle">CTR &rarr; ATC &rarr; Purchase conversion pipeline</div>
+            </div>
+            <span class="card-badge badge-warning">Funnel</span>
+          </div>
+          <div class="mod-e-funnel-container">
+            <canvas id="modEFunnelChart"></canvas>
+          </div>
+          <div class="mod-e-funnel-interpret">
+            <strong>Interpretation:</strong> Styling section has the highest purchase rate among clickers, but size guide drives the most purchases per click when zoom is excluded. Image Zoom has high CTR but weak downstream conversion.
+          </div>
+        </div>
+
+        <!-- Zone 4: Return-Risk Impact -->
+        <div class="card-static mod-e-animate">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Will It Fit? Does the Guide Help?</div>
+              <div class="card-subtitle">Return-rate impact of size guide usage</div>
+            </div>
+            <span class="card-badge badge-success">Risk</span>
+          </div>
+          <div class="mod-e-risk-grid">
+            <div class="mod-e-odds-callout">
+              <div class="mod-e-odds-value" id="modEOddsRatio">0.58</div>
+              <div class="mod-e-odds-label">Odds Ratio</div>
+              <div class="mod-e-odds-ci">95% CI: 0.48 – 0.70</div>
+              <div class="mod-e-odds-desc">Size-guide users have <strong>42% lower odds</strong> of fit-related returns compared to matched non-users.</div>
+            </div>
+            <div>
+              <div class="mod-e-risk-toggle" id="modERiskToggle">
+                <button class="mod-e-risk-toggle-btn active" data-view="category" onclick="modERiskSwitchView('category')">By Category</button>
+                <button class="mod-e-risk-toggle-btn" data-view="dose" onclick="modERiskSwitchView('dose')">Dose-Response</button>
+              </div>
+              <div class="mod-e-risk-chart-container">
+                <canvas id="modERiskChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Zone 5: Trust-Friction Reel -->
+      <div class="card-static mod-e-animate" style="margin-top: var(--space-2xl);">
+        <div class="card-header">
+          <div>
+            <div class="card-title">The Human Truth</div>
+            <div class="card-subtitle">Session recordings — confidence signals vs. trust-friction patterns</div>
+          </div>
+          <span class="card-badge badge-accent">Qualitative</span>
+        </div>
+        <div class="mod-e-reel-grid" id="modEReelGrid"></div>
+      </div>
+
+    </section>
+    <section class="tab-panel" id="panel-friction">
+
+      <!-- STICKY FILTER BAR -->
+      <div class="mod-c-filter-bar">
+        <span class="filter-label">Filters</span>
+        <select class="filter-select" id="modFDateRange">
+          <option>Last 7 days</option><option selected>Last 14 days</option><option>Last 30 days</option><option>MTD</option><option>Custom</option>
+        </select>
+        <select class="filter-select" id="modFDevice">
+          <option selected>All devices</option><option>Android mobile</option><option>iOS mobile</option><option>Desktop</option>
+        </select>
+        <select class="filter-select" id="modFTraffic">
+          <option selected>All sources</option><option>Meta</option><option>Google CPC</option><option>Organic</option><option>Influencer</option><option>Others</option>
+        </select>
+        <select class="filter-select" id="modFVisitor">
+          <option selected>All visitors</option><option>New</option><option>Returning</option>
+        </select>
+        <select class="filter-select" id="modFPayment">
+          <option selected>All payments</option><option>COD</option><option>Prepaid</option>
+        </select>
+        <button class="mod-c-filter-btn primary" onclick="applyModFFilters()">Apply Filters</button>
+      </div>
+
+      <!-- SECTION HEADER -->
+      <div class="section-header" style="margin-top:var(--space-lg);">
+        <h2 class="section-title">Funnel Leaks &amp; Friction Points</h2>
+        <p class="section-desc">Identify, visualise, and prioritise checkout friction across India's dual-funnel reality — COD vs Prepaid. Every leak is tied to a revenue recovery number.</p>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="mod-f-kpi-row">
+        <div class="mod-f-kpi-card" tabindex="0">
+          <div class="mod-f-kpi-icon">&#9888;</div>
+          <div class="mod-f-kpi-value danger" data-count="8.4" data-prefix="&#8377;" data-suffix="L" data-decimals="1">&#8377;0L</div>
+          <div class="mod-f-kpi-label">Weekly Revenue Loss</div>
+          <div class="kpi-change negative">&#9660; &#8377;1.2L vs prev period</div>
+          <canvas class="mod-f-kpi-sparkline" id="modFSparkLoss" width="140" height="28"></canvas>
+        </div>
+        <div class="mod-f-kpi-card" tabindex="0">
+          <div class="mod-f-kpi-icon">&#128683;</div>
+          <div class="mod-f-kpi-value" style="font-size:22px;color:var(--text-primary);">Payment Processing</div>
+          <div class="mod-f-kpi-label">Top Leaking Stage</div>
+          <div class="kpi-change negative">38% drop-off (COD mobile)</div>
+        </div>
+        <div class="mod-f-kpi-card" tabindex="0">
+          <div class="mod-f-kpi-icon">&#128200;</div>
+          <div class="mod-f-kpi-value burgundy" data-count="3.1" data-prefix="&#8377;" data-suffix="L" data-decimals="1">&#8377;0L</div>
+          <div class="mod-f-kpi-label">RTO-Adjusted Margin Impact</div>
+          <div class="kpi-change negative">RTO cost on COD orders</div>
+          <canvas class="mod-f-kpi-sparkline" id="modFSparkRTO" width="140" height="28"></canvas>
+        </div>
+        <div class="mod-f-kpi-card" tabindex="0">
+          <div class="mod-f-kpi-icon">&#10003;</div>
+          <div class="mod-f-kpi-label">Checkout Conversion Rate</div>
+          <div class="mod-f-gauge-wrap">
+            <div class="mod-f-gauge"><canvas id="modFGaugeCanvas" width="72" height="40"></canvas></div>
+            <div class="mod-f-gauge-labels">
+              <div class="mod-f-gauge-label"><span class="mod-f-gauge-dot" style="background:var(--brand-primary);"></span> COD: <span id="modFCodRate">0%</span></div>
+              <div class="mod-f-gauge-label"><span class="mod-f-gauge-dot" style="background:var(--brand-secondary);"></span> Prepaid: <span id="modFPrepaidRate">0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-COLUMN GRID: FUNNEL + HEAT MATRIX -->
+      <div class="mod-d-grid mod-f-section">
+
+        <!-- F3: Dual Funnel Visualisation -->
+        <div class="card-static">
+          <div class="card-header">
+            <div>
+              <div class="card-title">COD vs Prepaid Funnel</div>
+              <div class="card-subtitle">Stage-by-stage drop-off comparison with revenue loss</div>
+            </div>
+            <span class="card-badge badge-danger">High Leak</span>
+          </div>
+          <div class="mod-f-funnel-legend">
+            <div class="mod-f-funnel-legend-item"><span class="mod-f-funnel-legend-dot" style="background:rgba(193,100,82,0.6);"></span> COD</div>
+            <div class="mod-f-funnel-legend-item"><span class="mod-f-funnel-legend-dot" style="background:rgba(32,23,71,0.6);"></span> Prepaid</div>
+          </div>
+          <div class="mod-f-funnel-container">
+            <canvas id="modFFunnelChart"></canvas>
+          </div>
+        </div>
+
+        <!-- F4: GoKwik Checkout Stage Spotlight -->
+        <div class="card-static">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Checkout Stage Spotlight</div>
+              <div class="card-subtitle">Drop-off % by payment method across checkout stages</div>
+            </div>
+          </div>
+          <div class="mod-d-insight">
+            <strong>Key insight:</strong> 38% of users who selected COD dropped off at payment processing — often due to pincode unserviceability detected late in the flow.
+          </div>
+          <table class="mod-f-heat-matrix" id="modFHeatMatrix">
+            <thead><tr><th>Method</th><th>Address</th><th>Shipping</th><th>Payment Selection</th><th>Payment Processing</th></tr></thead>
+            <tbody id="modFHeatMatrixBody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- F5: Pincode Black Hole Map -->
+      <div class="card-static mod-f-section">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pincode Black Hole Map</div>
+            <div class="card-subtitle">Geospatial drop-off analysis — unserviceable &amp; high-RTO pincodes</div>
+          </div>
+          <span class="card-badge badge-warning">Geographic Risk</span>
+        </div>
+        <div class="mod-f-map-wrapper">
+          <div class="mod-f-map-container" id="modFMapContainer"></div>
+          <div>
+            <div class="card-title" style="font-size:13px;margin-bottom:var(--space-md);">Top 10 Problem Pincodes</div>
+            <div style="overflow-x:auto;max-height:440px;overflow-y:auto;">
+              <table class="mod-f-pincodes-table" id="modFPincodesTable">
+                <thead>
+                  <tr>
+                    <th>Pincode</th>
+                    <th>Region</th>
+                    <th>Drop-off</th>
+                    <th>RTO Risk</th>
+                    <th>Loss</th>
+                  </tr>
+                </thead>
+                <tbody id="modFPincodesBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- F6: Annotated Session Replays -->
+      <div class="card-static mod-f-section">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Annotated Session Replays</div>
+            <div class="card-subtitle">Friction-tagged user sessions from Hotjar / Clarity</div>
+          </div>
+        </div>
+        <div class="mod-f-replay-layout">
+          <!-- Playlist -->
+          <div class="mod-f-replay-playlist" id="modFReplayPlaylist"></div>
+          <!-- Player -->
+          <div class="mod-f-replay-player">
+            <div class="mod-f-replay-viewport">
+              <div class="mod-f-replay-placeholder">
+                <div class="mod-f-replay-play-btn">
+                  <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                </div>
+                <div class="mod-f-replay-label">Session Replay — Hotjar</div>
+              </div>
+            </div>
+            <div class="mod-f-replay-controls">
+              <span class="mod-f-replay-time">0:42 / 2:15</span>
+              <div class="mod-f-replay-progress"><div class="mod-f-replay-progress-fill"></div></div>
+              <span class="mod-f-replay-speed">1x</span>
+            </div>
+          </div>
+          <!-- Insights -->
+          <div class="mod-f-replay-insights" id="modFReplayInsights"></div>
+        </div>
+      </div>
+
+      <!-- Pre-Purchase Friction Spotlight -->
+      <div class="card-static mod-f-section">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pre-Purchase Friction Spotlight</div>
+            <div class="card-subtitle">Leaks before "Begin Checkout" — PLP, PDP, Cart, and exit-before-checkout friction</div>
+          </div>
+          <span class="card-badge badge-warning">Pre-Checkout</span>
+        </div>
+        <div class="mod-f-prepurchase-header">
+          <div class="mod-f-stage-pills" id="modFPPStagePills">
+            <button class="mod-f-stage-pill active" onclick="filterModFPP('all',this)">All Stages</button>
+            <button class="mod-f-stage-pill" onclick="filterModFPP('plp',this)">PLP / Collection</button>
+            <button class="mod-f-stage-pill" onclick="filterModFPP('pdp',this)">PDP Browsing</button>
+            <button class="mod-f-stage-pill" onclick="filterModFPP('cart',this)">Cart</button>
+            <button class="mod-f-stage-pill" onclick="filterModFPP('begin_checkout',this)">Cart → Checkout</button>
+          </div>
+        </div>
+
+        <!-- Funnel Drop-off Summary -->
+        <div class="mod-f-pp-funnel-summary" id="modFPPFunnelSummary"></div>
+
+        <!-- Friction Cards Grid -->
+        <div class="mod-f-prepurchase-grid" id="modFPPCardsGrid"></div>
+
+        <div class="mod-d-insight" style="margin-top:var(--space-lg);">
+          <strong>Cumulative impact:</strong> Pre-purchase friction accounts for an estimated <strong>₹4.3L/week</strong> in lost revenue — 51% of total funnel leaks. Most drop-offs happen before users ever reach checkout, yet 80% of dashboard attention goes to post-checkout issues.
+        </div>
+      </div>
+
+      <!-- F7: Priority Leaks Table -->
+      <div class="card-static mod-f-section">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Top Priority Leaks</div>
+            <div class="card-subtitle">Ranked by weekly revenue loss — click row for full evidence</div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="mod-f-leaks-table" id="modFLeaksTable">
+            <thead>
+              <tr>
+                <th onclick="sortModFLeaks('stage')">Stage</th>
+                <th onclick="sortModFLeaks('segment')">Segment</th>
+                <th onclick="sortModFLeaks('rootCause')">Root Cause</th>
+                <th onclick="sortModFLeaks('revenueLoss')">Weekly Loss</th>
+                <th>Evidence</th>
+                <th>Recommended Fix</th>
+                <th onclick="sortModFLeaks('owner')">Owner</th>
+              </tr>
+            </thead>
+            <tbody id="modFLeaksBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Post-Fix Conversion Trend -->
+      <div class="card-static mod-f-section">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Post-Fix Conversion Trend</div>
+            <div class="card-subtitle">Pre/post deployment comparison with revenue recovery</div>
+          </div>
+        </div>
+        <div class="mod-f-trend-toggle" id="modFTrendToggle">
+          <button class="mod-f-trend-btn active" data-segment="all" onclick="switchModFTrend('all',this)">All</button>
+          <button class="mod-f-trend-btn" data-segment="cod" onclick="switchModFTrend('cod',this)">COD Only</button>
+          <button class="mod-f-trend-btn" data-segment="prepaid" onclick="switchModFTrend('prepaid',this)">Prepaid Only</button>
+        </div>
+        <div class="mod-f-trend-container">
+          <canvas id="modFTrendChart"></canvas>
+        </div>
+      </div>
+
+    </section>
 
     <!-- ============================================= -->
     <!-- MODULE G: Post‑Purchase & Omnichannel Intelligence -->
@@ -3180,6 +4196,14 @@
       if (id === 'navigation' && !moduleDInitialized) {
         moduleDInitialized = true;
         setTimeout(initModuleD, 50);
+      }
+      if (id === 'product' && !moduleEInitialized) {
+        moduleEInitialized = true;
+        setTimeout(initModuleE, 50);
+      }
+      if (id === 'friction' && !moduleFInitialized) {
+        moduleFInitialized = true;
+        setTimeout(initModuleF, 50);
       }
       if (id === 'omnichannel' && !moduleGInitialized) {
         moduleGInitialized = true;
@@ -4850,6 +5874,1401 @@
         }
       }, 250);
     });
+
+    // =============================================
+    // MODULE E — Product Engagement & Trust Signals
+    // =============================================
+
+    // ---- Module E Data ----
+    const modEShapData = [
+      { feature: 'Size Guide Opened', shap: 0.182, ciLow: 0.155, ciHigh: 0.209, positive: true },
+      { feature: 'Video Play (>15s)', shap: 0.147, ciLow: 0.121, ciHigh: 0.173, positive: true },
+      { feature: 'Styling Section View', shap: 0.131, ciLow: 0.108, ciHigh: 0.154, positive: true },
+      { feature: 'Reviews Scrolled', shap: 0.098, ciLow: 0.076, ciHigh: 0.120, positive: true },
+      { feature: 'Image Zoom (3+ clicks)', shap: 0.087, ciLow: 0.062, ciHigh: 0.112, positive: true },
+      { feature: 'Delivery Policy View', shap: 0.064, ciLow: 0.041, ciHigh: 0.087, positive: true },
+      { feature: 'Wishlist Add', shap: 0.052, ciLow: 0.029, ciHigh: 0.075, positive: true },
+      { feature: 'Share Button Click', shap: 0.018, ciLow: -0.005, ciHigh: 0.041, positive: false },
+      { feature: 'Color Swatch Hover', shap: 0.012, ciLow: -0.009, ciHigh: 0.033, positive: false }
+    ];
+
+    const modECausalData = [
+      { interaction: 'Size Guide', observed: '+34%', att: '+22%', attVal: 22, ab: 'Planned Q3', conf: 'high', trend: [18, 19, 21, 22],
+        modal: { title: 'Size Guide — High Confidence', body: '<p><strong>Methodology:</strong> Propensity Score Matching with 1:1 nearest-neighbor matching on 12 covariates including session depth, device type, traffic source, and prior purchase history.</p><p><strong>Key finding:</strong> Observed lift of +34% drops to +22% after controlling for selection bias. The remaining 12-point gap was due to high-intent shoppers being more likely to open the guide.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> Effect is robust. Consider A/B test in Q3 to confirm causality. Current PSM evidence is strong enough to justify expanding size guide placement.</div>' } },
+      { interaction: 'Video Play (>15s)', observed: '+28%', att: '+16%', attVal: 16, ab: 'TBD', conf: 'medium', trend: [12, 14, 15, 16],
+        modal: { title: 'Video Play — Medium Confidence', body: '<p><strong>Methodology:</strong> PSM applied but unable to fully control for "engagement intent" — users who watch videos are inherently more interested in the product.</p><p><strong>Key finding:</strong> Nearly half the observed lift disappears after matching, suggesting significant selection bias. Video watchers were already more likely to purchase.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> A/B test recommended — randomly assign video prominence to isolate causal effect. Current PSM is suggestive but not conclusive.</div>' } },
+      { interaction: 'Styling Section', observed: '+21%', att: '+14%', attVal: 14, ab: 'TBD', conf: 'medium', trend: [11, 12, 13, 14],
+        modal: { title: 'Styling Section — Medium Confidence', body: '<p><strong>Methodology:</strong> PSM with 10 covariates. Styling section viewers are harder to match because they tend to be higher-AOV shoppers browsing complete looks.</p><p><strong>Key finding:</strong> 7-point gap between observed (+21%) and causal (+14%) suggests moderate selection bias. The section appeals to already-engaged shoppers.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> Test personalized styling recommendations for non-viewers to measure true incremental impact.</div>' } },
+      { interaction: 'Image Zoom', observed: '+19%', att: '+5%', attVal: 5, ab: 'Running', conf: 'low', trend: [6, 5, 5, 5],
+        modal: { title: 'Image Zoom — Low Confidence', body: '<p><strong>Methodology:</strong> PSM shows very high selection bias. Image zoom users are heavy explorers who view 4+ PDPs per session regardless of zoom.</p><p><strong>Key finding:</strong> Observed +19% collapses to just +5% after matching. Most of the zoom-purchase correlation is driven by session depth, not the zoom feature itself.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> Do not over-invest in zoom optimization. The feature is popular but not causal. A/B test is already running — await results.</div>' } },
+      { interaction: 'Reviews Read', observed: '+26%', att: '+18%', attVal: 18, ab: 'Planned Q4', conf: 'high', trend: [14, 16, 17, 18],
+        modal: { title: 'Reviews Read — High Confidence', body: '<p><strong>Methodology:</strong> Strong PSM match with 11 covariates. Review readers are a distinct behavioral cohort but matching quality is high (standardized mean diff < 0.1 on all covariates).</p><p><strong>Key finding:</strong> +18% causal lift is robust. Reviews genuinely build purchase confidence, especially for first-time buyers.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> Surface review highlights earlier on PDP. Consider "review summary" cards above the fold.</div>' } },
+      { interaction: 'Delivery Policy', observed: '+11%', att: '+8%', attVal: 8, ab: 'TBD', conf: 'medium', trend: [7, 7, 8, 8],
+        modal: { title: 'Delivery Policy — Medium Confidence', body: '<p><strong>Methodology:</strong> PSM applied. Delivery policy checkers tend to be cautious first-time buyers — a segment with naturally lower conversion.</p><p><strong>Key finding:</strong> Modest causal lift (+8%) suggests that clear delivery info reduces purchase anxiety, particularly for Tier 2/3 city shoppers.</p><div class="mod-e-modal-rec"><strong>Recommendation:</strong> Add estimated delivery date on PDP to preempt policy page visits and keep users in the purchase flow.</div>' } }
+    ];
+
+    const modEFunnelData = {
+      modules: ['Size Guide', 'Styling', 'Delivery Policy', 'Image Zoom'],
+      ctr: [68, 42, 31, 74],
+      atc: [38, 28, 14, 22],
+      purchase: [18, 15, 6, 8],
+      per100: [26.5, 35.7, 19.4, 10.8]
+    };
+
+    const modERiskCategory = {
+      labels: ['Dresses', 'Kurtas', 'Sarees', 'Lehengas', 'Dupattas'],
+      users: [8.2, 6.1, 3.4, 11.5, 4.8],
+      nonUsers: [14.8, 11.2, 5.9, 19.3, 8.1],
+      oddsRatios: [0.55, 0.54, 0.58, 0.60, 0.59]
+    };
+
+    const modERiskDose = {
+      labels: ['< 10 sec', '10–30 sec', '30–60 sec', '> 60 sec', 'No guide'],
+      returnRate: [12.1, 9.8, 6.4, 4.9, 14.2]
+    };
+
+    const modEReelData = [
+      { type: 'confidence', title: 'Slow, deliberate scroll through reviews', desc: 'User reads 8 reviews, checks size chart, adds to cart. Classic confidence-building pattern.', duration: '0:14', tags: ['reviews', 'size-guide', 'add-to-cart'], cta: 'Amplify review visibility' },
+      { type: 'friction', title: 'Rage click on size chart image', desc: 'User clicks the size chart 5 times trying to zoom. Leaves PDP after 45 seconds of frustration.', duration: '0:12', tags: ['rage-click', 'size-chart', 'UX-friction'], cta: 'Add pinch-to-zoom on mobile' },
+      { type: 'confidence', title: 'Video play followed by wishlist add', desc: 'User watches 22s of styling video, adds item to wishlist, returns next day to purchase.', duration: '0:11', tags: ['video', 'wishlist', 'return-visit'], cta: 'Track video-to-wishlist funnel' },
+      { type: 'friction', title: 'Delivery policy page → cart abandonment', desc: 'User checks delivery policy, sees 7-day delivery, goes back, removes item from cart.', duration: '0:09', tags: ['delivery', 'abandonment', 'Tier-2'], cta: 'Surface delivery ETA on PDP' },
+      { type: 'confidence', title: 'Complete size guide flow to purchase', desc: 'User opens size guide, selects measurements, confirms fit, immediately adds to cart.', duration: '0:15', tags: ['size-guide', 'measurement', 'direct-purchase'], cta: 'A/B test mandatory size guide' },
+      { type: 'friction', title: 'International sizing confusion', desc: 'User toggles between size options 6 times, opens new tab (presumably for conversion), does not return.', duration: '0:08', tags: ['sizing', 'international', 'confusion'], cta: 'Add international size conversion' }
+    ];
+
+    const modEConfidenceDetails = {};
+    modECausalData.forEach(d => { modEConfidenceDetails[d.interaction] = d.modal; });
+
+    // ---- Module E: KPI Animation ----
+    function animateModEKPI(id, target, suffix, duration) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var start = 0;
+      var startTime = null;
+      var isFloat = String(target).indexOf('.') !== -1;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var val = start + (target - start) * eased;
+        el.textContent = (isFloat ? val.toFixed(1) : Math.round(val)) + (suffix || '');
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ---- Module E: SHAP Chart ----
+    var modEShapInst = null;
+    function renderModEShap() {
+      var ctx = document.getElementById('modEShapChart');
+      if (!ctx) return;
+      if (modEShapInst) modEShapInst.destroy();
+
+      var labels = modEShapData.map(d => d.feature);
+      var values = modEShapData.map(d => d.shap);
+      var colors = modEShapData.map(d => d.positive ? '#c16452' : '#5c5c5c');
+      var bgColors = modEShapData.map(d => d.positive ? 'rgba(193,100,82,0.75)' : 'rgba(92,92,92,0.55)');
+
+      modEShapInst = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Mean |SHAP|',
+            data: values,
+            backgroundColor: bgColors,
+            borderColor: colors,
+            borderWidth: 1.5,
+            borderRadius: 3,
+            barPercentage: 0.72
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 900, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  var d = modEShapData[ctx.dataIndex];
+                  return 'SHAP: ' + d.shap.toFixed(3) + '  (CI: ' + d.ciLow.toFixed(3) + ' – ' + d.ciHigh.toFixed(3) + ')';
+                },
+                afterLabel: function() {
+                  return 'Holding device type and session depth constant';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              title: { display: true, text: 'Mean |SHAP Value| (Impact on Purchase Probability)', font: { size: 11, weight: '600' }, color: '#999' },
+              grid: { color: 'rgba(0,0,0,0.04)' },
+              ticks: { font: { size: 11 } }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { font: { size: 12, weight: '500' }, color: '#171717' }
+            }
+          }
+        },
+        plugins: [{
+          id: 'modEShapErrorBars',
+          afterDatasetsDraw: function(chart) {
+            var ctx2 = chart.ctx;
+            var meta = chart.getDatasetMeta(0);
+            var xScale = chart.scales.x;
+            meta.data.forEach(function(bar, i) {
+              var d = modEShapData[i];
+              var y = bar.y;
+              var xLow = xScale.getPixelForValue(d.ciLow);
+              var xHigh = xScale.getPixelForValue(d.ciHigh);
+              ctx2.save();
+              ctx2.strokeStyle = 'rgba(193,100,82,0.45)';
+              ctx2.lineWidth = 1.5;
+              ctx2.beginPath();
+              ctx2.moveTo(xLow, y);
+              ctx2.lineTo(xHigh, y);
+              ctx2.stroke();
+              // Caps
+              ctx2.beginPath();
+              ctx2.moveTo(xLow, y - 4);
+              ctx2.lineTo(xLow, y + 4);
+              ctx2.stroke();
+              ctx2.beginPath();
+              ctx2.moveTo(xHigh, y - 4);
+              ctx2.lineTo(xHigh, y + 4);
+              ctx2.stroke();
+              ctx2.restore();
+            });
+          }
+        }, {
+          id: 'modEShapBaseline',
+          afterDraw: function(chart) {
+            var ctx2 = chart.ctx;
+            var xScale = chart.scales.x;
+            var x0 = xScale.getPixelForValue(0);
+            var yTop = chart.chartArea.top;
+            var yBot = chart.chartArea.bottom;
+            ctx2.save();
+            ctx2.strokeStyle = '#999';
+            ctx2.lineWidth = 1;
+            ctx2.setLineDash([4, 4]);
+            ctx2.beginPath();
+            ctx2.moveTo(x0, yTop);
+            ctx2.lineTo(x0, yBot);
+            ctx2.stroke();
+            ctx2.restore();
+          }
+        }]
+      });
+    }
+
+    // ---- Module E: Causal Lift Table ----
+    function renderModECausalTable() {
+      var tbody = document.getElementById('modECausalBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      modECausalData.forEach(function(d, idx) {
+        var tr = document.createElement('tr');
+        var sigClass = d.attVal >= 10 ? 'significant' : 'insignificant';
+        var arrow = d.attVal > 0 ? '↑' : (d.attVal < 0 ? '↓' : '→');
+        var abCell = d.ab === 'Running' ? '<span style="color:#09728c;font-weight:600;">● Running</span>' :
+                     d.ab.indexOf('Planned') === 0 ? '<span style="color:var(--text-tertiary);">' + d.ab + '</span>' :
+                     '<span style="color:var(--text-tertiary);">' + d.ab + '</span>';
+        tr.innerHTML =
+          '<td style="font-weight:600;">' + d.interaction + '</td>' +
+          '<td>' + d.observed + '</td>' +
+          '<td class="mod-e-att-cell ' + sigClass + '"><span class="mod-e-att-arrow">' + arrow + '</span>' + d.att + '</td>' +
+          '<td>' + abCell + '</td>' +
+          '<td><button class="mod-e-conf-badge ' + d.conf + '" onclick="openModEConfModal(\'' + d.interaction + '\')">' + d.conf + '</button></td>' +
+          '<td class="mod-e-sparkline-cell"><canvas id="modECausalSpark' + idx + '" width="80" height="28"></canvas></td>';
+        tbody.appendChild(tr);
+      });
+      // Render sparklines
+      modECausalData.forEach(function(d, idx) {
+        renderCausalSparkline('modECausalSpark' + idx, d.trend, d.attVal >= 10 ? '#3ea36a' : '#5c5c5c');
+      });
+    }
+
+    function renderCausalSparkline(canvasId, data, color) {
+      var canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width, h = canvas.height;
+      var pad = 3;
+      var min = Math.min.apply(null, data);
+      var max = Math.max.apply(null, data);
+      var range = max - min || 1;
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.8;
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      data.forEach(function(v, i) {
+        var x = pad + (i / (data.length - 1)) * (w - pad * 2);
+        var y = h - pad - ((v - min) / range) * (h - pad * 2);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      // End dot
+      var lastX = pad + ((data.length - 1) / (data.length - 1)) * (w - pad * 2);
+      var lastY = h - pad - ((data[data.length - 1] - min) / range) * (h - pad * 2);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ---- Module E: Confidence Modal ----
+    function openModEConfModal(interaction) {
+      var detail = modEConfidenceDetails[interaction];
+      if (!detail) return;
+      document.getElementById('modEModalTitle').textContent = detail.title;
+      document.getElementById('modEModalBody').innerHTML = detail.body;
+      document.getElementById('modEModalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModEModal() {
+      document.getElementById('modEModalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ---- Module E: Funnel Efficiency Chart ----
+    var modEFunnelInst = null;
+    function renderModEFunnel() {
+      var ctx = document.getElementById('modEFunnelChart');
+      if (!ctx) return;
+      if (modEFunnelInst) modEFunnelInst.destroy();
+      var d = modEFunnelData;
+
+      modEFunnelInst = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: d.modules,
+          datasets: [
+            {
+              label: 'CTR (%)',
+              data: d.ctr,
+              backgroundColor: 'rgba(9,114,140,0.7)',
+              borderColor: '#09728c',
+              borderWidth: 1.5,
+              borderRadius: 3,
+              barPercentage: 0.8,
+              categoryPercentage: 0.7
+            },
+            {
+              label: 'ATC Rate (%)',
+              data: d.atc,
+              backgroundColor: 'rgba(193,100,82,0.65)',
+              borderColor: '#c16452',
+              borderWidth: 1.5,
+              borderRadius: 3,
+              barPercentage: 0.8,
+              categoryPercentage: 0.7
+            },
+            {
+              label: 'Purchase Rate (%)',
+              data: d.purchase,
+              backgroundColor: 'rgba(35,35,35,0.85)',
+              borderColor: '#232323',
+              borderWidth: 1.5,
+              borderRadius: 3,
+              barPercentage: 0.8,
+              categoryPercentage: 0.7
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 800, easing: 'easeOutQuart' },
+          plugins: {
+            legend: {
+              position: 'top',
+              align: 'end',
+              labels: { font: { size: 11, weight: '600' }, padding: 16 }
+            },
+            tooltip: {
+              callbacks: {
+                afterBody: function(items) {
+                  var idx = items[0].dataIndex;
+                  return 'Purchases / 100 clicks: ' + d.per100[idx];
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 12, weight: '600' }, color: '#171717' }
+            },
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: 'Rate (%)', font: { size: 11, weight: '600' }, color: '#999' },
+              grid: { color: 'rgba(0,0,0,0.04)' },
+              ticks: { font: { size: 11 } }
+            }
+          }
+        },
+        plugins: [{
+          id: 'modEFunnelPer100',
+          afterDatasetsDraw: function(chart) {
+            var ctx2 = chart.ctx;
+            var meta0 = chart.getDatasetMeta(0);
+            ctx2.save();
+            ctx2.font = '600 10px "Nunito Sans", sans-serif';
+            ctx2.fillStyle = '#c16452';
+            ctx2.textAlign = 'center';
+            meta0.data.forEach(function(bar, i) {
+              var x = bar.x;
+              var y = chart.chartArea.top - 6;
+              ctx2.fillText(d.per100[i] + '/100', x, y);
+            });
+            ctx2.restore();
+          }
+        }]
+      });
+    }
+
+    // ---- Module E: Return-Risk Chart ----
+    var modERiskInst = null;
+    var modERiskCurrentView = 'category';
+
+    function modERiskSwitchView(view) {
+      modERiskCurrentView = view;
+      document.querySelectorAll('#modERiskToggle .mod-e-risk-toggle-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+      });
+      renderModERiskChart();
+    }
+
+    function renderModERiskChart() {
+      var ctx = document.getElementById('modERiskChart');
+      if (!ctx) return;
+      if (modERiskInst) modERiskInst.destroy();
+
+      if (modERiskCurrentView === 'category') {
+        var d = modERiskCategory;
+        modERiskInst = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: d.labels,
+            datasets: [
+              {
+                label: 'Size Guide Users',
+                data: d.users,
+                backgroundColor: 'rgba(62,163,106,0.7)',
+                borderColor: '#3ea36a',
+                borderWidth: 1.5,
+                borderRadius: 3,
+                barPercentage: 0.75,
+                categoryPercentage: 0.7
+              },
+              {
+                label: 'Non-Users',
+                data: d.nonUsers,
+                backgroundColor: 'rgba(194,0,0,0.5)',
+                borderColor: '#c20000',
+                borderWidth: 1.5,
+                borderRadius: 3,
+                barPercentage: 0.75,
+                categoryPercentage: 0.7
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 600, easing: 'easeOutQuart' },
+            plugins: {
+              legend: { position: 'top', align: 'end', labels: { font: { size: 10, weight: '600' }, padding: 12 } },
+              tooltip: {
+                callbacks: {
+                  afterBody: function(items) {
+                    var idx = items[0].dataIndex;
+                    return 'Odds Ratio: ' + d.oddsRatios[idx] + ' (< 1 = positive)';
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { size: 11, weight: '500' } } },
+              y: { beginAtZero: true, title: { display: true, text: 'Return Rate (%)', font: { size: 10, weight: '600' }, color: '#999' }, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 10 } } }
+            }
+          }
+        });
+      } else {
+        var dd = modERiskDose;
+        var barColors = dd.returnRate.map(function(v) {
+          if (v < 7) return 'rgba(62,163,106,0.75)';
+          if (v < 11) return 'rgba(234,161,46,0.65)';
+          return 'rgba(194,0,0,0.55)';
+        });
+        var borderColors = dd.returnRate.map(function(v) {
+          if (v < 7) return '#3ea36a';
+          if (v < 11) return '#EAA12E';
+          return '#c20000';
+        });
+        modERiskInst = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: dd.labels,
+            datasets: [{
+              label: 'Return Rate (%)',
+              data: dd.returnRate,
+              backgroundColor: barColors,
+              borderColor: borderColors,
+              borderWidth: 1.5,
+              borderRadius: 3,
+              barPercentage: 0.65
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 600, easing: 'easeOutQuart' },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  afterLabel: function(ctx2) {
+                    if (ctx2.dataIndex === 4) return 'Baseline — no guide usage';
+                    return 'Time spent on size guide before ATC';
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { size: 11, weight: '500' } } },
+              y: { beginAtZero: true, title: { display: true, text: 'Return Rate (%)', font: { size: 10, weight: '600' }, color: '#999' }, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 10 } } }
+            }
+          }
+        });
+      }
+    }
+
+    // ---- Module E: Trust-Friction Reel ----
+    function renderModEReel() {
+      var grid = document.getElementById('modEReelGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      modEReelData.forEach(function(clip) {
+        var card = document.createElement('div');
+        card.className = 'mod-e-reel-card';
+        var typeLabel = clip.type === 'confidence' ? 'Confidence Signal' : 'Trust Friction';
+        var tagsHtml = clip.tags.map(function(t) { return '<span class="mod-e-reel-tag">' + t + '</span>'; }).join('');
+        card.innerHTML =
+          '<div class="mod-e-reel-thumb">' +
+            '<div class="mod-e-reel-thumb-inner">' +
+              '<div class="mod-e-reel-play-btn">' +
+                '<svg class="mod-e-reel-play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+              '</div>' +
+            '</div>' +
+            '<span class="mod-e-reel-duration">' + clip.duration + '</span>' +
+          '</div>' +
+          '<div class="mod-e-reel-body">' +
+            '<div class="mod-e-reel-type ' + clip.type + '">' + typeLabel + '</div>' +
+            '<div class="mod-e-reel-title">' + clip.title + '</div>' +
+            '<div class="mod-e-reel-desc">' + clip.desc + '</div>' +
+            '<div class="mod-e-reel-tags">' + tagsHtml + '</div>' +
+            '<button class="mod-e-reel-cta" onclick="alert(\'Creating card: ' + clip.cta + '\')">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>' +
+              clip.cta +
+            '</button>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+    }
+
+    // ---- Module E: Staggered Entrance ----
+    function triggerModEAnimations() {
+      var panel = document.getElementById('panel-product');
+      if (!panel) return;
+      var items = panel.querySelectorAll('.mod-e-animate');
+      items.forEach(function(el, i) {
+        setTimeout(function() { el.classList.add('visible'); }, 60 * i);
+      });
+    }
+
+    // ---- Module E: Init ----
+    var moduleEInitialized = false;
+    function initModuleE() {
+      if (moduleEInitialized) return;
+      moduleEInitialized = true;
+
+      // Animate KPIs
+      animateModEKPI('modETscore', 82, '/100', 1200);
+      animateModEKPI('modESizeGuide', 22, '%', 1000);
+      animateModEKPI('modEConvLift', 16, '%', 1100);
+      animateModEKPI('modEReturnDrop', 42, '%', 1000);
+      animateModEKPI('modESessionQ', 7.4, '/10', 900);
+
+      // Render charts and tables
+      setTimeout(renderModEShap, 150);
+      setTimeout(renderModECausalTable, 250);
+      setTimeout(renderModEFunnel, 350);
+      setTimeout(renderModERiskChart, 450);
+      setTimeout(renderModEReel, 500);
+
+      // Staggered entrance
+      triggerModEAnimations();
+    }
+
+    // Auto-init Module E when its tab is activated
+    document.addEventListener('click', function(e) {
+      var tabBtn = e.target.closest('[data-tab="product"]');
+      if (tabBtn) {
+        setTimeout(initModuleE, 50);
+      }
+    });
+
+    // ---- Module E: Resize handler ----
+    var modEResizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(modEResizeTimer);
+      modEResizeTimer = setTimeout(function() {
+        if (moduleEInitialized && document.getElementById('panel-product').classList.contains('active')) {
+          renderModEShap();
+          renderModEFunnel();
+          renderModERiskChart();
+        }
+      }, 250);
+    });
+
+
+
+    // =============================================
+    // MODULE F — Funnel Leaks & Friction Points
+    // =============================================
+
+    // ---- Mock Data ----
+
+    var funnelStages = ['Landing', 'PLP', 'PDP', 'Add to Cart', 'Begin Checkout', 'Address', 'Shipping', 'Payment Selection', 'Payment Processing', 'Confirmed'];
+    var funnelDataCOD = {
+      remaining: [100, 72, 54, 32, 24, 18, 15, 12, 8, 5],
+      dropOff: [0, 28, 18, 22, 8, 6, 3, 3, 4, 3],
+      volume: [42000, 30240, 22680, 13440, 10080, 7560, 6300, 5040, 3360, 2100],
+      revenueLoss: [0, 280000, 180000, 310000, 120000, 85000, 42000, 52000, 145000, 0]
+    };
+    var funnelDataPrepaid = {
+      remaining: [100, 78, 62, 41, 33, 27, 24, 21, 18, 15],
+      dropOff: [0, 22, 16, 21, 8, 6, 3, 3, 3, 3],
+      volume: [28000, 21840, 17360, 11480, 9240, 7560, 6720, 5880, 5040, 4200],
+      revenueLoss: [0, 195000, 142000, 240000, 88000, 62000, 35000, 38000, 52000, 0]
+    };
+
+    var heatMatrixData = {
+      methods: ['COD', 'UPI', 'Card', 'BNPL / Wallet'],
+      stages: ['Address', 'Shipping', 'Payment Selection', 'Payment Processing'],
+      values: [
+        [12, 8, 18, 38],
+        [6, 4, 14, 22],
+        [8, 5, 16, 12],
+        [10, 7, 20, 28]
+      ],
+      volumes: [
+        [3200, 2100, 4800, 10100],
+        [1400, 920, 3200, 5100],
+        [1800, 1100, 3600, 2700],
+        [2400, 1700, 4800, 6700]
+      ]
+    };
+
+    var pincodeData = [
+      { pincode: '800001', region: 'Patna, Bihar', lat: 25.61, lng: 85.14, dropOff: 62, rtoScore: 0.78, loss: 240000, status: 'critical', courier: 'Limited DTDC' },
+      { pincode: '226001', region: 'Lucknow, UP', lat: 26.85, lng: 80.95, dropOff: 54, rtoScore: 0.72, loss: 195000, status: 'critical', courier: 'Delhivery' },
+      { pincode: '302001', region: 'Jaipur, Rajasthan', lat: 26.92, lng: 75.79, dropOff: 48, rtoScore: 0.65, loss: 175000, status: 'critical', courier: 'BlueDart' },
+      { pincode: '500001', region: 'Hyderabad, TS', lat: 17.38, lng: 78.49, dropOff: 42, rtoScore: 0.58, loss: 148000, status: 'warning', courier: 'Ecom Express' },
+      { pincode: '400001', region: 'Mumbai, MH', lat: 18.94, lng: 72.84, dropOff: 38, rtoScore: 0.42, loss: 132000, status: 'warning', courier: 'Delhivery' },
+      { pincode: '560001', region: 'Bangalore, KA', lat: 12.97, lng: 77.59, dropOff: 35, rtoScore: 0.38, loss: 118000, status: 'warning', courier: 'Xpressbees' },
+      { pincode: '700001', region: 'Kolkata, WB', lat: 22.57, lng: 88.36, dropOff: 44, rtoScore: 0.61, loss: 158000, status: 'critical', courier: 'Delhivery' },
+      { pincode: '110001', region: 'Delhi NCR', lat: 28.61, lng: 77.21, dropOff: 32, rtoScore: 0.45, loss: 105000, status: 'warning', courier: 'BlueDart' },
+      { pincode: '395001', region: 'Surat, Gujarat', lat: 21.17, lng: 72.83, dropOff: 28, rtoScore: 0.35, loss: 82000, status: 'moderate', courier: 'DTDC' },
+      { pincode: '600001', region: 'Chennai, TN', lat: 13.08, lng: 80.27, dropOff: 25, rtoScore: 0.30, loss: 72000, status: 'moderate', courier: 'Delhivery' }
+    ];
+
+    var leaksData = [
+      { stage: 'Payment Processing', segment: 'COD / Android / Meta', rootCause: 'UX Friction', rootCauseClass: 'ux-friction', revenueLoss: 245000, evidence: '60% drop-off when COD unavailable; tickets mention "COD option missing" at final step. 18 rage-click sessions recorded.', fix: 'Smart COD — dynamic messaging: "COD available above ₹500". Auto-detect pincode serviceability before payment.', owner: 'Product', evidenceDetails: { tickets: 'TK-4521, TK-4587, TK-4612', replays: '18 sessions tagged: cod_toggle_rage', heatmap: 'Payment method selector — 72% dead clicks on greyed-out COD option' } },
+      { stage: 'Address', segment: 'COD / Mobile / Organic', rootCause: 'Trust Gap', rootCauseClass: 'trust-gap', revenueLoss: 185000, evidence: 'Pincode check takes >3 seconds on 4G. Users abandon before seeing delivery estimate. 42% of tier-2/3 pincodes show "not serviceable".', fix: 'Pre-validate pincode at cart level. Show estimated delivery date before checkout. Activate GoKwik address auto-fill.', owner: 'Engineering', evidenceDetails: { tickets: 'TK-4688, TK-4701', replays: '24 sessions tagged: pincode_check_spin', heatmap: 'Address form — high exit rate on pincode field (38%)' } },
+      { stage: 'PDP', segment: 'All / Returning / Influencer', rootCause: 'Storytelling Break', rootCauseClass: 'storytelling', revenueLoss: 142000, evidence: 'Size chart clicks lead to generic PDF. No body-type-specific guidance. Return rate 22% on size-related issues.', fix: 'Add "Worn by models your size" section with Indian body measurements. Interactive size recommender based on height/weight.', owner: 'Creative & CRO', evidenceDetails: { tickets: 'TK-4312, TK-4401', replays: '31 sessions tagged: size_chart_dead_clicks', heatmap: 'PDP size selector — 64% click but no conversion uplift' } },
+      { stage: 'Payment Processing', segment: 'UPI / Android / Google CPC', rootCause: 'Payment Death Spiral', rootCauseClass: 'payment', revenueLoss: 128000, evidence: 'OTP field does not auto-advance. Users timeout waiting for OTP. UPI intent flow breaks on older Android versions.', fix: 'Implement GoKwik Magic Checkout with payment retry logic. Auto-detect OTP and advance field. Fallback to UPI ID entry.', owner: 'Engineering', evidenceDetails: { tickets: 'TK-4789, TK-4812', replays: '15 sessions tagged: payment_otp_timeout', heatmap: 'UPI intent screen — 52% abandonment at OTP step' } },
+      { stage: 'Shipping', segment: 'All / Desktop / Direct', rootCause: 'UX Friction', rootCauseClass: 'ux-friction', revenueLoss: 98000, evidence: 'Shipping options unclear. Express vs Standard delivery not differentiated visually. Free shipping threshold not shown.', fix: 'Add progress bar: "₹X more for free shipping". Show delivery date estimates per shipping method. Highlight recommended option.', owner: 'Product', evidenceDetails: { tickets: 'TK-4890', replays: '8 sessions tagged: shipping_confusion', heatmap: 'Shipping selector — users toggle 3x on average before proceeding' } }
+    ];
+
+    var replaySessions = [
+      { id: 1, device: 'Android', browser: 'Chrome', duration: '2:15', tags: ['cod_toggle_rage'], tagClass: 'ux-friction', stage: 'Payment Processing', summary: 'User attempted COD 4 times on payment screen. Each attempt triggered a page reload. User rage-clicked the COD toggle before abandoning cart.', stats: [{ label: 'Rage clicks', value: '14' }, { label: 'Time on payment page', value: '1m 48s' }, { label: 'Cart value', value: '₹4,200' }] },
+      { id: 2, device: 'iOS', browser: 'Safari', duration: '3:42', tags: ['pincode_check_spin'], tagClass: 'ux-friction', stage: 'Address', summary: 'User entered pincode but the serviceability check spinner ran for 8 seconds. User refreshed twice, then switched to competitor.', stats: [{ label: 'Wait time', value: '8.2s' }, { label: 'Page refreshes', value: '2' }, { label: 'Cart value', value: '₹6,800' }] },
+      { id: 3, device: 'Android', browser: 'Chrome', duration: '1:58', tags: ['payment_otp_timeout'], tagClass: 'payment', stage: 'Payment Processing', summary: 'UPI OTP never auto-filled. User manually switched to banking app, returned to find session expired. Abandoned after 3 attempts.', stats: [{ label: 'OTP failures', value: '3' }, { label: 'Session timeouts', value: '2' }, { label: 'Cart value', value: '₹3,450' }] },
+      { id: 4, device: 'Desktop', browser: 'Chrome', duration: '4:12', tags: ['coupon_apply_failure'], tagClass: 'ux-friction', stage: 'Payment Selection', summary: 'User tried 5 different coupon codes. Only 1 applied successfully but was removed when changing payment method. Error message was unclear.', stats: [{ label: 'Coupon attempts', value: '5' }, { label: 'Errors seen', value: '3' }, { label: 'Cart value', value: '₹8,200' }] },
+      { id: 5, device: 'Android', browser: 'Chrome', duration: '2:45', tags: ['size_chart_dead_clicks'], tagClass: 'storytelling', stage: 'PDP', summary: 'User opened size chart 3 times. Each time it loaded a generic PDF with no body-type guidance. User added to cart but later returned the item (size issue).', stats: [{ label: 'Size chart opens', value: '3' }, { label: 'PDF views', value: '3' }, { label: 'Later return', value: 'Yes' }] },
+      { id: 6, device: 'Android', browser: 'Chrome', duration: '1:32', tags: ['filter_spinner'], tagClass: 'ux-friction', stage: 'PLP / Collection', summary: 'User applied "Size: M" filter on bridal lehenga collection. Filter took 2.8s to respond on 4G. User tapped filter button 6 times thinking it was broken, then left without viewing any PDP.', stats: [{ label: 'Filter taps', value: '6' }, { label: 'Avg response time', value: '2.8s' }, { label: 'PDPs viewed', value: '0' }] },
+      { id: 7, device: 'Android', browser: 'Chrome', duration: '3:18', tags: ['image_gallery_rage'], tagClass: 'ux-friction', stage: 'PDP', summary: 'User swiped through PDP image gallery 12 times trying to see fabric texture. No zoom functionality worked on mobile. User rage-clicked the main image before exiting.', stats: [{ label: 'Gallery swipes', value: '12' }, { label: 'Rage clicks', value: '8' }, { label: 'Time on PDP', value: '2m 44s' }] },
+      { id: 8, device: 'Desktop', browser: 'Chrome', duration: '2:05', tags: ['free_shipping_not_visible'], tagClass: 'trust-gap', stage: 'Cart', summary: 'User had ₹4,500 in cart (threshold is ₹5,000). Free shipping progress bar was not visible. User abandoned cart after seeing ₹120 shipping charge at checkout preview.', stats: [{ label: 'Cart value', value: '₹4,500' }, { label: 'Gap to threshold', value: '₹500' }, { label: 'Shipping shown', value: '₹120' }] },
+      { id: 9, device: 'Android', browser: 'Chrome', duration: '1:12', tags: ['login_abandon'], tagClass: 'ux-friction', stage: 'Cart → Checkout', summary: 'User clicked "Proceed to Checkout" from cart. Was presented with login/signup wall. Tapped "back" immediately and exited the site. Never saw guest checkout option.', stats: [{ label: 'Time at login wall', value: '4s' }, { label: 'Cart items', value: '3' }, { label: 'Cart value', value: '₹7,200' }] }
+    ];
+
+    var trendData = {
+      labels: ['W1 Apr', 'W2 Apr', 'W3 Apr', 'W4 Apr', 'W1 May', 'W2 May', 'W3 May', 'W4 May', 'W1 Jun', 'W2 Jun'],
+      deployWeek: 5,
+      all: {
+        convRate: [2.8, 2.6, 2.5, 2.4, 2.3, 2.9, 3.2, 3.5, 3.8, 4.1],
+        revenue: [0, 0, 0, 0, 0, 120000, 245000, 380000, 520000, 680000]
+      },
+      cod: {
+        convRate: [1.8, 1.6, 1.5, 1.4, 1.3, 1.8, 2.2, 2.6, 3.0, 3.4],
+        revenue: [0, 0, 0, 0, 0, 85000, 168000, 260000, 380000, 490000]
+      },
+      prepaid: {
+        convRate: [4.2, 4.0, 3.9, 3.8, 3.7, 4.4, 4.6, 4.8, 5.0, 5.2],
+        revenue: [0, 0, 0, 0, 0, 35000, 77000, 120000, 140000, 190000]
+      }
+    };
+
+    // ---- Chart instances ----
+    var modFFunnelChartInst = null;
+    var modFTrendChartInst = null;
+    var modFMapInst = null;
+    var modFResizeTimer;
+    var moduleFInitialized = false;
+
+    // ---- Module F Init ----
+    function initModuleF() {
+      animateModFKPIs();
+      renderModFGauge();
+      renderModFSparklines();
+      renderModFFunnel();
+      renderModFHeatMatrix();
+      renderModFMap();
+      renderModFPincodes();
+      renderModFReplays();
+      renderModFPPFunnelSummary();
+      renderModFPPCards();
+      renderModFLeaksTable();
+      renderModFTrendChart('all');
+    }
+
+    // ---- KPI Counter Animation ----
+    function animateModFKPIs() {
+      var cards = document.querySelectorAll('#panel-friction .mod-f-kpi-value[data-count]');
+      if (!cards.length) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+            var el = entry.target;
+            var target = parseFloat(el.dataset.count);
+            var prefix = el.dataset.prefix || '';
+            var suffix = el.dataset.suffix || '';
+            var decimals = parseInt(el.dataset.decimals) || 0;
+            var duration = 800;
+            var start = performance.now();
+            function tick(now) {
+              var t = Math.min((now - start) / duration, 1);
+              var ease = 1 - Math.pow(1 - t, 3);
+              var val = target * ease;
+              el.textContent = prefix + val.toFixed(decimals) + suffix;
+              if (t < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          }
+        });
+      }, { threshold: 0.3 });
+      cards.forEach(function(c) { observer.observe(c); });
+
+      // Animate conversion rate labels
+      setTimeout(function() {
+        document.getElementById('modFCodRate').textContent = '24.2%';
+        document.getElementById('modFPrepaidRate').textContent = '41.8%';
+      }, 400);
+    }
+
+    // ---- KPI Gauge (mini half-donut) ----
+    function renderModFGauge() {
+      var canvas = document.getElementById('modFGaugeCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width, h = canvas.height;
+      var cx = w / 2, cy = h - 2, r = 30;
+
+      // Background arc
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, Math.PI, 2 * Math.PI);
+      ctx.strokeStyle = '#ebebeb';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // COD arc (24.2%)
+      var codAngle = Math.PI + (Math.PI * 0.242);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, Math.PI, codAngle);
+      ctx.strokeStyle = '#c16452';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Prepaid arc (41.8%)
+      var prepaidAngle = Math.PI + (Math.PI * 0.418);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 9, Math.PI, prepaidAngle);
+      ctx.strokeStyle = '#201747';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    // ---- KPI Sparklines ----
+    function renderModFSparklines() {
+      renderModFSparkline('modFSparkLoss', [7.2, 7.8, 8.1, 8.6, 8.2, 8.4], '#c20000');
+      renderModFSparkline('modFSparkRTO', [2.8, 3.0, 2.9, 3.2, 3.0, 3.1], '#b61d0f');
+    }
+    function renderModFSparkline(id, data, color) {
+      var c = document.getElementById(id);
+      if (!c) return;
+      var ctx = c.getContext('2d');
+      var w = c.width, h = c.height;
+      ctx.clearRect(0, 0, w, h);
+      var pad = 4;
+      var min = Math.min.apply(null, data) * 0.85;
+      var max = Math.max.apply(null, data) * 1.1;
+      var range = max - min || 1;
+      var step = (w - pad * 2) / (data.length - 1);
+      ctx.beginPath();
+      data.forEach(function(v, i) {
+        var x = pad + i * step;
+        var y = h - pad - ((v - min) / range) * (h - pad * 2);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      // Fill
+      var lastX = pad + (data.length - 1) * step;
+      ctx.lineTo(lastX, h - pad);
+      ctx.lineTo(pad, h - pad);
+      ctx.closePath();
+      ctx.globalAlpha = 0.08;
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    // ---- F3: Dual Funnel Chart ----
+    function renderModFFunnel() {
+      var ctx = document.getElementById('modFFunnelChart');
+      if (!ctx) return;
+      if (modFFunnelChartInst) modFFunnelChartInst.destroy();
+
+      modFFunnelChartInst = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: funnelStages,
+          datasets: [
+            {
+              label: 'COD % Remaining',
+              data: funnelDataCOD.remaining,
+              backgroundColor: 'rgba(193, 100, 82, 0.6)',
+              hoverBackgroundColor: 'rgba(193, 100, 82, 0.9)',
+              borderRadius: 4,
+              barPercentage: 0.7,
+              categoryPercentage: 0.85
+            },
+            {
+              label: 'Prepaid % Remaining',
+              data: funnelDataPrepaid.remaining,
+              backgroundColor: 'rgba(32, 23, 71, 0.6)',
+              hoverBackgroundColor: 'rgba(32, 23, 71, 0.9)',
+              borderRadius: 4,
+              barPercentage: 0.7,
+              categoryPercentage: 0.85
+            }
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  var idx = context.dataIndex;
+                  var src = context.datasetIndex === 0 ? funnelDataCOD : funnelDataPrepaid;
+                  var type = context.datasetIndex === 0 ? 'COD' : 'Prepaid';
+                  return [
+                    type + ': ' + context.raw + '% remaining',
+                    'Drop-off: ' + src.dropOff[idx] + '% (' + src.volume[idx].toLocaleString('en-IN') + ' sessions)',
+                    'Revenue loss: \u20B9' + src.revenueLoss[idx].toLocaleString('en-IN')
+                  ];
+                }
+              }
+            }
+          },
+          animations: {
+            x: { duration: 800, easing: 'easeOutCubic' }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Remaining %', color: '#5c5c5c', font: { size: 11, weight: '600' } },
+              grid: { color: '#ebebeb' },
+              max: 100,
+              ticks: { callback: function(val) { return val + '%'; } }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { font: { size: 11, weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    // ---- F4: Heat Matrix ----
+    function getModFHeatColor(dropPct) {
+      var maxDrop = 40;
+      var t = Math.min(dropPct / maxDrop, 1);
+      if (t < 0.2) return { bg: 'rgba(250,242,230,0.9)', text: '#5c5c5c' };
+      if (t < 0.4) return { bg: 'rgba(234,161,46,0.15)', text: '#9a6c00' };
+      if (t < 0.6) return { bg: 'rgba(234,161,46,0.30)', text: '#7a5500' };
+      if (t < 0.8) return { bg: 'rgba(194,0,0,0.15)', text: '#c20000' };
+      return { bg: 'rgba(194,0,0,0.30)', text: '#8b0000' };
+    }
+
+    function renderModFHeatMatrix() {
+      var tbody = document.getElementById('modFHeatMatrixBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      heatMatrixData.methods.forEach(function(method, mi) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + method + '</td>';
+        heatMatrixData.stages.forEach(function(stage, si) {
+          var pct = heatMatrixData.values[mi][si];
+          var vol = heatMatrixData.volumes[mi][si];
+          var c = getModFHeatColor(pct);
+          tr.innerHTML += '<td><span class="mod-f-heat-cell" style="background:' + c.bg + ';color:' + c.text + ';" title="' + method + ' \u2192 ' + stage + ': ' + pct + '% drop-off, ' + vol.toLocaleString() + ' sessions"><span class="pct">' + pct + '%</span><span class="vol">' + vol.toLocaleString() + '</span></span></td>';
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ---- F5: Pincode Map (Leaflet) ----
+    var indiaGeoJSON = {
+      "type": "FeatureCollection",
+      "features": [
+        { "type": "Feature", "properties": { "name": "Jammu & Kashmir" }, "geometry": { "type": "Polygon", "coordinates": [[[73.8,34],[74.5,35],[75.5,36],[76.8,35.5],[77,34.5],[76.5,33],[75.5,32.5],[74.5,33],[73.8,34]]] } },
+        { "type": "Feature", "properties": { "name": "Himachal Pradesh" }, "geometry": { "type": "Polygon", "coordinates": [[[75.5,32.5],[76.5,33],[77.5,32.8],[78,32],[77.5,31],[76.5,31],[75.8,31.5],[75.5,32.5]]] } },
+        { "type": "Feature", "properties": { "name": "Punjab" }, "geometry": { "type": "Polygon", "coordinates": [[[73.8,32],[75,32.5],[75.5,32.5],[75.8,31.5],[76.5,31],[76.2,30.2],[75.5,29.8],[74.5,30.5],[73.8,32]]] } },
+        { "type": "Feature", "properties": { "name": "Haryana" }, "geometry": { "type": "Polygon", "coordinates": [[[75.5,29.8],[76.2,30.2],[76.8,30],[77.2,29.5],[77.5,28.5],[76.5,28],[75.5,28.5],[75.5,29.8]]] } },
+        { "type": "Feature", "properties": { "name": "Delhi" }, "geometry": { "type": "Polygon", "coordinates": [[[76.8,28.8],[77.4,28.9],[77.5,28.5],[77.2,28.3],[76.8,28.5],[76.8,28.8]]] } },
+        { "type": "Feature", "properties": { "name": "Rajasthan" }, "geometry": { "type": "Polygon", "coordinates": [[[69.5,28.5],[72,28.8],[73.5,28.5],[75.5,28.5],[76.5,28],[77,27],[77,26],[76.5,24.5],[75,24],[73,24.5],[71,25],[70,26],[69.5,28.5]]] } },
+        { "type": "Feature", "properties": { "name": "Uttar Pradesh" }, "geometry": { "type": "Polygon", "coordinates": [[[77.5,28.5],[78.5,28.8],[80,28.5],[82,27.5],[84,27],[84.5,26],[84,25],[82,24.5],[80,24],[78.5,24.5],[77.5,25.5],[77,27],[77.5,28.5]]] } },
+        { "type": "Feature", "properties": { "name": "Bihar" }, "geometry": { "type": "Polygon", "coordinates": [[[83.5,27],[84.5,27],[86,26.5],[87.5,26],[87.5,25],[86.5,24.5],[85,24],[83.5,24.5],[83,25.5],[83.5,27]]] } },
+        { "type": "Feature", "properties": { "name": "West Bengal" }, "geometry": { "type": "Polygon", "coordinates": [[[86.5,27],[87.5,27],[88.5,27],[89,26.5],[88.8,25],[88.5,23.5],[88.2,22],[87.5,21.5],[86.5,22],[87,23.5],[87.5,25],[86.5,26.5],[86.5,27]]] } },
+        { "type": "Feature", "properties": { "name": "Gujarat" }, "geometry": { "type": "Polygon", "coordinates": [[[68.5,24],[69,23],[70,22],[71,21],[72,21.5],[72.5,22],[73,23],[73.5,24],[72,24.5],[71,25],[70,26],[69,24.5],[68.5,24]]] } },
+        { "type": "Feature", "properties": { "name": "Madhya Pradesh" }, "geometry": { "type": "Polygon", "coordinates": [[[74,25],[76,25],[78.5,24.5],[80,24],[82,24.5],[82.5,23.5],[82,22.5],[80,22],[78,22],[76,22.5],[74.5,23],[74,25]]] } },
+        { "type": "Feature", "properties": { "name": "Maharashtra" }, "geometry": { "type": "Polygon", "coordinates": [[[72.5,21.5],[73.5,21],[74.5,20],[76,19.5],[78,19],[79.5,19.5],[80,20],[80,21],[80,22],[78,22],[76,22.5],[74.5,23],[73.5,22],[72.5,21.5]]] } },
+        { "type": "Feature", "properties": { "name": "Karnataka" }, "geometry": { "type": "Polygon", "coordinates": [[[74,18.5],[75,17],[76,15],[77,13],[78,12],[79,13.5],[80,15],[80,17],[78.5,18],[77,19],[75.5,19.5],[74,18.5]]] } },
+        { "type": "Feature", "properties": { "name": "Telangana" }, "geometry": { "type": "Polygon", "coordinates": [[[77,19],[78.5,19.5],[80,19.5],[80.5,18.5],[80,17],[79,16.5],[78,17],[77,17.5],[77,19]]] } },
+        { "type": "Feature", "properties": { "name": "Tamil Nadu" }, "geometry": { "type": "Polygon", "coordinates": [[[77,13],[78,12],[79,11],[80,10],[80,9],[79,8.5],[78,8.5],[77.5,9.5],[77,11],[77,13]]] } },
+        { "type": "Feature", "properties": { "name": "Kerala" }, "geometry": { "type": "Polygon", "coordinates": [[[75,12],[76,11],[76.5,10],[77,9],[76.5,8.5],[75.5,9],[75,10],[74.8,11],[75,12]]] } },
+        { "type": "Feature", "properties": { "name": "Odisha" }, "geometry": { "type": "Polygon", "coordinates": [[[81.5,22],[83,22],[84.5,21.5],[86,21],[87,20.5],[86.5,19.5],[85,19],[83.5,19],[82,19.5],[81,20.5],[81.5,22]]] } },
+        { "type": "Feature", "properties": { "name": "Chhattisgarh" }, "geometry": { "type": "Polygon", "coordinates": [[[80,22],[81,23],[82.5,23.5],[83.5,23],[84,22],[83.5,21],[83,20],[82,19.5],[81,20.5],[80,21],[80,22]]] } }
+      ]
+    };
+
+    function renderModFMap() {
+      var container = document.getElementById('modFMapContainer');
+      if (!container || modFMapInst) return;
+
+      modFMapInst = L.map(container, { scrollWheelZoom: false }).setView([22.5, 79], 5);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 12
+      }).addTo(modFMapInst);
+
+      // India state outlines
+      L.geoJSON(indiaGeoJSON, {
+        style: {
+          color: '#c16452',
+          weight: 1.5,
+          fillColor: '#faf2e6',
+          fillOpacity: 0.3,
+          opacity: 0.6
+        }
+      }).addTo(modFMapInst);
+
+      // Pincode markers
+      pincodeData.forEach(function(pin) {
+        var radius = Math.max(6, Math.min(28, pin.dropOff / 3));
+        var color = pin.status === 'critical' ? '#c20000' : pin.status === 'warning' ? '#EAA12E' : '#3ea36a';
+
+        var marker = L.circleMarker([pin.lat, pin.lng], {
+          radius: radius,
+          fillColor: color,
+          fillOpacity: 0.45,
+          color: color,
+          weight: 2,
+          opacity: 0.8
+        }).addTo(modFMapInst);
+
+        marker.bindTooltip(
+          '<strong>' + pin.pincode + '</strong> — ' + pin.region + '<br>' +
+          'Drop-off: <strong>' + pin.dropOff + '%</strong><br>' +
+          'RTO Score: ' + pin.rtoScore.toFixed(2) + '<br>' +
+          'Courier: ' + pin.courier,
+          { direction: 'top', offset: [0, -8] }
+        );
+
+        marker.bindPopup(
+          '<div style="font-family:Nunito Sans,sans-serif;font-size:12px;min-width:180px;">' +
+          '<strong style="font-size:14px;">' + pin.pincode + '</strong><br>' +
+          '<span style="color:#5c5c5c;">' + pin.region + '</span><br><br>' +
+          '<span style="color:#c20000;font-weight:700;">\u20B9' + (pin.loss / 1000).toFixed(0) + 'K</span> weekly loss<br>' +
+          'Drop-off: ' + pin.dropOff + '% &middot; RTO: ' + (pin.rtoScore * 100).toFixed(0) + '%<br>' +
+          '<span style="font-size:11px;color:#999;">Courier: ' + pin.courier + '</span>' +
+          '</div>'
+        );
+      });
+
+      // Fix Leaflet rendering in lazy-loaded tabs
+      setTimeout(function() { modFMapInst.invalidateSize(); }, 100);
+    }
+
+    // ---- Pincodes Table ----
+    function renderModFPincodes() {
+      var tbody = document.getElementById('modFPincodesBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      pincodeData.forEach(function(pin) {
+        var statusClass = pin.status;
+        var statusLabel = pin.status.charAt(0).toUpperCase() + pin.status.slice(1);
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td style="font-weight:700;">' + pin.pincode + '</td>'
+          + '<td>' + pin.region + '</td>'
+          + '<td style="font-weight:700;color:var(--data-danger);">' + pin.dropOff + '%</td>'
+          + '<td><span class="mod-f-pincode-status ' + statusClass + '">' + statusLabel + '</span></td>'
+          + '<td style="font-weight:700;">\u20B9' + (pin.loss / 1000).toFixed(0) + 'K</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ---- F6: Session Replays ----
+    var activeReplayIdx = 0;
+
+    function renderModFReplays() {
+      var playlist = document.getElementById('modFReplayPlaylist');
+      var insights = document.getElementById('modFReplayInsights');
+      if (!playlist || !insights) return;
+
+      playlist.innerHTML = '<div class="mod-f-replay-playlist-title">Friction Sessions (' + replaySessions.length + ')</div>';
+      replaySessions.forEach(function(session, i) {
+        var item = document.createElement('div');
+        item.className = 'mod-f-replay-item' + (i === 0 ? ' active' : '');
+        item.onclick = function() { selectModFReplay(i); };
+        var tagsHtml = session.tags.map(function(t) {
+          return '<span class="mod-f-tag ' + session.tagClass + '">' + t + '</span>';
+        }).join('');
+        item.innerHTML = '<div class="mod-f-replay-item-thumb">&#9654;</div>'
+          + '<div class="mod-f-replay-item-meta">'
+          + '<span class="mod-f-replay-item-device">' + session.device + '</span>'
+          + '<span>' + session.duration + '</span>'
+          + '</div>'
+          + '<div style="margin-top:4px;">' + tagsHtml + '</div>';
+        playlist.appendChild(item);
+      });
+
+      renderModFReplayInsights(0);
+    }
+
+    function selectModFReplay(idx) {
+      activeReplayIdx = idx;
+      document.querySelectorAll('.mod-f-replay-item').forEach(function(el, i) {
+        el.classList.toggle('active', i === idx);
+      });
+      renderModFReplayInsights(idx);
+    }
+
+    function renderModFReplayInsights(idx) {
+      var el = document.getElementById('modFReplayInsights');
+      if (!el) return;
+      var s = replaySessions[idx];
+      var statsHtml = s.stats.map(function(st) {
+        return '<div class="mod-f-replay-insight-stat">' + st.label + ': <strong style="margin-left:auto;">' + st.value + '</strong></div>';
+      }).join('');
+      el.innerHTML = '<div class="mod-f-replay-insight-title">AI Friction Analysis</div>'
+        + '<div class="mod-f-replay-insight-text">' + s.summary + '</div>'
+        + '<div style="font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-sm);">Session Metrics</div>'
+        + statsHtml
+        + '<div style="margin-top:var(--space-lg);font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-sm);">Stage</div>'
+        + '<div style="font-size:12px;font-weight:600;color:var(--brand-primary);">' + s.stage + '</div>';
+    }
+
+    // ---- Pre-Purchase Friction Spotlight ----
+
+    var ppFunnelSummary = [
+      { stage: 'PLP / Collection', dropOff: 28, volume: 4920, loss: 82000 },
+      { stage: 'PDP Browsing', dropOff: 46, volume: 8480, loss: 168000 },
+      { stage: 'Cart', dropOff: 22, volume: 2380, loss: 52000 },
+      { stage: 'Cart → Checkout', dropOff: 45, volume: 5200, loss: 126000 }
+    ];
+
+    var ppFrictionData = [
+      {
+        stageKey: 'plp',
+        stage: 'PLP / Collection',
+        title: 'Sort & Filter Broken on 4G Mobile',
+        segment: 'Mobile / Android / All sources',
+        revenueLoss: 82000,
+        severity: 'high',
+        dropOffPct: 28,
+        dropOffLabel: 'PLP → PDP drop-off',
+        fix: 'Fix filter debounce (currently fires on every keystroke). Add skeleton loaders for filtered results. Lazy-load product images below fold.',
+        tags: [{ label: 'filter_spinner', class: 'ux-friction' }],
+        evidence: 'GA4: view_item_list → select_item drop-off 28% on mobile vs 14% desktop. Avg filter response time: 2.8s on 4G.',
+        tickets: 'TK-4912, TK-4933'
+      },
+      {
+        stageKey: 'pdp',
+        stage: 'PDP Browsing',
+        title: 'No Indian Body-Type Size Guide',
+        segment: 'All devices / Returning / Influencer',
+        revenueLoss: 142000,
+        severity: 'critical',
+        dropOffPct: 46,
+        dropOffLabel: 'PDP → ATC drop-off',
+        fix: 'Add "Worn by models your size" section with Indian body measurements. Interactive size recommender based on height/weight.',
+        tags: [{ label: 'size_chart_dead_clicks', class: 'storytelling' }, { label: 'image_gallery_rage', class: 'ux-friction' }],
+        evidence: 'Hotjar: 31 rage-click sessions on size chart. 64% click size selector but no conversion uplift. Return rate 22% on size issues.',
+        tickets: 'TK-4312, TK-4401, TK-4455'
+      },
+      {
+        stageKey: 'cart',
+        stage: 'Cart',
+        title: 'Free Shipping Threshold Not Visible',
+        segment: 'Desktop / Google CPC / New visitors',
+        revenueLoss: 52000,
+        severity: 'critical',
+        dropOffPct: 22,
+        dropOffLabel: 'Cart → Checkout drop-off',
+        fix: 'Add dynamic progress bar: "₹500 more for free shipping". Show estimated delivery date. Highlight recommended upsells.',
+        tags: [{ label: 'free_shipping_not_visible', class: 'trust-gap' }],
+        evidence: 'Shopify: 22% of cart views never proceed to checkout. Users who see shipping threshold banner convert 34% higher. Coupon confusion on 15% of sessions.',
+        tickets: 'TK-4988, TK-5001'
+      },
+      {
+        stageKey: 'begin_checkout',
+        stage: 'Cart → Checkout',
+        title: 'Login Wall Causes Mobile Exit',
+        segment: 'All devices / New visitors / Meta traffic',
+        revenueLoss: 126000,
+        severity: 'critical',
+        dropOffPct: 45,
+        dropOffLabel: 'ATC → Begin Checkout drop-off',
+        fix: 'Guest checkout by default. Show "Continue as guest" prominently. Move login/register to optional post-purchase step.',
+        tags: [{ label: 'login_abandon', class: 'ux-friction' }],
+        evidence: 'GA4: add_to_cart → begin_checkout abandonment is 45%. Login wall responsible for 60% of those exits. Meta traffic hit hardest (58% exit).',
+        tickets: 'TK-5042, TK-5067, TK-5089'
+      }
+    ];
+
+    var currentPPFilter = 'all';
+
+    function filterModFPP(stageKey, btn) {
+      currentPPFilter = stageKey;
+      document.querySelectorAll('#modFPPStagePills .mod-f-stage-pill').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderModFPPCards();
+    }
+
+    function renderModFPPFunnelSummary() {
+      var container = document.getElementById('modFPPFunnelSummary');
+      if (!container) return;
+      container.innerHTML = '';
+      ppFunnelSummary.forEach(function(step) {
+        var el = document.createElement('div');
+        el.className = 'mod-f-pp-funnel-step';
+        el.innerHTML = '<div class="mod-f-pp-funnel-step-name">' + step.stage + '</div>'
+          + '<div class="mod-f-pp-funnel-step-pct">' + step.dropOff + '%</div>'
+          + '<div class="mod-f-pp-funnel-step-vol">' + step.volume.toLocaleString('en-IN') + ' lost</div>'
+          + '<div class="mod-f-pp-funnel-step-loss">\u20B9' + (step.loss / 1000).toFixed(0) + 'K/wk</div>';
+        container.appendChild(el);
+      });
+    }
+
+    function renderModFPPCards() {
+      var container = document.getElementById('modFPPCardsGrid');
+      if (!container) return;
+      container.innerHTML = '';
+      var filtered = currentPPFilter === 'all' ? ppFrictionData : ppFrictionData.filter(function(d) { return d.stageKey === currentPPFilter; });
+      filtered.forEach(function(item) {
+        var lossClass = item.revenueLoss > 150000 ? 'high' : item.revenueLoss > 80000 ? 'medium' : 'moderate';
+        var barColor = item.severity === 'critical' ? 'var(--data-danger)' : item.severity === 'high' ? 'var(--data-warning)' : 'var(--data-success)';
+        var tagsHtml = item.tags.map(function(t) {
+          return '<span class="mod-f-tag ' + t.class + '">' + t.label + '</span>';
+        }).join('');
+        var card = document.createElement('div');
+        card.className = 'mod-f-prepurchase-card ' + item.severity;
+        card.innerHTML = '<div class="mod-f-pp-stage">' + item.stage + '</div>'
+          + '<div class="mod-f-pp-title">' + item.title + '</div>'
+          + '<div class="mod-f-pp-loss ' + lossClass + '">\u20B9' + (item.revenueLoss / 1000).toFixed(0) + 'K<span style="font-size:12px;font-weight:500;color:var(--text-tertiary);">/week</span></div>'
+          + '<div class="mod-f-pp-loss-label">Weekly Revenue Loss</div>'
+          + '<div class="mod-f-pp-dropoff-bar">'
+          + '<div class="mod-f-pp-dropoff-label"><span>' + item.dropOffLabel + '</span><span style="color:' + barColor + ';font-weight:700;">' + item.dropOffPct + '%</span></div>'
+          + '<div class="mod-f-pp-dropoff-track"><div class="mod-f-pp-dropoff-fill" style="width:' + item.dropOffPct + '%;background:' + barColor + ';"></div></div>'
+          + '</div>'
+          + '<div class="mod-f-pp-segment"><strong>' + item.segment + '</strong></div>'
+          + '<div class="mod-f-pp-fix">' + item.fix + '</div>'
+          + '<div class="mod-f-pp-tags">' + tagsHtml + '</div>';
+        container.appendChild(card);
+      });
+    }
+
+    // ---- F7: Priority Leaks Table ----
+    var modFLeaksSort = { key: 'revenueLoss', dir: -1 };
+
+    function sortModFLeaks(key) {
+      if (modFLeaksSort.key === key) { modFLeaksSort.dir *= -1; }
+      else { modFLeaksSort.key = key; modFLeaksSort.dir = -1; }
+      renderModFLeaksTable();
+    }
+
+    function renderModFLeaksTable() {
+      var tbody = document.getElementById('modFLeaksBody');
+      if (!tbody) return;
+      var sorted = leaksData.slice().sort(function(a, b) {
+        var k = modFLeaksSort.key;
+        var va = a[k], vb = b[k];
+        if (typeof va === 'string') return modFLeaksSort.dir * va.localeCompare(vb);
+        return modFLeaksSort.dir * (va - vb);
+      });
+      tbody.innerHTML = '';
+      sorted.forEach(function(leak, i) {
+        var lossClass = leak.revenueLoss > 150000 ? 'high' : 'medium';
+        var tr = document.createElement('tr');
+        tr.onclick = function() { toggleModFLeakExpand(i); };
+        tr.innerHTML = '<td style="font-weight:600;">' + leak.stage + '</td>'
+          + '<td style="font-size:11px;">' + leak.segment + '</td>'
+          + '<td><span class="mod-f-root-cause ' + leak.rootCauseClass + '">' + leak.rootCause + '</span></td>'
+          + '<td><span class="mod-f-revenue-loss ' + lossClass + '">\u20B9' + (leak.revenueLoss / 1000).toFixed(0) + 'K</span></td>'
+          + '<td style="max-width:260px;font-size:11px;line-height:1.4;">' + leak.evidence + '</td>'
+          + '<td style="max-width:200px;font-size:11px;line-height:1.4;color:var(--data-success);font-weight:600;">' + leak.fix + '</td>'
+          + '<td style="font-size:11px;font-weight:600;">' + leak.owner + '</td>';
+        tbody.appendChild(tr);
+
+        // Expanded detail row
+        var expTr = document.createElement('tr');
+        expTr.className = 'mod-f-leak-expanded';
+        expTr.id = 'modFLeakExpand' + i;
+        expTr.innerHTML = '<td colspan="7"><div class="evidence-grid">'
+          + '<div class="evidence-item"><div class="evidence-label">Support Tickets</div><div class="evidence-value">' + leak.evidenceDetails.tickets + '</div></div>'
+          + '<div class="evidence-item"><div class="evidence-label">Session Replays</div><div class="evidence-value">' + leak.evidenceDetails.replays + '</div></div>'
+          + '<div class="evidence-item"><div class="evidence-label">Heatmap Evidence</div><div class="evidence-value">' + leak.evidenceDetails.heatmap + '</div></div>'
+          + '</div></td>';
+        tbody.appendChild(expTr);
+      });
+    }
+
+    function toggleModFLeakExpand(idx) {
+      var el = document.getElementById('modFLeakExpand' + idx);
+      if (el) el.classList.toggle('open');
+    }
+
+    // ---- Post-Fix Trend Chart ----
+    var currentTrendSegment = 'all';
+
+    function switchModFTrend(segment, btn) {
+      currentTrendSegment = segment;
+      document.querySelectorAll('#modFTrendToggle .mod-f-trend-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderModFTrendChart(segment);
+    }
+
+    function renderModFTrendChart(segment) {
+      var ctx = document.getElementById('modFTrendChart');
+      if (!ctx) return;
+      if (modFTrendChartInst) modFTrendChartInst.destroy();
+
+      var data = trendData[segment];
+      var deployIdx = trendData.deployWeek;
+
+      modFTrendChartInst = new Chart(ctx.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: trendData.labels,
+          datasets: [
+            {
+              label: 'Conversion Rate (%)',
+              data: data.convRate,
+              borderColor: '#c16452',
+              backgroundColor: 'rgba(193,100,82,0.08)',
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              pointBackgroundColor: '#c16452',
+              yAxisID: 'y'
+            },
+            {
+              label: 'Revenue Recovery (\u20B9)',
+              data: data.revenue,
+              borderColor: '#3ea36a',
+              backgroundColor: 'rgba(62,163,106,0.06)',
+              fill: true,
+              tension: 0.4,
+              borderWidth: 2,
+              borderDash: [5, 3],
+              pointRadius: 3,
+              pointHoverRadius: 5,
+              pointBackgroundColor: '#3ea36a',
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'top', align: 'end' },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  if (context.datasetIndex === 0) return 'Conv. Rate: ' + context.raw + '%';
+                  return 'Recovery: \u20B9' + context.raw.toLocaleString('en-IN');
+                }
+              }
+            },
+            annotation: {
+              annotations: {
+                deployLine: {
+                  type: 'line',
+                  xMin: deployIdx,
+                  xMax: deployIdx,
+                  borderColor: '#c16452',
+                  borderWidth: 2,
+                  borderDash: [6, 4],
+                  label: {
+                    display: true,
+                    content: 'Fix Deployed',
+                    position: 'start',
+                    backgroundColor: '#c16452',
+                    color: '#fff',
+                    font: { size: 10, weight: '700' },
+                    padding: 4,
+                    borderRadius: 3
+                  }
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              position: 'left',
+              title: { display: true, text: 'Conversion Rate (%)', color: '#5c5c5c', font: { size: 11, weight: '600' } },
+              grid: { color: '#ebebeb' },
+              ticks: { callback: function(v) { return v + '%'; } }
+            },
+            y1: {
+              position: 'right',
+              title: { display: true, text: 'Revenue Recovery (\u20B9)', color: '#5c5c5c', font: { size: 11, weight: '600' } },
+              grid: { display: false },
+              ticks: { callback: function(v) { return '\u20B9' + (v / 1000) + 'K'; } }
+            },
+            x: { grid: { display: false } }
+          },
+          animations: {
+            y: { duration: 600, easing: 'easeOutCubic' }
+          }
+        },
+        plugins: [{
+          id: 'deployMarker',
+          afterDraw: function(chart) {
+            var ctx2 = chart.ctx;
+            var xScale = chart.scales.x;
+            var yScale = chart.scales.y;
+            if (!xScale || deployIdx >= chart.data.labels.length) return;
+            var x = xScale.getPixelForValue(deployIdx);
+            var yTop = yScale.top;
+            var yBottom = yScale.bottom;
+            ctx2.save();
+            ctx2.beginPath();
+            ctx2.setLineDash([6, 4]);
+            ctx2.strokeStyle = '#c16452';
+            ctx2.lineWidth = 2;
+            ctx2.moveTo(x, yTop);
+            ctx2.lineTo(x, yBottom);
+            ctx2.stroke();
+            ctx2.restore();
+            // Label
+            ctx2.save();
+            ctx2.fillStyle = '#c16452';
+            ctx2.font = '700 10px "Nunito Sans", sans-serif';
+            ctx2.textAlign = 'center';
+            var label = 'Fix Deployed';
+            var tw = ctx2.measureText(label).width;
+            ctx2.fillStyle = '#c16452';
+            ctx2.fillRect(x - tw / 2 - 6, yTop - 2, tw + 12, 18);
+            ctx2.fillStyle = '#ffffff';
+            ctx2.fillText(label, x, yTop + 11);
+            ctx2.restore();
+          }
+        }]
+      });
+    }
+
+    // ---- Filters ----
+    function applyModFFilters() {
+      document.querySelectorAll('#panel-friction .mod-f-kpi-value[data-count]').forEach(function(el) {
+        delete el.dataset.animated;
+      });
+      initModuleF();
+    }
+
+    // ---- Resize handler ----
+    window.addEventListener('resize', function() {
+      clearTimeout(modFResizeTimer);
+      modFResizeTimer = setTimeout(function() {
+        if (moduleFInitialized && document.getElementById('panel-friction').classList.contains('active')) {
+          if (modFMapInst) modFMapInst.invalidateSize();
+        }
+      }, 250);
+    });
+
+    // ---- Module D Init ----
+    function initModuleD() {
+      animateModDKPIs();
+      renderModDLeaderboard();
+      renderModDDiscoveryChart();
+      renderModDFunnel();
+      renderModDHeatmap();
+      renderModDSankey();
+      renderModDSearchTerms();
+      renderModDZeroResults();
+      renderModDChord();
+      renderModDPathAnalysis('converters');
+    }
+
+    // Resize chord and sankey on window resize
+    var modDResizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(modDResizeTimer);
+      modDResizeTimer = setTimeout(function() {
+        if (moduleDInitialized && document.getElementById('panel-navigation').classList.contains('active')) {
+          renderModDSankey();
+          renderModDChord();
+        }
+      }, 250);
+    });
+
 
     // =============================================
     // MODULE G — Post‑Purchase & Omnichannel Intelligence

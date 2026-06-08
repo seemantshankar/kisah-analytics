@@ -1111,6 +1111,260 @@
       .mod-d-loop-kpi { flex-direction: column; gap: var(--space-md); }
     }
 
+    /* ============================================
+       MODULE G — Post‑Purchase & Omnichannel Intelligence
+       ============================================ */
+
+    /* Layout */
+    .mod-g-layout { display: flex; gap: var(--grid-gutter); }
+    .mod-g-sidebar {
+      flex: 0 0 240px; min-width: 240px;
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      padding: var(--space-xl); position: sticky;
+      top: calc(var(--header-height) + var(--tab-bar-height) + var(--space-2xl));
+      max-height: calc(100vh - var(--header-height) - var(--tab-bar-height) - var(--space-4xl));
+      overflow-y: auto; transition: flex-basis 0.3s ease, min-width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+    }
+    .mod-g-sidebar.collapsed { flex: 0 0 0; min-width: 0; padding: 0; overflow: hidden; opacity: 0; pointer-events: none; }
+    .mod-g-main { flex: 1; min-width: 0; }
+
+    .mod-g-sidebar-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      color: var(--text-primary); margin-bottom: var(--space-lg);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mod-g-sidebar-toggle {
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border-default); background: var(--bg-card);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text-tertiary); font-size: 14px; transition: all var(--transition-fast);
+    }
+    .mod-g-sidebar-toggle:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-g-filter-expand {
+      position: fixed; bottom: var(--space-2xl); left: var(--space-2xl);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--brand-secondary); color: var(--text-inverse);
+      border: none; cursor: pointer; display: none; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-dropdown); z-index: 50; font-size: 18px;
+      transition: all var(--transition-fast);
+    }
+    .mod-g-filter-expand:hover { background: var(--brand-primary); transform: scale(1.08); }
+    .mod-g-filter-expand.visible { display: flex; }
+
+    .mod-g-filter-group { margin-bottom: var(--space-lg); }
+    .mod-g-filter-label {
+      font-size: 10px; font-weight: 700; color: var(--text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-sm);
+    }
+    .mod-g-filter-select {
+      width: 100%; font-family: var(--font-body); font-size: 12px; font-weight: 500;
+      padding: 7px 10px; border: 1px solid var(--border-default); border-radius: var(--radius-sm);
+      background: var(--bg-card); color: var(--text-primary); cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+    .mod-g-filter-select:hover { border-color: var(--brand-primary); }
+
+    /* KPI Row */
+    .mod-g-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gutter); margin-bottom: var(--space-2xl); }
+    .mod-g-kpi-card {
+      background: var(--bg-card); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card);
+      padding: var(--space-xl); transition: all var(--transition-base);
+      position: relative; overflow: hidden; cursor: default;
+    }
+    .mod-g-kpi-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px) scale(1.01); }
+    .mod-g-kpi-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--brand-primary);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .mod-g-kpi-card:hover::after { transform: scaleX(1); }
+    .mod-g-kpi-value {
+      font-family: var(--font-body); font-size: 32px; font-weight: 800;
+      color: var(--text-primary); line-height: 1.1;
+    }
+    .mod-g-kpi-value.brand { color: var(--brand-primary); }
+    .mod-g-kpi-value.success { color: var(--data-success); }
+    .mod-g-kpi-value.danger { color: var(--data-danger); }
+    .mod-g-kpi-label {
+      font-size: 11px; font-weight: 700; color: var(--text-secondary);
+      margin-top: var(--space-xs); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .mod-g-kpi-spark { margin-top: var(--space-md); height: 36px; }
+    .mod-g-kpi-sub {
+      font-size: 11px; color: var(--text-tertiary); margin-top: var(--space-sm);
+      display: flex; align-items: center; gap: var(--space-xs);
+    }
+
+    /* NPS mini donut container */
+    .mod-g-nps-breakdown { display: flex; gap: var(--space-md); margin-top: var(--space-md); }
+    .mod-g-nps-segment { display: flex; flex-direction: column; align-items: center; }
+    .mod-g-nps-pct { font-size: 13px; font-weight: 700; }
+    .mod-g-nps-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); }
+
+    /* Omnichannel share stacked bar */
+    .mod-g-omni-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: var(--space-md); }
+    .mod-g-omni-seg { transition: width 0.4s ease; }
+
+    /* Grid */
+    .mod-g-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gutter); }
+    .mod-g-full { grid-column: 1 / -1; }
+
+    /* Chart containers */
+    .mod-g-chart-container { position: relative; height: 320px; }
+    .mod-g-chart-container.tall { height: 380px; }
+
+    /* Cohort picker */
+    .mod-g-cohort-picker { display: flex; gap: 6px; margin-bottom: var(--space-md); flex-wrap: wrap; }
+    .mod-g-cohort-btn {
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
+      padding: 5px 12px; border: 1px solid var(--border-default); border-radius: var(--radius-pill);
+      background: var(--bg-card); color: var(--text-secondary); cursor: pointer;
+      transition: all var(--transition-fast); white-space: nowrap;
+    }
+    .mod-g-cohort-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .mod-g-cohort-btn.active { background: var(--brand-primary); color: var(--text-inverse); border-color: var(--brand-primary); }
+
+    /* Insight callout */
+    .mod-g-insight {
+      font-size: 12px; color: var(--text-secondary); background: var(--bg-inset);
+      border-left: 3px solid var(--brand-primary); padding: 8px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-top: var(--space-md);
+      line-height: 1.5;
+    }
+
+    /* Category Leaderboard Table */
+    .mod-g-leaderboard { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+    .mod-g-leaderboard thead th {
+      font-weight: 700; color: var(--text-secondary); text-align: left;
+      padding: var(--space-md) var(--space-lg); border-bottom: 2px solid var(--border-default);
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+      white-space: nowrap; cursor: pointer; user-select: none; transition: color var(--transition-fast);
+    }
+    .mod-g-leaderboard thead th:hover { color: var(--brand-primary); }
+    .mod-g-leaderboard tbody tr { transition: background var(--transition-fast); }
+    .mod-g-leaderboard tbody tr:hover { background: var(--bg-inset); }
+    .mod-g-leaderboard tbody td {
+      padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary); vertical-align: middle; font-size: 13px;
+    }
+    .mod-g-leaderboard tbody tr:last-child td { border-bottom: none; }
+    .mod-g-return-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 8px;
+      border-radius: var(--radius-pill); white-space: nowrap; display: inline-block;
+    }
+    .mod-g-return-good { background: var(--data-success-light); color: var(--data-success); }
+    .mod-g-return-mid { background: var(--data-warning-light); color: #9a6c00; }
+    .mod-g-return-bad { background: var(--data-danger-light); color: var(--data-danger); }
+
+    /* Cross-Shop Heatmap */
+    .mod-g-heatmap { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .mod-g-heatmap th {
+      font-family: var(--font-body); font-size: 10px; font-weight: 700;
+      color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 8px 6px; text-align: center; border-bottom: 2px solid var(--border-subtle);
+    }
+    .mod-g-heatmap th:first-child { text-align: left; }
+    .mod-g-heatmap td {
+      padding: 6px; text-align: center; font-weight: 600; font-size: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .mod-g-heatmap td:first-child {
+      text-align: left; font-size: 12px; font-weight: 600; color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .mod-g-heat-cell {
+      display: inline-block; padding: 4px 8px; min-width: 42px; border-radius: 4px;
+      cursor: default; transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .mod-g-heat-cell:hover { transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+
+    /* PDP Module Effectiveness — dual bar layout */
+    .mod-g-pdp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gutter); }
+
+    /* Pareto chart */
+    .mod-g-pareto-container { position: relative; height: 340px; }
+
+    /* Omnichannel KPI mini cards */
+    .mod-g-omni-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-bottom: var(--space-lg); }
+    .mod-g-omni-mini-card {
+      background: var(--bg-inset); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); padding: var(--space-lg);
+      text-align: center; transition: all var(--transition-base);
+    }
+    .mod-g-omni-mini-card:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-glow-accent); }
+    .mod-g-omni-mini-channel { font-size: 11px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-sm); }
+    .mod-g-omni-mini-row { display: flex; justify-content: center; gap: var(--space-lg); }
+    .mod-g-omni-mini-stat { display: flex; flex-direction: column; align-items: center; }
+    .mod-g-omni-mini-val { font-size: 18px; font-weight: 800; color: var(--text-primary); line-height: 1.2; }
+    .mod-g-omni-mini-label { font-size: 9px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Funnel comparison */
+    .mod-g-funnel-container { position: relative; height: 220px; }
+
+    /* Attribution table */
+    .mod-g-attr-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+    .mod-g-attr-table thead th {
+      font-size: 10px; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border-subtle);
+    }
+    .mod-g-attr-table tbody tr { transition: background var(--transition-fast); }
+    .mod-g-attr-table tbody tr:hover { background: var(--bg-inset); }
+    .mod-g-attr-table tbody td {
+      padding: 7px 10px; border-bottom: 1px solid var(--border-subtle);
+      font-size: 12px; vertical-align: middle; color: var(--text-primary);
+    }
+    .mod-g-channel-tag {
+      font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: var(--radius-pill);
+      text-transform: uppercase; letter-spacing: 0.04em; display: inline-block;
+    }
+    .mod-g-channel-tag.social { background: rgba(225,48,108,0.1); color: #e1306c; }
+    .mod-g-channel-tag.search { background: rgba(66,133,244,0.1); color: #4285f4; }
+    .mod-g-channel-tag.whatsapp { background: rgba(37,211,102,0.1); color: #25d366; }
+    .mod-g-channel-tag.retail { background: rgba(234,161,46,0.12); color: #9a6c00; }
+    .mod-g-channel-tag.direct { background: var(--bg-inset); color: var(--text-secondary); }
+    .mod-g-channel-tag.organic { background: rgba(62,163,106,0.12); color: var(--data-success); }
+    .mod-g-channel-tag.email { background: rgba(32,23,71,0.1); color: var(--brand-secondary); }
+    .mod-g-channel-tag.paid { background: rgba(194,0,0,0.1); color: var(--data-danger); }
+
+    /* Sankey */
+    .mod-g-sankey-container { position: relative; height: 380px; overflow: hidden; }
+    .mod-g-sankey-container canvas { display: block; }
+    .mod-g-sankey-legend {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: var(--space-md);
+      padding: var(--space-md) var(--space-lg); background: var(--bg-inset);
+      border-radius: var(--radius-md); font-size: 11px; color: var(--text-secondary);
+    }
+    .mod-g-sankey-legend-item { display: flex; align-items: center; gap: 6px; }
+    .mod-g-sankey-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+    /* Revisit annotation */
+    .mod-g-annotation {
+      font-size: 12px; font-weight: 600; color: var(--brand-primary);
+      background: rgba(var(--brand-primary-rgb),0.08);
+      padding: 6px 12px; border-radius: var(--radius-pill);
+      display: inline-block; margin-top: var(--space-md);
+    }
+
+    /* Responsive */
+    @media(max-width:1024px) {
+      .mod-g-sidebar { flex: 0 0 200px; min-width: 200px; }
+      .mod-g-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .mod-g-grid { grid-template-columns: 1fr; }
+      .mod-g-pdp-grid { grid-template-columns: 1fr; }
+      .mod-g-omni-kpis { grid-template-columns: 1fr; }
+    }
+    @media(max-width:768px) {
+      .mod-g-sidebar { display: none; }
+      .mod-g-filter-expand { display: flex !important; }
+      .mod-g-kpi-row { grid-template-columns: 1fr; }
+      .mod-g-kpi-value { font-size: 26px; }
+      .mod-g-chart-container { height: 260px; }
+      .mod-g-sankey-container { height: 300px; }
+    }
+
   </style>
 </head>
 <body>
@@ -1170,6 +1424,7 @@
     <button class="tab-item" data-tab="navigation" onclick="switchTab('navigation',this)"><span class="tab-number">D</span><span class="tab-label">Navigation & Discovery</span></button>
     <button class="tab-item" data-tab="product" onclick="switchTab('product',this)"><span class="tab-number">E</span><span class="tab-label">Product & Trust</span></button>
     <button class="tab-item" data-tab="friction" onclick="switchTab('friction',this)"><span class="tab-number">F</span><span class="tab-label">Friction & Leaks</span></button>
+    <button class="tab-item" data-tab="omnichannel" onclick="switchTab('omnichannel',this)"><span class="tab-number">G</span><span class="tab-label">Post‑Purchase & Omnichannel</span></button>
   </nav>
 
   <!-- SIDEBAR OVERLAY -->
@@ -1920,6 +2175,276 @@
     </section>
     <section class="tab-panel" id="panel-product"><div class="module-placeholder"><svg class="module-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><h3>Module E — Product Engagement & Trust Factors</h3><p>SHAP feature importance, return-rate impact, funnel efficiency, and qualitative trust reel.</p></div></section>
     <section class="tab-panel" id="panel-friction"><div class="module-placeholder"><svg class="module-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><h3>Module F — Friction & Conversion Leaks</h3><p>Dual COD/Prepaid funnel, pincode black hole map, revenue recovery ICE matrix, and session replays.</p></div></section>
+
+    <!-- ============================================= -->
+    <!-- MODULE G: Post‑Purchase & Omnichannel Intelligence -->
+    <!-- ============================================= -->
+    <section class="tab-panel" id="panel-omnichannel">
+      <div class="section-header">
+        <h2 class="section-title">Post‑Purchase & Omnichannel Intelligence</h2>
+        <p class="section-desc">Time‑to‑purchase, product revisits, category conversion, PDP module lift, return analytics, and blended omnichannel journeys.</p>
+      </div>
+
+      <div class="mod-g-layout">
+        <!-- Filter Sidebar -->
+        <aside class="mod-g-sidebar" id="modGSidebar">
+          <div class="mod-g-sidebar-title">
+            Filters
+            <button class="mod-g-sidebar-toggle" onclick="toggleModGSidebar()" aria-label="Collapse filters">&laquo;</button>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Date Range</div>
+            <select class="mod-g-filter-select" id="modGDateRange">
+              <option value="30">Last 30 days</option>
+              <option value="60" selected>Last 60 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="mtd">Month to date</option>
+            </select>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Cohort</div>
+            <select class="mod-g-filter-select" id="modGCohort">
+              <option value="all" selected>All Cohorts</option>
+              <option value="deep">Deep Explorer</option>
+              <option value="quick">Quick Browser</option>
+              <option value="occasion">Occasion Focused</option>
+              <option value="price">Price Sensitive</option>
+            </select>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Device</div>
+            <select class="mod-g-filter-select" id="modGDevice">
+              <option value="all" selected>All Devices</option>
+              <option value="mobile-android">Mobile Android</option>
+              <option value="mobile-ios">Mobile iOS</option>
+              <option value="desktop">Desktop</option>
+            </select>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Traffic Source</div>
+            <select class="mod-g-filter-select" id="modGSource">
+              <option value="all" selected>All Sources</option>
+              <option value="meta">Meta</option>
+              <option value="google">Google CPC</option>
+              <option value="organic">Organic</option>
+              <option value="influencer">Influencer</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="retail">Retail</option>
+            </select>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Product Category</div>
+            <select class="mod-g-filter-select" id="modGCategory">
+              <option value="all" selected>All Categories</option>
+              <option value="wedding">Wedding Lehenga</option>
+              <option value="sherwani">Men's Sherwani</option>
+              <option value="festive">Festive Kurta</option>
+              <option value="daily">Daily Wear</option>
+              <option value="accessories">Accessories</option>
+            </select>
+          </div>
+          <div class="mod-g-filter-group">
+            <div class="mod-g-filter-label">Channel Type</div>
+            <select class="mod-g-filter-select" id="modGChannel">
+              <option value="all" selected>All Channels</option>
+              <option value="online">Online only</option>
+              <option value="offline">Offline only</option>
+              <option value="blended">Blended</option>
+            </select>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="mod-g-main">
+          <!-- KPI Cards -->
+          <div class="mod-g-kpi-row">
+            <div class="mod-g-kpi-card">
+              <div class="mod-g-kpi-value brand" id="modGRepeatRate" data-count="18.4" data-suffix="%" data-decimals="1">0%</div>
+              <div class="mod-g-kpi-label">Repeat Purchase Rate (90d)</div>
+              <div class="kpi-change positive">▲ 2.1pp vs prev</div>
+              <canvas class="mod-g-kpi-spark" id="modGSparkRepeat" width="180" height="36"></canvas>
+            </div>
+            <div class="mod-g-kpi-card">
+              <div class="mod-g-kpi-value success" id="modGNPS" data-count="54" data-suffix="" data-decimals="0">0</div>
+              <div class="mod-g-kpi-label">NPS Score</div>
+              <div class="mod-g-nps-breakdown">
+                <div class="mod-g-nps-segment"><span class="mod-g-nps-pct" style="color:var(--data-success)">62%</span><span class="mod-g-nps-label">Promoters</span></div>
+                <div class="mod-g-nps-segment"><span class="mod-g-nps-pct" style="color:var(--data-warning)">30%</span><span class="mod-g-nps-label">Passives</span></div>
+                <div class="mod-g-nps-segment"><span class="mod-g-nps-pct" style="color:var(--data-danger)">8%</span><span class="mod-g-nps-label">Detractors</span></div>
+              </div>
+            </div>
+            <div class="mod-g-kpi-card">
+              <div class="mod-g-kpi-value" id="modGDaysToConvert" data-count="6.2" data-suffix="d" data-decimals="1">0d</div>
+              <div class="mod-g-kpi-label">Median Days to Convert</div>
+              <div class="kpi-change negative">▲ 0.8d vs prev</div>
+              <div class="mod-g-kpi-sub">Wedding: 12.4d · Daily: 2.1d</div>
+            </div>
+            <div class="mod-g-kpi-card">
+              <div class="mod-g-kpi-value" id="modGOmniShare" data-count="23" data-suffix="%" data-decimals="0">0%</div>
+              <div class="mod-g-kpi-label">Omnichannel Revenue Share</div>
+              <div class="mod-g-omni-bar">
+                <div class="mod-g-omni-seg" style="width:77%;background:var(--brand-secondary)"></div>
+                <div class="mod-g-omni-seg" style="width:12%;background:#25d366"></div>
+                <div class="mod-g-omni-seg" style="width:11%;background:var(--brand-primary)"></div>
+              </div>
+              <div class="mod-g-kpi-sub" style="gap:12px;margin-top:8px;">
+                <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--brand-secondary);margin-right:3px;"></span>Online 77%</span>
+                <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#25d366;margin-right:3px;"></span>WhatsApp 12%</span>
+                <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--brand-primary);margin-right:3px;"></span>Retail 11%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- G1: Days-to-Convert Histogram + G2: Product Revisit Rate -->
+          <div class="mod-g-grid">
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Days to Convert</div><div class="card-subtitle">Distribution of time from first visit to purchase</div></div>
+                <span class="card-badge badge-accent">Histogram</span>
+              </div>
+              <div class="mod-g-cohort-picker" id="modGHistPicker">
+                <button class="mod-g-cohort-btn active" onclick="switchHistCohort(this,'wedding')">Wedding</button>
+                <button class="mod-g-cohort-btn" onclick="switchHistCohort(this,'daily')">Daily Wear</button>
+                <button class="mod-g-cohort-btn" onclick="switchHistCohort(this,'festive')">Festive</button>
+              </div>
+              <div class="mod-g-chart-container"><canvas id="modGDaysHistogram"></canvas></div>
+            </div>
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Product Revisit Rate</div><div class="card-subtitle">Users returning to view the same product before purchase</div></div>
+                <span class="card-badge badge-success">Live</span>
+              </div>
+              <div class="mod-g-chart-container"><canvas id="modGRevisitChart"></canvas></div>
+              <div class="mod-g-annotation">Products revisited 2+ times convert 34% higher</div>
+            </div>
+          </div>
+
+          <!-- G3: Category Conversion Leaderboard + Cross-Shop Matrix -->
+          <div class="mod-g-grid mt-2xl">
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Category Conversion Leaderboard</div><div class="card-subtitle">Conversion rate, AOV, and return rate by category</div></div>
+                <span class="card-badge badge-accent">Sortable</span>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="mod-g-leaderboard" id="modGCategoryTable">
+                  <thead><tr>
+                    <th onclick="sortModGCategory('category')">Category</th>
+                    <th onclick="sortModGCategory('sessions')">Sessions</th>
+                    <th onclick="sortModGCategory('cvr')">CVR</th>
+                    <th onclick="sortModGCategory('aov')">AOV</th>
+                    <th onclick="sortModGCategory('revenue')">Revenue</th>
+                    <th onclick="sortModGCategory('returnRate')">Return</th>
+                  </tr></thead>
+                  <tbody id="modGCategoryBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Cross‑Shop Matrix</div><div class="card-subtitle">Lift index: category A buyers who later purchased category B (90d)</div></div>
+                <span class="card-badge badge-warning">Heatmap</span>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="mod-g-heatmap" id="modGCrossShopTable"></table>
+              </div>
+              <div class="mod-g-insight">Wedding Lehenga buyers show 2.3x lift into Festive Wear — strongest cross-sell opportunity.</div>
+            </div>
+          </div>
+
+          <!-- G4: PDP Module Effectiveness -->
+          <div class="card-static mt-2xl">
+            <div class="card-header">
+              <div><div class="card-title">PDP Module Effectiveness</div><div class="card-subtitle">Engagement rate vs conversion lift for each PDP feature</div></div>
+              <span class="card-badge badge-accent">Engagement & Lift</span>
+            </div>
+            <div class="mod-g-pdp-grid">
+              <div class="mod-g-chart-container"><canvas id="modGPDPEngagement"></canvas></div>
+              <div class="mod-g-chart-container"><canvas id="modGPDPLift"></canvas></div>
+            </div>
+            <div class="mod-g-insight">Styling gallery has the highest conversion lift (+31%) but lowest engagement (18%) — consider moving above the fold on PDPs.</div>
+          </div>
+
+          <!-- G5: Return Reasons (Pareto) + Return Rate by Category -->
+          <div class="mod-g-grid mt-2xl">
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Return Reasons</div><div class="card-subtitle">Pareto analysis of return reason codes</div></div>
+                <span class="card-badge badge-danger">Pareto</span>
+              </div>
+              <div class="mod-g-pareto-container"><canvas id="modGPareto"></canvas></div>
+            </div>
+            <div class="card-static">
+              <div class="card-header">
+                <div><div class="card-title">Return Rate by Category</div><div class="card-subtitle">Product categories ranked by return rate</div></div>
+                <span class="card-badge badge-warning">Analysis</span>
+              </div>
+              <div class="mod-g-chart-container"><canvas id="modGReturnCategory"></canvas></div>
+              <div class="mod-g-insight">Accessories show 12% return rate (1.5x site avg) — "Different from photos" is the dominant reason.</div>
+            </div>
+          </div>
+
+          <!-- G6: Omnichannel Performance -->
+          <div class="card-static mt-2xl">
+            <div class="card-header">
+              <div><div class="card-title">Omnichannel Performance</div><div class="card-subtitle">WhatsApp, Retail, and Digital channel comparison</div></div>
+              <span class="card-badge badge-accent">Multi‑channel</span>
+            </div>
+            <div class="mod-g-omni-kpis">
+              <div class="mod-g-omni-mini-card">
+                <div class="mod-g-omni-mini-channel">Online Only</div>
+                <div class="mod-g-omni-mini-row">
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">3.8%</span><span class="mod-g-omni-mini-label">Conv Rate</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">₹3,240</span><span class="mod-g-omni-mini-label">AOV</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">8.2%</span><span class="mod-g-omni-mini-label">Return</span></div>
+                </div>
+              </div>
+              <div class="mod-g-omni-mini-card">
+                <div class="mod-g-omni-mini-channel" style="color:#25d366">WhatsApp‑Assisted</div>
+                <div class="mod-g-omni-mini-row">
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">5.2%</span><span class="mod-g-omni-mini-label">Conv Rate</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">₹4,100</span><span class="mod-g-omni-mini-label">AOV</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">6.5%</span><span class="mod-g-omni-mini-label">Return</span></div>
+                </div>
+              </div>
+              <div class="mod-g-omni-mini-card">
+                <div class="mod-g-omni-mini-channel" style="color:var(--brand-primary)">Retail (Offline)</div>
+                <div class="mod-g-omni-mini-row">
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">—</span><span class="mod-g-omni-mini-label">Conv Rate</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">₹4,800</span><span class="mod-g-omni-mini-label">AOV</span></div>
+                  <div class="mod-g-omni-mini-stat"><span class="mod-g-omni-mini-val">11%</span><span class="mod-g-omni-mini-label">Return</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="mod-g-grid">
+              <div>
+                <div class="card-title" style="font-size:14px;margin-bottom:var(--space-md);">Funnel Comparison: Online vs WhatsApp</div>
+                <div class="mod-g-funnel-container"><canvas id="modGOmniFunnel"></canvas></div>
+              </div>
+              <div>
+                <div class="card-title" style="font-size:14px;margin-bottom:var(--space-md);">Blended Journey Attribution (Top 10)</div>
+                <div style="overflow-x:auto;max-height:240px;">
+                  <table class="mod-g-attr-table" id="modGAttributionTable">
+                    <thead><tr><th>Customer</th><th>First Touch</th><th>Second Touch</th><th>Purchase</th></tr></thead>
+                    <tbody id="modGAttributionBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- G7: Customer Journey Sankey -->
+          <div class="card-static mt-2xl">
+            <div class="card-header">
+              <div><div class="card-title">Customer Journey Sankey</div><div class="card-subtitle">Channel-to-channel flow to final purchase</div></div>
+              <span class="card-badge badge-accent">Flow</span>
+            </div>
+            <div class="mod-g-sankey-container"><canvas id="modGSankeyCanvas"></canvas></div>
+            <div class="mod-g-sankey-legend" id="modGSankeyLegend"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Shared canvas tooltip -->
@@ -2655,6 +3180,10 @@
       if (id === 'navigation' && !moduleDInitialized) {
         moduleDInitialized = true;
         setTimeout(initModuleD, 50);
+      }
+      if (id === 'omnichannel' && !moduleGInitialized) {
+        moduleGInitialized = true;
+        setTimeout(initModuleG, 50);
       }
     };
 
@@ -4316,8 +4845,654 @@
           renderModDSankey();
           renderModDChord();
         }
+        if (moduleGInitialized && document.getElementById('panel-omnichannel').classList.contains('active')) {
+          renderModGSankey();
+        }
       }, 250);
     });
+
+    // =============================================
+    // MODULE G — Post‑Purchase & Omnichannel Intelligence
+    // =============================================
+    var moduleGInitialized = false;
+
+    // ---- Filter Sidebar ----
+    function toggleModGSidebar() {
+      var sidebar = document.getElementById('modGSidebar');
+      sidebar.classList.toggle('collapsed');
+      var btn = sidebar.querySelector('.mod-g-sidebar-toggle');
+      btn.innerHTML = sidebar.classList.contains('collapsed') ? '&raquo;' : '&laquo;';
+    }
+
+    // ---- KPI Count-up Animation ----
+    function animateModGKPIs() {
+      var cards = document.querySelectorAll('#panel-omnichannel .mod-g-kpi-value[data-count]');
+      if (!cards.length) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+            var el = entry.target;
+            var target = parseFloat(el.dataset.count);
+            var suffix = el.dataset.suffix || '';
+            var decimals = parseInt(el.dataset.decimals) || 0;
+            var duration = 800;
+            var start = performance.now();
+            function tick(now) {
+              var t = Math.min((now - start) / duration, 1);
+              var ease = 1 - Math.pow(1 - t, 3);
+              el.textContent = (target * ease).toFixed(decimals) + suffix;
+              if (t < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          }
+        });
+      }, { threshold: 0.3 });
+      cards.forEach(function(c) { observer.observe(c); });
+    }
+
+    // ---- Sparkline ----
+    function renderModGSparkline(canvasId, data, color) {
+      var canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width, h = canvas.height;
+      var max = Math.max.apply(null, data), min = Math.min.apply(null, data);
+      var range = max - min || 1;
+      var step = w / (data.length - 1);
+      ctx.clearRect(0, 0, w, h);
+      ctx.beginPath();
+      data.forEach(function(v, i) {
+        var x = i * step, y = h - 4 - ((v - min) / range) * (h - 8);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+      var grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, color.replace(')', ',0.15)').replace('rgb', 'rgba'));
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+    }
+
+    // ---- G1: Days-to-Convert Histogram ----
+    var histogramChart = null;
+    var histData = {
+      wedding: { label: 'Wedding Shoppers', data: [28, 22, 18, 14, 10, 5, 3], color: 'rgba(193,100,82,0.65)', border: '#c16452' },
+      daily: { label: 'Daily Wear', data: [52, 18, 12, 8, 5, 3, 2], color: 'rgba(32,23,71,0.6)', border: '#201747' },
+      festive: { label: 'Festive', data: [38, 24, 16, 10, 6, 4, 2], color: 'rgba(9,114,140,0.6)', border: '#09728c' }
+    };
+    var activeHistCohort = 'wedding';
+
+    function switchHistCohort(btn, cohort) {
+      document.querySelectorAll('#modGHistPicker .mod-g-cohort-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeHistCohort = cohort;
+      renderModGHistogram();
+    }
+
+    function renderModGHistogram() {
+      var ctx = document.getElementById('modGDaysHistogram');
+      if (!ctx) return;
+      if (histogramChart) histogramChart.destroy();
+      var d = histData[activeHistCohort];
+      histogramChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['0\u20131d', '2\u20133d', '4\u20137d', '8\u201314d', '15\u201330d', '31\u201360d', '61\u201390d'],
+          datasets: [{
+            label: d.label, data: d.data,
+            backgroundColor: d.color, borderColor: d.border, borderWidth: 1,
+            borderRadius: 4, barPercentage: 0.75
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#171717', cornerRadius: 3, padding: 10,
+              callbacks: {
+                label: function(ctx) { return ctx.raw + '% of converters'; },
+                afterLabel: function(ctx) {
+                  var aovs = [2800, 3400, 4200, 5100, 5800, 6200, 7100];
+                  return 'Median AOV: \u20B9' + aovs[ctx.dataIndex].toLocaleString();
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 11 } }, title: { display: true, text: 'Days from first visit to purchase', font: { size: 11 }, color: '#999' } },
+            y: { grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } }, beginAtZero: true, title: { display: true, text: '% of converters', font: { size: 11 }, color: '#999' } }
+          }
+        }
+      });
+    }
+
+    // ---- G2: Product Revisit Rate ----
+    var revisitChart = null;
+    function renderModGRevisit() {
+      var ctx = document.getElementById('modGRevisitChart');
+      if (!ctx) return;
+      if (revisitChart) revisitChart.destroy();
+      revisitChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['1 revisit', '2 revisits', '3 revisits', '4\u20135 revisits', '6+ revisits'],
+          datasets: [{
+            label: '% of Purchasers', data: [42, 26, 16, 10, 6],
+            backgroundColor: ['rgba(193,100,82,0.5)', 'rgba(193,100,82,0.65)', 'rgba(193,100,82,0.75)', 'rgba(193,100,82,0.85)', 'rgba(193,100,82,1)'],
+            borderColor: '#c16452', borderWidth: 1, borderRadius: 4, barPercentage: 0.7
+          }]
+        },
+        options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#171717', cornerRadius: 3, padding: 10,
+              callbacks: { label: function(ctx) { return ctx.raw + '% of purchasers'; } }
+            }
+          },
+          scales: {
+            x: { grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } }, beginAtZero: true },
+            y: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
+          }
+        }
+      });
+    }
+
+    // ---- G3: Category Conversion Leaderboard ----
+    var categoryData = [
+      { category: 'Wedding Lehenga', sessions: 12400, cvr: 4.2, aov: 8200, revenue: 4256000, returnRate: 6.5 },
+      { category: "Men\u2019s Sherwani", sessions: 8200, cvr: 3.8, aov: 6800, revenue: 2121760, returnRate: 5.2 },
+      { category: 'Festive Kurta', sessions: 6500, cvr: 2.9, aov: 3400, revenue: 640900, returnRate: 8.1 },
+      { category: 'Daily Wear', sessions: 9800, cvr: 2.4, aov: 1800, revenue: 423360, returnRate: 9.8 },
+      { category: 'Accessories', sessions: 4100, cvr: 1.8, aov: 1200, revenue: 88560, returnRate: 12.0 },
+      { category: 'Bridal Jewellery', sessions: 3200, cvr: 3.1, aov: 4500, revenue: 446400, returnRate: 4.2 },
+      { category: 'Footwear', sessions: 2800, cvr: 2.2, aov: 2100, revenue: 129360, returnRate: 10.5 }
+    ];
+    var modGCategorySort = { key: 'revenue', dir: -1 };
+
+    function sortModGCategory(key) {
+      if (modGCategorySort.key === key) { modGCategorySort.dir *= -1; }
+      else { modGCategorySort.key = key; modGCategorySort.dir = -1; }
+      renderModGCategoryTable();
+    }
+
+    function renderModGCategoryTable() {
+      var tbody = document.getElementById('modGCategoryBody');
+      if (!tbody) return;
+      var sorted = categoryData.slice().sort(function(a, b) {
+        var k = modGCategorySort.key;
+        var va = a[k], vb = b[k];
+        if (typeof va === 'string') return modGCategorySort.dir * va.localeCompare(vb);
+        return modGCategorySort.dir * (va - vb);
+      });
+      tbody.innerHTML = '';
+      sorted.forEach(function(r) {
+        var rClass = r.returnRate < 5 ? 'mod-g-return-good' : r.returnRate < 10 ? 'mod-g-return-mid' : 'mod-g-return-bad';
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td style="font-weight:600;">' + r.category + '</td>'
+          + '<td>' + r.sessions.toLocaleString() + '</td>'
+          + '<td style="font-weight:600;">' + r.cvr + '%</td>'
+          + '<td>\u20B9' + r.aov.toLocaleString() + '</td>'
+          + '<td style="font-weight:600;">\u20B9' + (r.revenue / 100000).toFixed(1) + 'L</td>'
+          + '<td><span class="mod-g-return-badge ' + rClass + '">' + r.returnRate + '%</span></td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ---- G3b: Cross-Shop Heatmap ----
+    var crossShopCategories = ['Wedding Lehenga', "Men\u2019s Sherwani", 'Festive Kurta', 'Daily Wear', 'Accessories'];
+    var crossShopMatrix = [
+      [0, 0.8, 2.3, 1.1, 1.4],
+      [0.9, 0, 1.6, 0.7, 1.2],
+      [1.5, 0.6, 0, 1.8, 0.9],
+      [0.4, 0.3, 1.2, 0, 0.7],
+      [1.1, 0.5, 0.8, 1.3, 0]
+    ];
+
+    function renderModGCrossShop() {
+      var table = document.getElementById('modGCrossShopTable');
+      if (!table) return;
+      var html = '<thead><tr><th></th>';
+      crossShopCategories.forEach(function(c) { html += '<th>' + c.split(' ')[0] + '</th>'; });
+      html += '</tr></thead><tbody>';
+      crossShopCategories.forEach(function(row, i) {
+        html += '<tr><td>' + row + '</td>';
+        crossShopCategories.forEach(function(col, j) {
+          var val = crossShopMatrix[i][j];
+          if (i === j) {
+            html += '<td><span class="mod-g-heat-cell" style="background:#ebebeb;color:#999;">\u2014</span></td>';
+          } else {
+            var intensity = Math.min(val / 2.5, 1);
+            var r = Math.round(193 + (255 - 193) * (1 - intensity));
+            var g = Math.round(100 + (255 - 100) * (1 - intensity));
+            var b = Math.round(82 + (255 - 82) * (1 - intensity));
+            var bg = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.2 + intensity * 0.6) + ')';
+            var textColor = val >= 1.5 ? '#fff' : 'var(--text-primary)';
+            var cellBg = val >= 1.5 ? (val >= 2.0 ? '#c16452' : 'rgba(193,100,82,0.7)') : bg;
+            html += '<td><span class="mod-g-heat-cell" style="background:' + cellBg + ';color:' + textColor + ';">' + val.toFixed(1) + 'x</span></td>';
+          }
+        });
+        html += '</tr>';
+      });
+      html += '</tbody>';
+      table.innerHTML = html;
+    }
+
+    // ---- G4: PDP Module Effectiveness ----
+    var pdpModules = ['Size Guide', 'Image Zoom', 'Video', 'Styling Gallery', 'Fabric Detail', 'Reviews', 'Delivery Msg'];
+    var pdpEngagement = [32, 68, 24, 18, 41, 53, 22];
+    var pdpLift = [18, 5, 22, 31, 12, 9, 8];
+    var pdpEngagementChart = null;
+    var pdpLiftChart = null;
+
+    function renderModGPDP() {
+      var ctx1 = document.getElementById('modGPDPEngagement');
+      var ctx2 = document.getElementById('modGPDPLift');
+      if (!ctx1 || !ctx2) return;
+      if (pdpEngagementChart) pdpEngagementChart.destroy();
+      if (pdpLiftChart) pdpLiftChart.destroy();
+
+      pdpEngagementChart = new Chart(ctx1.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: pdpModules,
+          datasets: [{
+            label: 'Engagement %', data: pdpEngagement,
+            backgroundColor: 'rgba(32,23,71,0.65)', borderColor: '#201747',
+            borderWidth: 1, borderRadius: 4, barPercentage: 0.65
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Engagement Rate (%)', font: { family: "'Trirong'", size: 14, weight: '600' }, color: '#171717', padding: { bottom: 12 } },
+            tooltip: { backgroundColor: '#171717', cornerRadius: 3, padding: 10, callbacks: { label: function(ctx) { return ctx.raw + '% of sessions'; } } }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+            y: { grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } }, beginAtZero: true }
+          }
+        }
+      });
+
+      pdpLiftChart = new Chart(ctx2.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: pdpModules,
+          datasets: [{
+            label: 'Conversion Lift', data: pdpLift,
+            backgroundColor: pdpLift.map(function(v) { return v >= 20 ? 'rgba(62,163,106,0.8)' : v >= 10 ? 'rgba(62,163,106,0.55)' : 'rgba(62,163,106,0.35)'; }),
+            borderColor: '#3ea36a', borderWidth: 1, borderRadius: 4, barPercentage: 0.65
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Conversion Lift (+%)', font: { family: "'Trirong'", size: 14, weight: '600' }, color: '#171717', padding: { bottom: 12 } },
+            tooltip: { backgroundColor: '#171717', cornerRadius: 3, padding: 10, callbacks: { label: function(ctx) { return '+' + ctx.raw + '% conversion lift'; } } }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+            y: { grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return '+' + v + '%'; } }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    // ---- G5: Return Reasons Pareto ----
+    var paretoChart = null;
+    function renderModGPareto() {
+      var ctx = document.getElementById('modGPareto');
+      if (!ctx) return;
+      if (paretoChart) paretoChart.destroy();
+      var reasons = ["Size doesn\u2019t fit", 'Different from photos', 'Quality issue', 'Damaged', 'Changed mind', 'Late delivery', 'Wrong item'];
+      var counts = [620, 380, 210, 120, 90, 55, 35];
+      var total = counts.reduce(function(a, b) { return a + b; }, 0);
+      var cumPct = []; var cum = 0;
+      counts.forEach(function(c) { cum += c; cumPct.push(Math.round((cum / total) * 100)); });
+
+      paretoChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: reasons,
+          datasets: [{
+            type: 'bar', label: 'Returns', data: counts,
+            backgroundColor: 'rgba(193,100,82,0.65)', borderColor: '#c16452',
+            borderWidth: 1, borderRadius: 4, barPercentage: 0.7, yAxisID: 'y', order: 2
+          }, {
+            type: 'line', label: 'Cumulative %', data: cumPct,
+            borderColor: '#201747', backgroundColor: 'transparent',
+            borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#201747',
+            pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', order: 1
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { position: 'top', labels: { usePointStyle: true, pointStyleWidth: 8, font: { size: 11, weight: '600' } } },
+            tooltip: {
+              backgroundColor: '#171717', cornerRadius: 3, padding: 10,
+              callbacks: {
+                label: function(ctx) {
+                  if (ctx.datasetIndex === 0) return ctx.raw + ' returns (' + Math.round((ctx.raw / total) * 100) + '%)';
+                  return 'Cumulative: ' + ctx.raw + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+            y: { position: 'left', grid: { color: '#ebebeb' }, ticks: { font: { size: 11 } }, beginAtZero: true, title: { display: true, text: 'Count', font: { size: 11 }, color: '#999' } },
+            y1: { position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } }, min: 0, max: 100, title: { display: true, text: 'Cumulative %', font: { size: 11 }, color: '#999' } }
+          }
+        }
+      });
+    }
+
+    // ---- G5b: Return Rate by Category ----
+    var returnCatChart = null;
+    function renderModGReturnCategory() {
+      var ctx = document.getElementById('modGReturnCategory');
+      if (!ctx) return;
+      if (returnCatChart) returnCatChart.destroy();
+      var cats = ['Accessories', 'Footwear', 'Daily Wear', 'Festive Kurta', 'Wedding Lehenga', "Men\u2019s Sherwani", 'Bridal Jewellery'];
+      var rates = [12.0, 10.5, 9.8, 8.1, 6.5, 5.2, 4.2];
+      var siteAvg = 8.0;
+
+      returnCatChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: cats,
+          datasets: [{
+            label: 'Return Rate (%)', data: rates,
+            backgroundColor: rates.map(function(r) { return r > siteAvg ? 'rgba(194,0,0,0.55)' : 'rgba(62,163,106,0.55)'; }),
+            borderColor: rates.map(function(r) { return r > siteAvg ? '#c20000' : '#3ea36a'; }),
+            borderWidth: 1, borderRadius: 4, barPercentage: 0.7
+          }]
+        },
+        options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#171717', cornerRadius: 3, padding: 10,
+              callbacks: {
+                label: function(ctx) { return ctx.raw + '% return rate' + (ctx.raw > siteAvg ? ' (above avg)' : ''); },
+                afterLabel: function() { return 'Site average: ' + siteAvg + '%'; }
+              }
+            },
+            annotation: undefined
+          },
+          scales: {
+            x: {
+              grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } }, beginAtZero: true,
+              title: { display: true, text: 'Return Rate (%)', font: { size: 11 }, color: '#999' }
+            },
+            y: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
+          }
+        },
+        plugins: [{
+          id: 'siteAvgLine',
+          afterDraw: function(chart) {
+            var xScale = chart.scales.x;
+            var yScale = chart.scales.y;
+            var xPos = xScale.getPixelForValue(siteAvg);
+            var ctx = chart.ctx;
+            ctx.save();
+            ctx.beginPath();
+            ctx.setLineDash([6, 4]);
+            ctx.strokeStyle = '#EAA12E';
+            ctx.lineWidth = 2;
+            ctx.moveTo(xPos, yScale.top);
+            ctx.lineTo(xPos, yScale.bottom);
+            ctx.stroke();
+            ctx.fillStyle = '#EAA12E';
+            ctx.font = '600 10px "Nunito Sans"';
+            ctx.fillText('Avg ' + siteAvg + '%', xPos + 4, yScale.top + 12);
+            ctx.restore();
+          }
+        }]
+      });
+    }
+
+    // ---- G6: Omnichannel Funnel ----
+    var omniFunnelChart = null;
+    function renderModGOmniFunnel() {
+      var ctx = document.getElementById('modGOmniFunnel');
+      if (!ctx) return;
+      if (omniFunnelChart) omniFunnelChart.destroy();
+      omniFunnelChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['Sessions / Inquiries', 'Add to Cart', 'Purchase'],
+          datasets: [{
+            label: 'Online', data: [45000, 8200, 1710],
+            backgroundColor: 'rgba(32,23,71,0.6)', borderColor: '#201747',
+            borderWidth: 1, borderRadius: 4, barPercentage: 0.5
+          }, {
+            label: 'WhatsApp', data: [3200, 1800, 624],
+            backgroundColor: 'rgba(37,211,102,0.6)', borderColor: '#25d366',
+            borderWidth: 1, borderRadius: 4, barPercentage: 0.5
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 600, easing: 'easeOutQuart' },
+          plugins: {
+            legend: { position: 'top', labels: { usePointStyle: true, pointStyleWidth: 8, font: { size: 11, weight: '600' } } },
+            tooltip: {
+              backgroundColor: '#171717', cornerRadius: 3, padding: 10,
+              callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.raw.toLocaleString(); } }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+            y: { grid: { color: '#ebebeb' }, ticks: { font: { size: 11 }, callback: function(v) { return v >= 1000 ? (v / 1000) + 'K' : v; } }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    // ---- G6b: Attribution Table ----
+    var attributionData = [
+      { id: 'KIS-4821', first: 'Instagram', firstTag: 'social', second: 'WhatsApp', secondTag: 'whatsapp', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-3917', first: 'Google CPC', firstTag: 'search', second: 'PDP Visit', secondTag: 'direct', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-5234', first: 'WhatsApp', firstTag: 'whatsapp', second: 'Retail Visit', secondTag: 'retail', purchase: 'Retail', purchaseTag: 'retail' },
+      { id: 'KIS-2891', first: 'Meta Ad', firstTag: 'social', second: 'Organic Search', secondTag: 'organic', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-6103', first: 'Retail Visit', firstTag: 'retail', second: 'Online Search', secondTag: 'search', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-7452', first: 'Email', firstTag: 'email', second: 'Direct', secondTag: 'direct', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-1567', first: 'Influencer', firstTag: 'social', second: 'Instagram', secondTag: 'social', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-8923', first: 'Google CPC', firstTag: 'search', second: 'WhatsApp', secondTag: 'whatsapp', purchase: 'Online', purchaseTag: 'direct' },
+      { id: 'KIS-3345', first: 'Instagram', firstTag: 'social', second: 'Retail Visit', secondTag: 'retail', purchase: 'Retail', purchaseTag: 'retail' },
+      { id: 'KIS-9012', first: 'Direct', firstTag: 'direct', second: 'Email', secondTag: 'email', purchase: 'Online', purchaseTag: 'direct' }
+    ];
+
+    function renderModGAttribution() {
+      var tbody = document.getElementById('modGAttributionBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      attributionData.forEach(function(r) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td style="font-weight:600;font-size:11px;">' + r.id + '</td>'
+          + '<td><span class="mod-g-channel-tag ' + r.firstTag + '">' + r.first + '</span></td>'
+          + '<td><span class="mod-g-channel-tag ' + r.secondTag + '">' + r.second + '</span></td>'
+          + '<td><span class="mod-g-channel-tag ' + r.purchaseTag + '">' + r.purchase + '</span></td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ---- G7: Customer Journey Sankey ----
+    function renderModGSankey() {
+      var container = document.querySelector('.mod-g-sankey-container');
+      var canvas = document.getElementById('modGSankeyCanvas');
+      if (!container || !canvas) return;
+      var dpr = window.devicePixelRatio || 1;
+      var W = container.clientWidth;
+      var H = 380;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      var ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, W, H);
+
+      var nodes = ['Instagram', 'Google CPC', 'Organic', 'Direct', 'WhatsApp', 'Retail', 'Email', 'Purchase'];
+      var nodeColors = ['#e1306c', '#4285f4', '#3ea36a', '#5c5c5c', '#25d366', '#c16452', '#201747', '#EAA12E'];
+      var colX = [0, 1, 2];
+      var colNodes = [
+        [0, 1, 2, 3, 4, 5, 6],
+        [7]
+      ];
+
+      var flows = [
+        { from: 0, to: 7, value: 420 },
+        { from: 1, to: 7, value: 310 },
+        { from: 2, to: 7, value: 180 },
+        { from: 3, to: 7, value: 220 },
+        { from: 4, to: 7, value: 150 },
+        { from: 5, to: 7, value: 95 },
+        { from: 6, to: 7, value: 65 }
+      ];
+
+      var padX = 80, padY = 30;
+      var nodeW = 18;
+      var leftX = padX;
+      var rightX = W - padX - nodeW;
+
+      var totalLeft = 0;
+      flows.forEach(function(f) { totalLeft += f.value; });
+
+      var leftNodes = [0, 1, 2, 3, 4, 5, 6];
+      var nodeHeights = {};
+      var nodeY = {};
+      var gap = 8;
+      var availH = H - padY * 2 - (leftNodes.length - 1) * gap;
+      var totalVal = 0;
+      leftNodes.forEach(function(n) {
+        var val = 0;
+        flows.forEach(function(f) { if (f.from === n) val += f.value; });
+        nodeHeights[n] = Math.max(8, (val / totalLeft) * availH);
+        totalVal += nodeHeights[n];
+      });
+
+      var cy = padY;
+      leftNodes.forEach(function(n) {
+        nodeY[n] = cy;
+        cy += nodeHeights[n] + gap;
+      });
+
+      var rightNodeH = Math.min(H - padY * 2, cy - padY);
+      nodeY[7] = padY;
+      nodeHeights[7] = rightNodeH;
+
+      // Draw flows
+      var rightCy = padY;
+      flows.forEach(function(f) {
+        var fromY = nodeY[f.from] + nodeHeights[f.from] / 2;
+        var flowH = (f.value / totalLeft) * rightNodeH;
+        var toY = rightCy + flowH / 2;
+
+        ctx.beginPath();
+        ctx.moveTo(leftX + nodeW, fromY);
+        var cpx1 = leftX + nodeW + (rightX - leftX - nodeW) * 0.4;
+        var cpx2 = leftX + nodeW + (rightX - leftX - nodeW) * 0.6;
+        ctx.bezierCurveTo(cpx1, fromY, cpx2, toY, rightX, toY);
+        ctx.strokeStyle = nodeColors[f.from];
+        ctx.globalAlpha = 0.3;
+        ctx.lineWidth = Math.max(3, (f.value / totalLeft) * rightNodeH * 0.8);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        rightCy += flowH;
+      });
+
+      // Draw left nodes
+      leftNodes.forEach(function(n) {
+        ctx.fillStyle = nodeColors[n];
+        ctx.fillRect(leftX, nodeY[n], nodeW, nodeHeights[n]);
+        ctx.fillStyle = '#171717';
+        ctx.font = '600 11px "Nunito Sans"';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(nodes[n], leftX - 8, nodeY[n] + nodeHeights[n] / 2);
+      });
+
+      // Draw right node
+      ctx.fillStyle = nodeColors[7];
+      ctx.fillRect(rightX, nodeY[7], nodeW, nodeHeights[7]);
+      ctx.fillStyle = '#171717';
+      ctx.font = '700 13px "Trirong"';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Purchase', rightX + nodeW + 10, nodeY[7] + nodeHeights[7] / 2);
+
+      // Legend
+      var legendEl = document.getElementById('modGSankeyLegend');
+      if (legendEl) {
+        legendEl.innerHTML = '';
+        nodes.slice(0, 7).forEach(function(n, i) {
+          legendEl.innerHTML += '<span class="mod-g-sankey-legend-item"><span class="mod-g-sankey-legend-dot" style="background:' + nodeColors[i] + '"></span>' + n + '</span>';
+        });
+      }
+
+      // Tooltip on hover
+      canvas.onmousemove = function(e) {
+        var rect = canvas.getBoundingClientRect();
+        var mx = e.clientX - rect.left;
+        var my = e.clientY - rect.top;
+        var tooltip = document.getElementById('modCTooltip');
+        var hit = null;
+        leftNodes.forEach(function(n) {
+          if (mx >= leftX && mx <= leftX + nodeW && my >= nodeY[n] && my <= nodeY[n] + nodeHeights[n]) hit = n;
+        });
+        if (mx >= rightX && mx <= rightX + nodeW && my >= nodeY[7] && my <= nodeY[7] + nodeHeights[7]) hit = 7;
+
+        if (hit !== null && tooltip) {
+          var val = 0;
+          flows.forEach(function(f) { if (f.from === hit || f.to === hit) val += f.value; });
+          tooltip.innerHTML = '<div class="mod-c-tooltip-title"><span class="mod-c-tooltip-dot" style="background:' + nodeColors[hit] + '"></span>' + nodes[hit] + '</div>'
+            + '<div class="mod-c-tooltip-row"><span class="mod-c-tooltip-label">Flow volume</span><span class="mod-c-tooltip-value">' + val.toLocaleString() + '</span></div>';
+          var tx = e.clientX + 14, ty = e.clientY - 10;
+          if (tx + 300 > window.innerWidth) tx = e.clientX - 310;
+          tooltip.style.left = tx + 'px'; tooltip.style.top = ty + 'px';
+          tooltip.classList.add('visible');
+          canvas.style.cursor = 'pointer';
+        } else {
+          if (tooltip) tooltip.classList.remove('visible');
+          canvas.style.cursor = 'default';
+        }
+      };
+      canvas.onmouseleave = function() {
+        var tooltip = document.getElementById('modCTooltip');
+        if (tooltip) tooltip.classList.remove('visible');
+      };
+    }
+
+    // ---- Module G Init ----
+    function initModuleG() {
+      animateModGKPIs();
+      renderModGSparkline('modGSparkRepeat', [14.2, 15.1, 16.3, 17.0, 17.8, 18.4], '#c16452');
+      renderModGHistogram();
+      renderModGRevisit();
+      renderModGCategoryTable();
+      renderModGCrossShop();
+      renderModGPDP();
+      renderModGPareto();
+      renderModGReturnCategory();
+      renderModGOmniFunnel();
+      renderModGAttribution();
+      renderModGSankey();
+    }
 
     // ESC key closes sidebar or modal
     document.addEventListener('keydown', e => {

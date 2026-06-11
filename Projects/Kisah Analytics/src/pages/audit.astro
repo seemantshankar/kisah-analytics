@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import { flows, buckets } from '../data/audit.js';
+
+const core = flows.filter((f) => f.group === 'core');
+const ethnic = flows.filter((f) => f.group === 'ethnic');
+---
+
+<BaseLayout title="The 17 Flows · Kisah Flow Audit">
+  <!-- intro -->
+  <section class="audit-hero">
+    <div class="shell">
+      <p class="eyebrow" data-reveal>Deep dive</p>
+      <h1 class="audit-hero__title" data-reveal style="--reveal-delay:.05s">
+        The 17 flows, end to end.
+      </h1>
+      <p class="audit-hero__lede" data-reveal style="--reveal-delay:.12s">
+        For every flow: does it exist, how it works today, where to improve, and
+        the specific friction points worth fixing. Twelve core flows, then five
+        ethnic-wear flows unique to the Indian festive context.
+      </p>
+    </div>
+  </section>
+
+  <div class="shell audit-layout">
+    <!-- ===================== TOC ===================== -->
+    <aside class="toc" aria-label="Flows">
+      <p class="toc__group">Core flows</p>
+      <ul>
+        {
+          core.map((f) => (
+            <li>
+              <a href={`#${f.id}`} class="toc__link" data-spy={f.id}>
+                <span class="toc__code">{f.code}</span>
+                <span class="toc__name">{f.title}</span>
+                <span class="toc__dot" style={`background:${buckets[f.bucket].color}`} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="toc__group">Ethnic-specific</p>
+      <ul>
+        {
+          ethnic.map((f) => (
+            <li>
+              <a href={`#${f.id}`} class="toc__link" data-spy={f.id}>
+                <span class="toc__code toc__code--ethnic">{f.code}</span>
+                <span class="toc__name">{f.title}</span>
+                <span class="toc__dot" style={`background:${buckets[f.bucket].color}`} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+
+    <!-- ===================== FLOWS ===================== -->
+    <div class="flows">
+      {
+        flows.map((f) => (
+          <article id={f.id} class="flow" style={`--accent:${buckets[f.bucket].color};--accent-tint:${buckets[f.bucket].tint}`}>
+            <header class="flow__head" data-reveal>
+              <div class="flow__heading">
+                <span class:list={['flow__code', { 'flow__code--ethnic': f.group === 'ethnic' }]}>
+                  {f.code}
+                </span>
+                <div>
+                  <h2 class="flow__title">{f.title}</h2>
+                  {f.subtitle && <p class="flow__subtitle">{f.subtitle}</p>}
+                </div>
+              </div>
+              <StatusBadge bucket={f.bucket} label={f.statusLabel} />
+            </header>
+
+            <p class="flow__summary" data-reveal style="--reveal-delay:.05s">
+              {f.summary}
+            </p>
+
+            <div class="fmap" data-reveal style="--reveal-delay:.05s">
+              <!-- Phase 1 — the journey today -->
+              <p class="fmap__phase">
+                <span class="fmap__phase-dot" style={`background:${buckets[f.bucket].color}`} />
+                How it works today
+              </p>
+              <ol class="fmap__journey">
+                {
+                  f.currentFlow.map((item, i) => (
+                    <li class="fmap__step">
+                      <span class="fmap__step-dot">{i + 1}</span>
+                      <div class="fmap__box">{item}</div>
+                    </li>
+                  ))
+                }
+              </ol>
+
+              <!-- Issues & solutions in unified flow -->
+              <ul class="fmap__solutions">
+                {
+                  f.friction.map((fr) => (
+                    <li class="fmap__solution-pair">
+                      <div class="fmap__fix">
+                        <p class="fmap__fix-point">
+                          <span class="fmap__fix-icon" aria-hidden="true">!</span>
+                          {fr.point}
+                        </p>
+                        <p class="fmap__fix-rec">
+                          <span class="fmap__fix-arrow" aria-hidden="true">→</span>
+                          {fr.rec}
+                        </p>
+                      </div>
+                    </li>
+                  ))
+                }
+                {
+                  f.improve.map((item) => (
+                    <li class="fmap__solution-pair">
+                      <div class="fmap__improve">{item}</div>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            <a class="flow__top" href="#main">↑ Back to top</a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .audit-hero {
+    background:
+      radial-gradient(120% 90% at 100% 0%, var(--color-cream), transparent 60%),
+      var(--color-canvas);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .audit-hero__title {
+    margin-top: 1rem;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1;
+  }
+  .audit-hero__lede {
+    margin-top: 1.3rem;
+    max-width: 60ch;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: var(--color-body);
+  }
+
+  .audit-layout {
+    display: grid;
+    grid-template-columns: 248px 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+    padding-bottom: 4rem;
+  }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    position: sticky;
+    top: calc(var(--nav-h, 68px) + 1.5rem);
+    align-self: start;
+    max-height: calc(100vh - var(--nav-h) - 3rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+  .toc ul { list-style: none; margin-bottom: 1.4rem; }
+  .toc__group {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.6rem;
+  }
+  .toc__link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--radius-md);
+    border-left: 2px solid transparent;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .toc__link:hover { background: var(--color-cream); }
+  .toc__code {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--color-indigo);
+    min-width: 1.5ch;
+    text-align: center;
+  }
+  .toc__code--ethnic { color: var(--color-brand); }
+  .toc__name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-body);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toc__dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .toc__link.is-active {
+    background: var(--color-cream);
+    border-left-color: var(--color-brand);
+  }
+  .toc__link.is-active .toc__name { color: var(--color-ink); }
+
+  /* ---------- Flow article ---------- */
+  .flows { min-width: 0; display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3.5rem); }
+  .flow {
+    scroll-margin-top: calc(var(--nav-h, 68px) + 1.5rem);
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-soft);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3.5vw, 2.75rem);
+    box-shadow: var(--shadow-card);
+  }
+  .flow__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.3rem;
+    border-bottom: 1px solid var(--color-hair-soft);
+  }
+  .flow__heading { display: flex; align-items: center; gap: 1.1rem; }
+  .flow__code {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-indigo);
+    background: var(--color-cream);
+    width: 3rem; height: 3rem;
+    display: grid; place-items: center;
+    border-radius: var(--radius-lg);
+  }
+  .flow__code--ethnic { color: var(--color-brand); background: var(--color-brand-tint); }
+  .flow__title { font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+  .flow__subtitle {
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-top: 0.15rem;
+  }
+  .flow__summary {
+    margin: 1.4rem 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-body);
+    max-width: 72ch;
+  }
+  .flow__summary::first-letter { /* subtle emphasis */ }
+
+  /* ---------- Flow map ---------- */
+  .fmap { margin-top: 1.6rem; }
+
+  .fmap__phase {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin-bottom: 1rem;
+  }
+  .fmap__phase-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  .fmap__phase--improve .fmap__phase-dot { background: var(--color-ok); }
+  .fmap__phase--fix .fmap__phase-dot { background: var(--color-danger); }
+
+  /* journey rail */
+  .fmap__journey {
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding-left: 2.4rem;
+  }
+  .fmap__journey::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0.6rem; bottom: -1000px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--color-hair-soft));
+  }
+  .fmap { position: relative; }
+  .fmap__step { position: relative; margin-bottom: 0.6rem; }
+  .fmap__step:last-child { margin-bottom: 0; }
+  .fmap__step-dot {
+    position: absolute;
+    left: -2.4rem; top: calc(50% + 2px);
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--color-paper);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-tint);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .fmap__box {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hair-soft);
+    border-radius: var(--radius-lg);
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-body);
+  }
+
+  /* unified solutions flow */
+  .fmap__solutions {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: relative;
+    padding-left: 2.4rem;
+    margin-top: 0.6rem;
+  }
+  .fmap__solution-pair { position: relative; }
+  .fmap__list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .fmap__improve {
+    position: relative;
+    padding: 0.7rem 0.9rem 0.7rem 1.95rem;
+    font-size: 0.89rem;
+    line-height: 1.5;
+    color: var(--color-body);
+    background: var(--color-ok-tint);
+    border: 1px solid color-mix(in srgb, var(--color-ok) 22%, transparent);
+    border-radius: var(--radius-lg);
+  }
+  .fmap__improve::before {
+    content: '';
+    position: absolute;
+    left: 0.8rem; top: 1.05rem;
+    width: 9px; height: 9px;
+    border: 2px solid var(--color-ok);
+    border-radius: 50%;
+  }
+
+  .fmap__fix {
+    background: var(--color-danger-tint);
+    border: 1px solid color-mix(in srgb, var(--color-danger) 22%, transparent);
+    border-radius: var(--radius-lg);
+    padding: 0.7rem 0.9rem;
+    transition: transform 0.25s var(--ease-out-soft), box-shadow 0.25s ease;
+  }
+  .fmap__fix:hover { transform: translateY(-1px); box-shadow: var(--shadow-card); }
+  .fmap__fix-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: var(--color-ink);
+  }
+  .fmap__fix-icon {
+    flex: none;
+    width: 1.1rem; height: 1.1rem;
+    display: grid; place-items: center;
+    margin-top: 0.05rem;
+    font-size: 0.66rem;
+    font-weight: 900;
+    color: #fff;
+    background: var(--color-danger);
+    border-radius: 50%;
+  }
+  .fmap__fix-rec {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 0.45rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--color-body);
+  }
+  .fmap__fix-arrow { color: var(--color-danger); font-weight: 800; flex: none; }
+
+  .flow__top {
+    display: inline-block;
+    margin-top: 1.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    transition: color 0.2s ease;
+  }
+  .flow__top:hover { color: var(--color-brand); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1000px) {
+    .audit-layout { grid-template-columns: 1fr; }
+    .toc { display: none; }
+  }
+  @media (max-width: 680px) {
+    .fmap__tracks { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  function bindSpy() {
+    const links = Array.from(document.querySelectorAll('[data-spy]'));
+    const sections = Array.from(document.querySelectorAll('.flow'));
+    if (!links.length || !sections.length) return;
+    if (sections[0].dataset.spyBound) return;
+    sections.forEach((s) => (s.dataset.spyBound = 'true'));
+
+    const map = new Map(links.map((l) => [l.getAttribute('data-spy'), l]));
+    const setActive = (id) => {
+      links.forEach((l) => l.classList.toggle('is-active', l.getAttribute('data-spy') === id));
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 1] }
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+  document.addEventListener('astro:page-load', bindSpy);
+  if (document.readyState !== 'loading') bindSpy();
+</script>

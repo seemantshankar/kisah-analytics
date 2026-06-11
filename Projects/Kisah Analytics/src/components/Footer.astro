@@ -1,0 +1,158 @@
+---
+import Logo from './Logo.astro';
+import { meta } from '../data/audit.js';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="site-footer__content">
+      <div class="site-footer__brand">
+        <a href="/" class="site-footer__logo" aria-label="Kisah">
+          <Logo variant="light" />
+        </a>
+        <p class="site-footer__description">
+          {meta.title}
+        </p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer">
+        <div class="site-footer__section">
+          <a href="/">Overview</a>
+          <a href="/audit">The 17 flows</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-footer__divider"></div>
+
+    <div class="site-footer__meta">
+      <div class="site-footer__item">
+        <span class="site-footer__label">Scope</span>
+        <span class="site-footer__value">12 core flows + 5 ethnic flows</span>
+        <span class="site-footer__value">~3,040 styles · ₹2,299–9,999</span>
+      </div>
+      <div class="site-footer__item">
+        <span class="site-footer__label">Status</span>
+        <span class="site-footer__value">{meta.prepared}</span>
+        <span class="site-footer__value">{meta.confidential}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__copyright">
+    <div class="shell">
+      <span>© {year} Kisah. Confidential — for internal review only.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-canvas);
+    border-top: 1px solid var(--color-hair-soft);
+    margin-top: clamp(4rem, 9vw, 8rem);
+  }
+
+  .site-footer__content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: flex-start;
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .site-footer__logo {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+  }
+
+  .site-footer__description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 45ch;
+    color: var(--color-body);
+    margin: 0;
+  }
+
+  .site-footer__nav {
+    display: flex;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .site-footer__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .site-footer__section a {
+    font-size: 0.9rem;
+    color: var(--color-body);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .site-footer__section a:hover {
+    color: var(--color-brand);
+  }
+
+  .site-footer__divider {
+    height: 1px;
+    background: var(--color-hair-soft);
+    margin: clamp(1.5rem, 3vw, 2rem) 0;
+  }
+
+  .site-footer__meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(2rem, 3vw, 2.5rem);
+  }
+
+  .site-footer__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .site-footer__label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.2rem;
+  }
+
+  .site-footer__value {
+    font-size: 0.9rem;
+    color: var(--color-body);
+    line-height: 1.5;
+  }
+
+  .site-footer__copyright {
+    background: var(--color-background-secondary);
+    padding: 1.5rem 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .site-footer__content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .site-footer__meta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

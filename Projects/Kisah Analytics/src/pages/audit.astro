@@ -286,14 +286,23 @@ const ethnic = flows.filter((f) => f.group === 'ethnic');
     margin: 0;
     padding-left: 2.4rem;
   }
+  .fmap { position: relative; }
   .fmap__journey::before {
     content: '';
     position: absolute;
-    left: 10px; top: 0.6rem; bottom: -1000px;
+    left: 10px; top: 0.6rem; bottom: 0;
     width: 2px;
     background: linear-gradient(to bottom, var(--accent), var(--color-hair-soft));
+    pointer-events: none;
   }
-  .fmap { position: relative; }
+  .fmap__solutions::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--color-hair-soft));
+    pointer-events: none;
+  }
   .fmap__step { position: relative; margin-bottom: 0.6rem; }
   .fmap__step:last-child { margin-bottom: 0; }
   .fmap__step-dot {

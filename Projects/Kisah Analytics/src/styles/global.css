@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+/* ============================================================
+   KISAH.IN — Flow Audit Report
+   Design tokens (Tailwind v4 @theme) derived from the
+   official Kisah brand system. These generate utilities like
+   bg-brand, text-indigo, font-display, shadow-card, etc.
+   ============================================================ */
+@theme {
+  /* ---- Brand ---- */
+  --color-brand: #c16452;          /* terracotta */
+  --color-brand-soft: #d98b7a;
+  --color-brand-tint: #f6e7e1;
+  --color-burgundy: #b61d0f;
+  --color-indigo: #201747;         /* deep purple footer */
+  --color-indigo-soft: #2e2566;
+
+  /* ---- Surfaces ---- */
+  --color-canvas: #fcfaf3;         /* scheme 1 cream */
+  --color-cream: #faf2e6;          /* scheme 2 beige */
+  --color-paper: #ffffff;
+  --color-ink: #171717;            /* headings */
+  --color-charcoal: #232323;       /* primary button */
+  --color-body: #5c5c5c;           /* body text */
+  --color-muted: #999999;
+  --color-hair: #ebebeb;           /* default border */
+  --color-hair-soft: #f0ebe0;
+  --color-hair-strong: #d6d6d6;
+
+  /* ---- Status / data ---- */
+  --color-ok: #3ea36a;             /* exists / success */
+  --color-ok-tint: #e3f5eb;
+  --color-warn: #eaa12e;           /* partial */
+  --color-warn-tint: #fdf1df;
+  --color-amber: #c98a2b;          /* exists-with-bugs accent */
+  --color-danger: #c20000;         /* missing / critical */
+  --color-danger-tint: #fdeaea;
+  --color-teal: #09728c;           /* minimal / info */
+  --color-teal-tint: #e2f0f3;
+  --color-magenta: #bd2585;
+
+  /* ---- Type ---- */
+  --font-display: "Trirong", Georgia, "Times New Roman", serif;
+  --font-body: "Nunito Sans Variable", "Nunito Sans", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* ---- Radius ---- */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-pill: 100px;
+
+  /* ---- Shadows ---- */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-lift: 0 14px 40px rgba(32, 23, 71, 0.10);
+  --shadow-glow: 0 0 0 1px rgba(193, 100, 82, 0.18), 0 12px 32px rgba(193, 100, 82, 0.16);
+
+  /* ---- Easing ---- */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Container ---- */
+  --breakpoint-3xl: 120rem;
+}
+
+/* ============================================================
+   Base layer
+   ============================================================ */
+@layer base {
+  :root {
+    --shell-max: 1200px;
+    --gutter: clamp(1.25rem, 5vw, 3.5rem);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis controls scroll once JS loads; disable native smooth then. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    font-synthesis: none;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+
+  /* Accessible focus ring */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* ============================================================
+   Reusable component classes
+   ============================================================ */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--shell-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.08rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+
+  /* Primary charcoal → terracotta button (brand spec) */
+  .btn {
+    --btn-bg: var(--color-charcoal);
+    --btn-fg: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    padding: 0.95em 1.6em;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--btn-bg);
+    cursor: pointer;
+    transition: background 0.25s var(--ease-out-soft),
+      border-color 0.25s var(--ease-out-soft),
+      transform 0.25s var(--ease-out-soft),
+      box-shadow 0.25s var(--ease-out-soft);
+    will-change: transform;
+  }
+  .btn:hover {
+    --btn-bg: var(--color-brand);
+    box-shadow: var(--shadow-glow);
+  }
+  .btn-ghost {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-ink);
+    border-color: var(--color-hair-strong);
+  }
+  .btn-ghost:hover {
+    --btn-fg: #fff;
+    --btn-bg: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+
+  .card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Scroll-reveal: hidden until Motion's inView adds .is-visible */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.75s var(--ease-out-soft),
+      transform 0.75s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: transform, opacity;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Thin animated hairline used under section headings */
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--color-brand) 0%,
+      var(--color-brand) 30%,
+      var(--color-hair) 30%,
+      var(--color-hair) 100%
+    );
+  }
+}

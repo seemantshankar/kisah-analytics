@@ -1,0 +1,14 @@
+---
+import logoImg from '../assets/kisah-logo.png';
+
+interface Props {
+  variant?: 'dark' | 'light';
+  class?: string;
+}
+const { variant = 'dark', class: cls = '' } = Astro.props;
+const word = variant === 'light' ? '#ffffff' : '#201747';
+---
+
+<span class={`inline-flex items-center gap-3 ${cls}`} aria-label="Kisah">
+  <img src={logoImg.src} alt="Kisah Logo" width="120" height="120" />
+</span>

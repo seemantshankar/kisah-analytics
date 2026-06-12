@@ -1,0 +1,124 @@
+---
+import { buckets, bucketCounts, flows } from '../data/audit.js';
+const counts = bucketCounts();
+const total = flows.length;
+const order = ['exists', 'partial', 'minimal', 'missing'];
+const segs = order.map((k) => ({
+  key: k,
+  ...buckets[k],
+  count: counts[k],
+  pct: Math.round((counts[k] / total) * 100),
+}));
+---
+
+<div class="dist" data-reveal>
+  <div class="dist__head">
+    <span class="eyebrow">Audit health</span>
+    <p class="dist__lede">
+      Of {total} flows tested, only a handful work cleanly. The rest carry bugs,
+      gaps, or don't exist yet.
+    </p>
+  </div>
+
+  <div class="dist__bar" role="img" aria-label="Distribution of flow statuses">
+    {
+      segs.map((s) => (
+        <span
+          class="dist__seg"
+          style={`--c:${s.color};flex:${s.count}`}
+          title={`${s.label}: ${s.count}`}
+        />
+      ))
+    }
+  </div>
+
+  <ul class="dist__legend">
+    {
+      segs.map((s) => (
+        <li class="dist__item" style={`--c:${s.color};--t:${s.tint}`}>
+          <span class="dist__num" data-count={s.count}>0</span>
+          <span class="dist__meta">
+            <span class="dist__label">
+              <span class="dist__swatch" />
+              {s.label}
+            </span>
+            <span class="dist__note">{s.note}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .dist {
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-soft);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: var(--shadow-card);
+  }
+  .dist__lede {
+    margin-top: 0.6rem;
+    max-width: 48ch;
+    color: var(--color-body);
+    font-weight: 500;
+  }
+  .dist__bar {
+    display: flex;
+    gap: 4px;
+    height: 14px;
+    margin: 1.75rem 0 1.5rem;
+  }
+  .dist__seg {
+    background: var(--c);
+    border-radius: 3px;
+    transform-origin: left;
+    animation: grow 1s var(--ease-out-soft) both;
+  }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  .dist__legend {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .dist__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+  }
+  .dist__num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--c);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .dist__meta { display: flex; flex-direction: column; gap: 0.4rem; }
+  .dist__label {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-size: 1rem;
+  }
+  .dist__swatch {
+    width: 1.1rem; height: 1.1rem;
+    border-radius: 3px;
+    background: var(--c);
+    flex-shrink: 0;
+  }
+  .dist__note { font-size: 0.9rem; color: var(--color-body); font-weight: 500; line-height: 1.5; }
+
+  @media (max-width: 540px) {
+    .dist__legend { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dist__seg { animation: none; }
+  }
+</style>

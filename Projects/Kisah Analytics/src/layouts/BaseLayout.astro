@@ -1,0 +1,63 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+
+// Self-hosted fonts (zero CLS) via Fontsource — latin subset only
+import '@fontsource/trirong/latin-400.css';
+import '@fontsource/trirong/latin-500.css';
+import '@fontsource/trirong/latin-600.css';
+import '@fontsource/trirong/latin-700.css';
+import '@fontsource-variable/nunito-sans/wght.css';
+
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Kisah · User Flow Audit Report',
+  description = 'A flow-by-flow UX audit of kisah.in — 12 core + 5 ethnic-specific customer flows, with prioritised fixes for revenue and trust.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#fcfaf3" />
+    <ClientRouter />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+
+    <script>
+      import '../scripts/interactions.js';
+    </script>
+
+    <style is:global>
+      .skip-link {
+        position: fixed;
+        left: 1rem;
+        top: -3rem;
+        z-index: 100;
+        padding: 0.6rem 1rem;
+        background: var(--color-ink);
+        color: #fff;
+        border-radius: var(--radius-md);
+        transition: top 0.2s ease;
+      }
+      .skip-link:focus { top: 1rem; }
+      main { padding-top: var(--nav-h, 68px); }
+    </style>
+  </body>
+</html>

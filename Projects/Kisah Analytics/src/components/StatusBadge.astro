@@ -1,0 +1,49 @@
+---
+import { buckets } from '../data/audit.js';
+interface Props {
+  bucket: keyof typeof buckets;
+  label?: string;
+  size?: 'sm' | 'md';
+}
+const { bucket, label, size = 'md' } = Astro.props;
+const b = buckets[bucket];
+---
+
+<span class:list={['status', `status--${size}`]} style={`--c:${b.color};--t:${b.tint}`}>
+  <span class="status__dot"></span>
+  {label ?? b.label}
+</span>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--c) 60%, #000);
+    background: var(--t);
+    border: 1px solid color-mix(in srgb, var(--c) 22%, transparent);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .status--md { font-size: 0.92rem; padding: 0.42em 0.95em; }
+  .status--sm { font-size: 0.82rem; padding: 0.32em 0.75em; }
+  .status__dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 60%, transparent);
+    animation: pulse 2.6s var(--ease-out-soft) infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 55%, transparent); }
+    70% { box-shadow: 0 0 0 6px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .status__dot { animation: none; }
+  }
+</style>

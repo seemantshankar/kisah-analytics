@@ -1,0 +1,597 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import ScoreDistribution from '../components/ScoreDistribution.astro';
+import {
+  meta,
+  heroStats,
+  priceBand,
+  summary,
+  flows,
+  buckets,
+  criticalFixes,
+} from '../data/audit.js';
+
+const core = flows.filter((f) => f.group === 'core');
+const ethnic = flows.filter((f) => f.group === 'ethnic');
+---
+
+<BaseLayout>
+  <!-- ============================= HERO ============================= -->
+  <section class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="shell hero__inner">
+      <p class="hero__eyebrow" data-reveal>
+        <span class="hero__dot"></span>
+        {meta.confidential} · {meta.prepared}
+      </p>
+
+      <h1 class="hero__title" data-reveal style="--reveal-delay:.05s">
+        The <em>Kisah</em> User Flow Audit
+      </h1>
+
+      <p class="hero__sub" data-reveal style="--reveal-delay:.12s">
+        A flow-by-flow read of <strong>{meta.domain}</strong> — India's D2C men's
+        &amp; kids' ethnic-wear house. {meta.subtitle}, tested live across the
+        complete customer lifecycle.
+      </p>
+
+      <div class="hero__cta" data-reveal style="--reveal-delay:.2s">
+        <a href="/audit" class="btn">
+          Explore the 17 flows
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="/priority-matrix" class="btn btn-ghost">
+          Jump to priority matrix
+        </a>
+      </div>
+
+      <dl class="hero__stats" data-reveal style="--reveal-delay:.28s">
+        {
+          heroStats.map((s) => (
+            <div class="hero__stat">
+              <dt>
+                {s.prefix ?? ''}<span data-count={s.value}>0</span>{s.suffix ?? ''}
+              </dt>
+              <dd>{s.label}</dd>
+            </div>
+          ))
+        }
+        <div class="hero__stat hero__stat--wide">
+          <dt class="hero__band">{priceBand}</dt>
+          <dd>price band tested</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ========================= EXEC SUMMARY ========================= -->
+  <section class="section section--cream" id="summary">
+    <div class="shell summary">
+      <div class="summary__copy">
+        <span class="eyebrow" data-reveal>Executive summary</span>
+        <h2 class="summary__title" data-reveal style="--reveal-delay:.05s">
+          Strong catalogue with a clean path for known shoppers — gaps elsewhere.
+        </h2>
+        {
+          summary.paragraphs.map((p, i) => (
+            <p class="summary__p" data-reveal style={`--reveal-delay:${0.1 + i * 0.05}s`}>
+              {p}
+            </p>
+          ))
+        }
+      </div>
+      <div class="summary__viz">
+        <ScoreDistribution />
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== KEY FINDINGS GRID ====================== -->
+  <section class="section" id="findings">
+    <div class="shell">
+      <header class="sec-head">
+        <div data-reveal>
+          <span class="eyebrow">Key findings at a glance</span>
+          <h2 class="sec-head__title">Every flow, scored.</h2>
+        </div>
+        <p class="sec-head__lede" data-reveal style="--reveal-delay:.08s">
+          The complete lifecycle — discovery to post-purchase community — across
+          12 core flows and 5 ethnic-wear flows unique to the Indian festive
+          context. Select any card for the full breakdown.
+        </p>
+      </header>
+
+      <div class="mfunnel">
+        <div class="mfunnel__legend" data-reveal>
+          {
+            Object.values(buckets).map((b) => (
+              <span class="mfunnel__legend-item">
+                <span class="mfunnel__legend-dot" style={`background:${b.color}`} />
+                {b.label}
+              </span>
+            ))
+          }
+        </div>
+
+        <p class="mfunnel__phase" data-reveal>
+          <span class="mfunnel__phase-line" />
+          The core journey — discovery to re-engagement
+        </p>
+
+        <ol class="mfunnel__spine">
+          {
+            core.map((f, i) => (
+              <li
+                class="mfunnel__stage"
+                data-reveal
+                style={`--reveal-delay:${(i % 4) * 0.05}s;--accent:${buckets[f.bucket].color};--accent-tint:${buckets[f.bucket].tint}`}
+              >
+                <span class="mfunnel__dot">{f.code}</span>
+                <a class="mfunnel__node" href={`/audit#${f.id}`}>
+                  <div class="mfunnel__node-head">
+                    <h4 class="mfunnel__node-title">{f.title}</h4>
+                    <StatusBadge bucket={f.bucket} label={f.statusLabel} size="sm" />
+                  </div>
+                  <p class="mfunnel__node-note">{f.keyNote}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="mfunnel__fork" aria-hidden="true">
+          <span class="mfunnel__fork-line" />
+          <span class="mfunnel__fork-pill">Cross-cutting opportunities</span>
+        </div>
+
+        <p class="mfunnel__phase mfunnel__phase--ethnic" data-reveal>
+          <span class="mfunnel__phase-line" />
+          Ethnic-specific flows — unique to the Indian festive context
+        </p>
+
+        <ul class="mfunnel__branch">
+          {
+            ethnic.map((f, i) => (
+              <li
+                data-reveal
+                style={`--reveal-delay:${(i % 3) * 0.05}s;--accent:${buckets[f.bucket].color};--accent-tint:${buckets[f.bucket].tint}`}
+              >
+                <a class="mfunnel__ethnic" href={`/audit#${f.id}`}>
+                  <span class="mfunnel__ethnic-code">{f.code}</span>
+                  <div class="mfunnel__ethnic-body">
+                    <div class="mfunnel__node-head">
+                      <h4 class="mfunnel__node-title">{f.title}</h4>
+                      <StatusBadge bucket={f.bucket} label={f.statusLabel} size="sm" />
+                    </div>
+                    <p class="mfunnel__node-note">{f.keyNote}</p>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CRITICAL FIXES ======================= -->
+  <section class="section section--ink" id="critical">
+    <div class="shell">
+      <header class="sec-head sec-head--light">
+        <div data-reveal>
+          <span class="eyebrow eyebrow--light">Top 5 critical fixes</span>
+          <h2 class="sec-head__title">Fix these first.</h2>
+        </div>
+        <p class="sec-head__lede sec-head__lede--light" data-reveal style="--reveal-delay:.08s">
+          Four are bugs already live on the site; one is a flow gap costing
+          first-time conversions. All are high-impact and mostly quick.
+        </p>
+      </header>
+
+      <ol class="fixes">
+        {
+          criticalFixes.map((f, i) => (
+            <li class="fix" data-reveal style={`--reveal-delay:${(i % 2) * 0.07}s`}>
+              <div class="fix__head">
+                <span class="fix__index">{String(i + 1).padStart(2, '0')}</span>
+                <span class:list={['fix__kind', f.kind === 'BUG' ? 'is-bug' : 'is-gap']}>
+                  {f.kind}
+                </span>
+              </div>
+              <h3 class="fix__title">{f.title}</h3>
+              <p class="fix__body">{f.body}</p>
+              <div class="fix__fix">
+                <span class="fix__fixlabel">Fix</span>
+                <p>{f.fix}</p>
+              </div>
+              <a class="fix__link" href={`/audit#${f.flow}`}>See in context →</a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================ CTA ============================ -->
+  <section class="section">
+    <div class="shell">
+      <div class="cta" data-reveal>
+        <div class="cta__copy">
+          <h2>From findings to a plan of action.</h2>
+          <p>
+            Every recommendation is mapped by impact and effort — so the team
+            knows exactly what to ship this week, this month, and this quarter.
+          </p>
+        </div>
+        <a href="/priority-matrix" class="btn">
+          Open the priority matrix
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Section rhythm ---------- */
+  .section { padding-block: clamp(3.5rem, 8vw, 7rem); }
+  .section--cream { background: var(--color-cream); }
+  .section--ink { background: var(--color-indigo); }
+
+  .sec-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+  .sec-head__title { font-size: clamp(1.9rem, 4vw, 2.9rem); }
+  .sec-head__lede { color: var(--color-body); max-width: 75ch; font-weight: 500; }
+  .sec-head--light .sec-head__title,
+  .sec-head--light .eyebrow--light { color: #fff; }
+  .eyebrow--light { color: var(--color-brand-soft); }
+  .sec-head__lede--light { color: rgba(255, 255, 255, 0.66); }
+  @media (max-width: 760px) { .sec-head { grid-template-columns: 1fr; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 100% 0%, var(--color-cream) 0%, transparent 55%),
+      var(--color-canvas);
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+  .hero__glow {
+    position: absolute;
+    top: -18%;
+    right: -8%;
+    width: 46vw;
+    height: 46vw;
+    max-width: 620px;
+    max-height: 620px;
+    background: radial-gradient(circle, rgba(193, 100, 82, 0.14), transparent 62%);
+    filter: blur(6px);
+    pointer-events: none;
+  }
+  .hero__inner { position: relative; }
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-body);
+  }
+  .hero__dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-brand);
+    box-shadow: 0 0 0 4px rgba(193, 100, 82, 0.16);
+  }
+  .hero__title {
+    margin-top: 1.4rem;
+    font-size: clamp(2.7rem, 8vw, 5.6rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--color-brand);
+  }
+  .hero__sub {
+    margin-top: 1.6rem;
+    max-width: 52ch;
+    font-size: clamp(1.02rem, 1.6vw, 1.22rem);
+    line-height: 1.6;
+    color: var(--color-body);
+  }
+  .hero__sub strong { color: var(--color-ink); font-weight: 700; }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.2rem;
+  }
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: clamp(2.75rem, 6vw, 4.5rem);
+    padding: 0;
+    border-top: 1px solid var(--color-hair);
+    border-top-width: 0;
+  }
+  .hero__stat dt {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+  .hero__band { letter-spacing: -0.01em; white-space: nowrap; }
+  .hero__stat dd {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-body);
+    text-align: center;
+  }
+  @media (max-width: 720px) {
+    .hero__stats { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+    .hero__stat--wide { grid-column: span 2; }
+  }
+
+  /* ---------- Summary ---------- */
+  .summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: flex-start;
+  }
+  .summary__copy { display: flex; flex-direction: column; }
+  .summary__title {
+    margin: 0.5rem 0 1rem;
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    line-height: 1.25;
+    max-width: 30ch;
+  }
+  .summary__p { margin-bottom: 0.7rem; color: var(--color-body); font-size: 0.9rem; font-weight: 500; }
+  .summary__p:last-child { margin-bottom: 0; }
+  @media (max-width: 860px) { .summary { grid-template-columns: 1fr; } }
+
+  /* ---------- Master funnel ---------- */
+  .mfunnel { max-width: 780px; margin-inline: auto; }
+
+  .mfunnel__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.4rem;
+    margin-bottom: 2.2rem;
+  }
+  .mfunnel__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--color-body);
+  }
+  .mfunnel__legend-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+  .mfunnel__phase {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin-bottom: 1.4rem;
+  }
+  .mfunnel__phase-line { width: 26px; height: 2px; background: var(--color-brand); flex: none; }
+
+  /* spine */
+  .mfunnel__spine { list-style: none; position: relative; padding-left: 3rem; }
+  .mfunnel__spine::before {
+    content: '';
+    position: absolute;
+    left: 13px; top: 1rem; bottom: 1rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-hair-strong), var(--color-hair-soft));
+  }
+  .mfunnel__stage { position: relative; margin-bottom: 0.8rem; }
+  .mfunnel__stage:last-child { margin-bottom: 0; }
+  .mfunnel__dot {
+    position: absolute;
+    left: -3rem; top: calc(50% + 2px);
+    transform: translateY(-50%);
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--color-paper);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-tint);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--accent);
+    z-index: 1;
+  }
+  .mfunnel__node {
+    display: block;
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.2rem;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s var(--ease-out-soft),
+      box-shadow 0.3s var(--ease-out-soft);
+  }
+  .mfunnel__node:hover { transform: translateX(4px); box-shadow: var(--shadow-lift); }
+  .mfunnel__node-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+  .mfunnel__node-title { font-size: 1.1rem; }
+  .mfunnel__node-note { font-size: 0.86rem; line-height: 1.5; color: var(--color-body); }
+
+  /* fork */
+  .mfunnel__fork {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.6rem 0;
+  }
+  .mfunnel__fork-line { width: 2px; height: 1.4rem; background: var(--color-hair-strong); }
+  .mfunnel__fork-pill {
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: var(--color-cream);
+    border: 1px solid var(--color-hair-soft);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-pill);
+  }
+
+  /* ethnic branch */
+  .mfunnel__branch {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .mfunnel__ethnic {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    height: 100%;
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s var(--ease-out-soft),
+      box-shadow 0.3s var(--ease-out-soft);
+  }
+  .mfunnel__ethnic:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .mfunnel__ethnic-code {
+    flex: none;
+    width: 2rem; height: 2rem;
+    display: grid; place-items: center;
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .mfunnel__ethnic-body { min-width: 0; }
+  @media (max-width: 560px) {
+    .mfunnel__branch { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Critical fixes ---------- */
+  .fixes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+  .fix {
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .fix:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(193, 100, 82, 0.5);
+    transform: translateY(-3px);
+  }
+  .fix:first-child { grid-column: span 2; }
+  .fix__head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+  .fix__index {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .fix__kind {
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 0.3em 0.7em;
+    border-radius: var(--radius-pill);
+  }
+  .fix__kind.is-bug { background: var(--color-danger-tint); color: var(--color-danger); }
+  .fix__kind.is-gap { background: var(--color-warn-tint); color: var(--color-amber); }
+  .fix__title { color: #fff; font-size: 1.25rem; margin-bottom: 0.55rem; }
+  .fix__body { color: rgba(255, 255, 255, 0.66); font-size: 0.92rem; flex: 1; }
+  .fix__fix {
+    margin-top: 1.1rem;
+    padding: 0.95rem 1.1rem;
+    background: rgba(193, 100, 82, 0.14);
+    border-left: 2px solid var(--color-brand);
+    border-radius: var(--radius-md);
+  }
+  .fix__fixlabel {
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-soft);
+  }
+  .fix__fix p { margin-top: 0.3rem; color: rgba(255, 255, 255, 0.86); font-size: 0.9rem; }
+  .fix__link {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-brand-soft);
+    transition: color 0.2s ease;
+  }
+  .fix__link:hover { color: #fff; }
+  @media (max-width: 720px) {
+    .fixes { grid-template-columns: 1fr; }
+    .fix:first-child { grid-column: span 1; }
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background:
+      radial-gradient(120% 140% at 0% 0%, var(--color-cream), var(--color-canvas));
+    border: 1px solid var(--color-hair-soft);
+    border-radius: var(--radius-xl);
+  }
+  .cta__copy h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 0.6rem; }
+  .cta__copy p { color: var(--color-body); max-width: 48ch; }
+</style>

@@ -30,7 +30,7 @@ const isActive = (href: string) =>
       }
     </nav>
 
-    <a href="/priority-matrix" class="site-nav__cta" data-magnetic="0.25">
+    <a href="/priority-matrix" class="site-nav__cta">
       View actions
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
         <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -110,7 +110,6 @@ const isActive = (href: string) =>
     background: var(--color-charcoal);
     border-radius: var(--radius-pill);
     transition: background 0.25s ease, box-shadow 0.25s ease;
-    will-change: transform;
   }
   .site-nav__cta:hover {
     background: var(--color-brand);
